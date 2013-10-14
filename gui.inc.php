@@ -296,7 +296,7 @@ function UKMvideoGUIupload() {
 
 	<form>
     <?php
-		UKM_loader('api/innslag.api');
+		require_once('UKM/innslag.class.php');
 		$innslag = new innslag($_GET['band']);
 		$navn = $innslag->g('b_name');
 		echo '<h2>Last opp video for: "'.$navn.'"</h2>';

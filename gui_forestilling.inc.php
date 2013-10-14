@@ -33,7 +33,7 @@ if(!isset($_GET['forestilling'])) {?>
 } elseif(isset($_GET['id'])) {
 	require_once('gui_upload.inc.php');
 } else {
-	UKM_loader('api/forestilling.class');
+	require_once('UKM/forestilling.class.php');
 	require_once('functions_bandrelated.inc.php');
 	$c = new forestilling($_GET['forestilling']);
 	$bands = $c->innslag();

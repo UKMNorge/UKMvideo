@@ -2,7 +2,7 @@
 /* 
 Plugin Name: UKM Videoopplaster
 Plugin URI: http://www.ukm-norge.no
-Description: UKM Norge admin
+Description: Opplasting av video til UKM-TV fra forestillinger (innslagsvideo) + UKM-TV Videoreportasjer
 Author: UKM Norge / M Mandal 
 Version: 1.0 
 Author URI: http://www.ukm-norge.no
