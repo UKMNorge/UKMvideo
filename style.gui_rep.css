@@ -1,0 +1,196 @@
+.videoopplaster .group {
+  width: 500px;
+  min-height: 50px;
+}
+.videoopplaster .group label {
+  width: 100%;
+  display: block;
+  font-weight: bold;
+}
+.videoopplaster progress {
+  width: 90%;
+  height: 18px;
+}
+.videoopplaster input[type=text],
+.videoopplaster input[type=file]{
+  width: 90%;
+}
+.videoopplaster div#uploaded, 
+.videoopplaster div#uploading {
+	display: none;
+}
+.videoopplaster input[type=text] {
+    font-size: 20px;
+}
+.videoopplaster textarea {
+  width: 90%;
+  height: 90px;
+}
+div.dropzone,
+div.videoopplaster {
+  float: left;
+}
+
+
+
+
+ul.videoreportasjer > li {
+  clear: both;
+	border: 1px solid #ccc;
+  width: 700px;
+}
+ul.videoreportasjer > li div.icons {
+ width: 60px; 
+}
+ul.videoreportasjer > li div.icons > div {
+ 	width: 50px;
+  float: left;
+  padding: 4px 0px 0px 8px;
+}
+ul.videoreportasjer div.ikon_detaljer_skjul {
+  display:none;
+}
+ul.videoreportasjer > li div.icons,
+ul.videoreportasjer > li div.basics {
+ float: left;
+}
+ul.videoreportasjer > li div.basics {
+	width: 500px;
+}
+ul.videoreportasjer > li div.title {
+  font-weight: bold;
+  font-size: 14px;
+	padding: 5px 0px 0px 2px;
+}
+ul.videoreportasjer > li div.image {
+  padding: 2px;
+  margin-right: 5px;
+  float: left;
+}
+ul.videoreportasjer > li div.image img {
+	padding: 3px;
+  background: #eee;
+  border: #ccc;
+}
+
+ul.videoreportasjer > li div.icons {
+ 	cursor:pointer; 
+}
+ul.videoreportasjer > li div.shareicons .ikon-rediger {
+ margin-right: 20px;
+  float: left;
+}
+ul.videoreportasjer > li > div.detailed {
+  clear: both;
+  margin-left: 123px;
+  display: none;
+}
+ul.videoreportasjer > li div.detailed iframe {
+ 	width: 560px; 
+}
+
+.shareicons div,
+.shareicons_related div {
+	padding-right: 10px;
+	float: right; 
+	cursor: pointer;
+}
+
+
+ul.forestillingsvideo {
+	width: 800px;
+}
+ul.forestillingsvideo > li {
+	clear: both;
+	border: 1px solid #ccc;
+	width: 700px;
+}
+ul.forestillingsvideo > li.active {
+	background: #eee;
+}
+ul.forestillingsvideo > li div.icons {
+ width: 190px; 
+}
+ul.forestillingsvideo > li div.icons > div {
+ 	width: 55px;
+  float: left;
+}
+ul.forestillingsvideo div.ikon_detaljer_skjul {
+  display:none;
+}
+ul.forestillingsvideo > li div.icons,
+ul.forestillingsvideo > li div.basics {
+ float: left;
+}
+ul.forestillingsvideo > li div.basics {
+	width: 500px;
+}
+ul.forestillingsvideo > li div.title {
+  font-weight: bold;
+  font-size: 14px;
+	padding: 5px 0px 0px 2px;
+}
+ul.forestillingsvideo > li div.image {
+  padding: 2px;
+  margin-right: 5px;
+  float: left;
+}
+ul.forestillingsvideo > li div.image img {
+	padding: 3px;
+  background: #eee;
+  border: #ccc;
+}
+
+ul.forestillingsvideo > li div.shareicons_related {
+ padding-right: 20px; 
+}
+
+ul.forestillingsvideo > li div.icons {
+ 	cursor:pointer; 
+}
+
+ul.forestillingsvideo > li > div.detailed {
+  clear: both;
+  margin-left: 145px;
+}
+ul.forestillingsvideo > li div.loading {
+	display: none;
+}
+ul.forestillingsvideo > li div.detailed iframe {
+ 	width: 560px; 
+  margin-left: 30px;
+}
+ul.forestillingsvideo > li div.ico {
+  float: right;
+  padding: 0px;
+	width: 40px;
+  margin-right: 20px;
+}
+ul.forestillingsvideo > li div.binfo {
+  float: right;
+  padding: 4px 5px 0px 5px;
+  min-width: 150px;
+  text-align: right;
+}
+
+.ikon_rediger div,
+.ikon_rediger a {
+ color: #000; 
+  text-decoration: none;
+}
+
+#tvadmin_wrap h2 {
+	float: left;
+  padding-top: 54px;
+  margin-left: 10px;
+}
+#tvadmin_logo {
+	float: left;
+}
+div.error#videoupgradetip {
+  float: right;
+  width: 450px;
+  height: 60px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
