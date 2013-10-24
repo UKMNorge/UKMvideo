@@ -1,0 +1,43 @@
+<h3>Velg innslag</h3>
+
+<ol class="unstyled ukmbilder_width">
+	{% for innslag in program %}
+	<li class="well well-mini clickable ett_innslag" id="innslag_{{innslag.id}}" data-innslag="{{innslag.id}}">
+		<div class="header">
+			<div class="actions">
+
+				<div class="pull-left details_show">
+					<img src="//ico.ukm.no/sirkel-pluss-256.png" /><br />
+					<small>Vis detaljer</small>
+				</div>
+				<div class="pull-left details_hide" style="display:none;">
+					<img src="//ico.ukm.no/sirkel-minus-256.png" /><br />
+					<small>Skjul detaljer</small>
+				</div>
+
+
+				<div class="pull-left numimages">
+					<div class="overunder">
+						<div class="over">{{innslag.num_videos}}</div>
+						<div class="under">bilde{{innslag.num_videos == 1 ? '' : 'r'}}</div>
+					</div>
+				</div>
+
+				<h1>{{innslag.name}}</h1>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<div class="details" style="display:none;">
+			<div class="loader">
+				<img src="//ico.ukm.no/loading.gif" width="40" class="pull-left" />
+				<strong>Vennligst vent, laster detaljer..</strong>
+			</div>
+			<div class="image_actions"></div>
+			<ol class="unstyled band_images">
+			
+			</ol>
+		</div>
+		<div class="clearfix"></div>
+	</li>
+	{% endfor %}
+</ol>
