@@ -20,7 +20,7 @@ function UKMvideo_menu() {
 
 function UKMvideo() {
 	if(!isset($_GET['action']))
-		$_GET['action'] = 'upload';
+		$_GET['action'] = 'innslag';
 		
 	require_once('UKM/related.class.php');
 	require_once('UKM/innslag.class.php');
@@ -29,11 +29,11 @@ function UKMvideo() {
 
 
 	switch( $_GET['action'] ) {
-		case 'upload':
-			require_once('controller_upload.inc.php');
+		case 'innslag':
+			require_once('controller_innslag.inc.php');
 			break;
-		case 'list':
-			require_once('controller_list.inc.php');
+		case 'reportasje':
+			require_once('controller_reportasje.inc.php');
 			break;
 	}
 	$INFOS['active'] = $_GET['action'];
