@@ -23,7 +23,7 @@ if( isset( $INFOS['program'] ) ) {
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_filmer' => sizeof($related['video']),
+						 'num_videos' => sizeof($related['video']),
 						);
 		$alle_innslag[] = $innslagdata;
 	}
