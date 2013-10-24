@@ -16,7 +16,7 @@ function details_show( innslag ) {
 	innslag.find('.details').slideDown();
 	innslag.find('.loader').slideDown();
 }
-function details_hide( selector ) {
+function details_hide( innslag ) {
 	innslag.find('.details_hide').hide();
 	innslag.find('.details_show').show();
 
