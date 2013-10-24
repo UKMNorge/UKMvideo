@@ -47,6 +47,8 @@ function UKMvideo_scripts_and_styles(){
 
 	wp_enqueue_style('UKMresources_tabs');
 
+	wp_enqueue_style( 'UKMvideo_css', plugin_dir_url( __FILE__ ) . 'UKMvideo.css');
+	wp_enqueue_script( 'UKMvideo_js', plugin_dir_url( __FILE__ ) . 'UKMvideo.js');
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('jqueryGoogleUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
