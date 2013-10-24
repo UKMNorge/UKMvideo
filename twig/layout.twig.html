@@ -1,0 +1,46 @@
+<div class="wrap" id="tvadmin_wrap">
+
+	<div class="error" id="videoupgradetip">
+		<strong>OBS:</strong>
+		Videoopplasteren kan kreve en relativt ny nettleser.
+		<br />
+		Vi anbefaler <a href="https://www.google.com/intl/no/chrome/browser/">Google Chrome</a>, 
+					<a href="http://www.mozilla.org/nb-NO/firefox/new/">Mozilla Firefox</a> eller 
+					<a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-9/worldwide-languages">Internet Explorer 9</a>.
+		<br />
+		Problemer med opplasting? <a href="mailto:support@ukm.no">Ta kontakt med support!</a>
+	</div>	
+
+
+	<img src="http://tv.ukm.no/img/ukmtv_logo.png" id="tvadmin_logo" />
+	<h2>Administrer innhold</h2>
+		<div class="clear clearfix clear-fix"></div>
+</div>
+
+
+<div class="UKM_tabs">
+	<a href="?page=UKMkart&action=innslag" {{ active_tab == 'innslag' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Film av innslag</span>
+			<img src="http://ico.ukm.no/persons-256.png" width="25"  border="0" /><br />
+			<span class="tab_description"></span>
+		</div>
+	</a>
+
+	<a href="?page=UKMkart&action=reportasje" {{ active_tab == 'reportasje' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Videoreportasjer</span>
+			<img src="http://ico.ukm.no/video-256.png" width="25" border="0" /><br />
+			<span class="tab_description"></span>
+		</div>
+	</a>
+</div>
+
+<div class="video_tabs_desc">
+	<span>
+	</span>
+</div>
+<div class="UKM_content_wrapper">
+	{% block content %}
+	{% endblock %}
+</div>

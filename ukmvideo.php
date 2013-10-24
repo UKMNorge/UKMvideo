@@ -4,111 +4,75 @@ Plugin Name: UKM Videoopplaster
 Plugin URI: http://www.ukm-norge.no
 Description: Opplasting av video til UKM-TV fra forestillinger (innslagsvideo) + UKM-TV Videoreportasjer
 Author: UKM Norge / M Mandal 
-Version: 1.0 
+Version: 3.0 
 Author URI: http://www.ukm-norge.no
 */
-/* UKM LOADER */ if(!defined('UKM_HOME')) define('UKM_HOME', '/home/ukmno/public_html/UKM/'); require_once(UKM_HOME.'loader.php');
-add_action('wp_ajax_ukmtv_delete', 'ukmtv_delete');
 
-
-
-
-function UKMvideoScripts() {
-	wp_enqueue_script('UKMvideo_jwplayer', WP_PLUGIN_URL .'/UKMvideo/jwplayer.js');
-}
-
-
-## CREATE A MENU
-function UKMvideos_menu() {
-	global $UKMN;
-	$page1 = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKM_videorep','UKM_videorep', 'http://ico.ukm.no/video-16.png', 12);
-	$page2 = add_submenu_page('UKM_videorep', ' Gammel videomodul', 'Gammel videomodul', 'publish_posts', 'UKM_videos','UKM_videos');
-
-	add_action( 'admin_print_styles-' . $page1, 'UKMvideoScripts' );
-	add_action('admin_print_styles-'.$page1, 'UKMVideo_jQupload');
-	add_action( 'admin_print_styles-' . $page2, 'UKMvideoScripts' );
-
-}
-
-function UKM_videorep(){
-	if(!isset($_GET['list']))
-		$_GET['list'] = 1;
-	require_once('gui_tabs.inc.php');
-	require_once('functions.inc.php');
-	require_once('save_rep.inc.php');
-	require_once('gui2013.inc.php');
-	require_once('gui_footer.inc.php');
-}
-
-function UKM_videos(){
-	require_once('gui.inc.php');
-	UKMvideoGUI();
-}
-
-add_action('wp_ajax_UKMVideoreportasje_data', 'UKMVideoreportasje_data');
-
-function UKMVideoreportasje_data() {
-	$sql = new SQL("SELECT `video_image`, `video_file`
-					FROM `ukm_standalone_video`
-					WHERE `cron_id` = '#cronid'",
-					array('cronid' => $_POST['cronid']));
-	$row = $sql->run('array');
-	if(empty($row['video_file']))
-		die( json_encode(array('cron_id' => $_POST['cronid'],
-							   'video' => false,
-							   'image' => false)) );
-
-	die( json_encode(array('cron_id' => $_POST['cronid'],
-						   'video' => $row['video_file'],
-						   'image' => $row['video_image'])) );
-}
-
-add_action('wp_ajax_UKMVideo_ajax', 'UKMVideo_ajax');
-add_action('wp_ajax_loadBandVideos', 'loadBandVideos');
-add_action('wp_ajax_load_rep_details', 'load_rep_details');
 if(is_admin()) {
-	add_action('admin_menu', 'UKMvideos_menu', 11000);
-	add_action('admin_init', 'UKMVideo_scriptsandstyles',1000);
-	add_action('admin_init', 'UKMTV_player');
+	add_action('admin_menu', 'UKMvideo_menu');
 }
 
-function loadBandVideos() {
-	require_once('ajax.bandrelated.inc.php');
-}
-function load_rep_details() {
-	require_once('ajax.standalone.inc.php');
+function UKMvideo_menu() {
+	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKM_videorep','UKM_videorep', 'http://ico.ukm.no/video-16.png', 12);
+	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
+
 }
 
-function ukmtv_delete() {
-	require_once('ajax.ukmtv_delete.inc.php');
+function UKMvideo() {
+	if(!isset($_GET['action']))
+		$_GET['action'] = 'upload';
+		
+	require_once('UKM/related.class.php');
+	require_once('UKM/innslag.class.php');
+	require_once('UKM/monstring.class.php');
+	$monstring = new monstring(get_option('pl_id'));
+
+
+	switch( $_GET['action'] ) {
+		case 'upload':
+			require_once('controller_upload.inc.php');
+			break;
+		case 'list':
+			require_once('controller_list.inc.php');
+			break;
+	}
+	$INFOS['active'] = $_GET['action'];
+	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));
 }
 
-function UKMTV_player() {
-	wp_enqueue_script('UKMTV_iframe','http://embed.ukm.no/iframe.js',10000);	
-}
+function UKMvideo_scripts_and_styles(){
+	wp_enqueue_script('handlebars_js');
+	wp_enqueue_script('bootstrap_js');
+	wp_enqueue_style('bootstrap_css');
 
-function UKMVideo_scriptsandstyles() {
-	wp_enqueue_style('UKMVideo_css', WP_PLUGIN_URL .'/UKMvideo/stil.css');	
+	wp_enqueue_style('UKMresources_tabs');
+
+	
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('jqueryGoogleUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
-	wp_enqueue_script('zoombox_js','/wp-content/plugins/UKMvisitorpages/zoombox/zoombox.js');
-	wp_enqueue_script('UKMvideo_js', WP_PLUGIN_URL .'/UKMvideo/script.js');
+
+	wp_enqueue_style( 'blueimp-gallery-css', plugin_dir_url( __FILE__ ) . 'jqueryuploader/css/blueimp-gallery.min.css');
+
+	// CSS to style the file input field as button and adjust the Bootstrap progress bars
+	wp_enqueue_style( 'jquery-fileupload-css', plugin_dir_url( __FILE__ ) . 'jqueryuploader/css/jquery.fileupload.css');
+	wp_enqueue_style( 'jquery-fileupload-ui-css', plugin_dir_url( __FILE__ ) . 'jqueryuploader/css/jquery.fileupload-ui.css');
+	
+	// The jQuery UI widget factory, can be omitted if jQuery UI is already included
+	wp_enqueue_script('jquery_ui_widget', plugin_dir_url(__FILE__) . 'jqueryuploader/js/vendor/jquery.ui.widget.js');
+	// The Load Image plugin is included for the preview images and image resizing functionality
+	wp_enqueue_script('load-image', plugin_dir_url(__FILE__) . 'jqueryuploader/js/vendor/load-image.min.js');
+	// The Canvas to Blob plugin is included for image resizing functionality
+	wp_enqueue_script('canvas-to-blob', plugin_dir_url(__FILE__) . 'jqueryuploader/js/vendor/canvas-to-blob.min.js');
+	// The Iframe Transport is required for browsers without support for XHR file uploads
+	wp_enqueue_script('iframe-transport', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.iframe-transport.js');	
+	// The basic File Upload plugin
+	wp_enqueue_script('fileupload', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.fileupload.js');	
+	// The File Upload user interface plugin
+	wp_enqueue_script('fileupload-ui', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.fileupload-ui.js');
+	// The File Upload processing plugin
+	wp_enqueue_script('fileupload-process', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.fileupload-process.js');	
+	// The File Upload image preview & resize plugin 
+	wp_enqueue_script('fileupload-image', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.fileupload-image.js');	
+	// The File Upload validation plugin
+	wp_enqueue_script('fileupload-validate', plugin_dir_url(__FILE__) . 'jqueryuploader/js/jquery.fileupload-validate.js');	
 }
-
-function UKMVideo_jQupload() {
-	wp_enqueue_script('jQu_iframe_transport', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/jquery.iframe-transport.js');
-	wp_enqueue_script('jQu_fileupload', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/jquery.fileupload.js');
-	wp_enqueue_script('jQu_fileupload-fp', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/jquery.fileupload-fp.js');
-	wp_enqueue_script('jQu_fileupload-ui', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/jquery.fileupload-ui.js');
-	wp_enqueue_script('jQu_main', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/main.js');
-	wp_enqueue_script('jQu_cors', WP_PLUGIN_URL . '/UKMvideo/jQupload/js/cors/jquery.xdr-transport.js');
-	wp_enqueue_style('jQu_guistyle', WP_PLUGIN_URL .'/UKMvideo/style.gui_rep.css');
-
-}
-
-
-function UKMVideo_ajax() {
-	require_once('ajax.php');
-	die();
-}
-?>
