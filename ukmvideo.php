@@ -9,14 +9,27 @@ Author URI: http://www.ukm-norge.no
 */
 
 if(is_admin()) {
+	require_once('UKM/inc/handlebars.inc.php');
 	add_action('admin_menu', 'UKMvideo_menu');
+	
+	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
+
 }
 
 function UKMvideo_menu() {
 	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 12);
 	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
-
 }
+
+function UKMvideo_ajax_load() {
+	if(!isset( $_POST['load'] ) ) 
+		die(0);
+	
+	require_once('ajax/load_'. $_POST['load'] .'.ajax.php');
+	
+	die( json_encode( $AJAX_DATA ) );
+}
+
 
 function UKMvideo() {
 	if(!isset($_GET['action']))
@@ -38,6 +51,8 @@ function UKMvideo() {
 	}
 	$INFOS['active'] = $_GET['action'];
 	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));
+	
+	echo HANDLEBARS( dirname(__FILE__) );
 }
 
 function UKMvideo_scripts_and_styles(){
