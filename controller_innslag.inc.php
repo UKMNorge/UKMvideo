@@ -8,4 +8,4 @@ $monstring = new monstring( get_option('pl_id') );
 $hendelser = $monstring->forestillinger();
 
 
-$infos['hendelser'] = $hendelser;
+$INFOS['hendelser'] = $hendelser;
