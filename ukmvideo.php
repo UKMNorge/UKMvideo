@@ -13,7 +13,7 @@ if(is_admin()) {
 }
 
 function UKMvideo_menu() {
-	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKM_videorep','UKM_videorep', 'http://ico.ukm.no/video-16.png', 12);
+	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKM_video','UKM_video', 'http://ico.ukm.no/video-16.png', 12);
 	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
 
 }
