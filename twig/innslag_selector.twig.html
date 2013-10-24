@@ -1,0 +1,14 @@
+<h3 class="lead">Velg sortering av innslag</h3>
+
+
+<h4>Alle innslag</h4>
+	<a href="?page=UKMvideo&action=innslag&filter=alfa">Alfabetisk liste over alle innslag på mønstringen</a>
+
+<h4>Innslag sortert etter forestilling/hendelse</h4>
+<ol class="unstyled">
+{% for hendelse in hendelser %} 
+	<li>
+		<a href="?page=UKMvideo&action=innslag&filter={{hendelse.c_id}}">{{hendelse.c_name}}</a>
+	</li>
+{% endfor %}
+</ol>
