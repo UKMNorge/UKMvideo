@@ -24,7 +24,7 @@ function details_show( innslag ) {
 					if(!response.success) {
 						alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
 						details_hide( jQuery('#innslag_' + response.id) );
-					} else if(response.related.length == 0 || response.related == undefined || response.related == null) {
+					} else if(response.related == undefined || response.related == null || response.related.length == 0) {
 						console.log('Innslag '+ response.id +': Ingen video');
 						var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-ingen').html() );
 						jQuery('#innslag_'+response.id).find('.loader').slideUp();
