@@ -26,7 +26,7 @@ if( !isset( $_POST['innslag'] ) ) {
 	$conv = new SQL("SELECT *
 					 FROM `ukm_related_video`
 					 WHERE `b_id` = '#bid'",
-					array('bid' => $innslag['b_id']));
+					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
 	while( $r = mysql_fetch_assoc( $conv ) ) {
 		if(!empty($r['file'])) {
