@@ -1,10 +1,33 @@
 <div class="clearfix"></div>
 <ol class="unstyled">
  {{#each videos }}
- 	<li class="video" id="video_{{id}}">
- 		{{name}}
- 		
- 		{{embedcode}}
+ 	<li class="video" id="video_{{id}}" data-video="{{id}}">
+ 		<div class="pull-right videoactions">
+
+	 		<div class="videoaction embed">
+				<img src="//ico.ukm.no/embed-close-256.png" /><br />
+				<small>bygg inn</small>
+	 		</div>
+
+	 		<div class="videoaction edit">
+				<img src="//ico.ukm.no/pencil-256.png" /><br />
+				<small>rediger</small>
+	 		</div>
+
+	 		<div class="videoaction delete">
+				<img src="//ico.ukm.no/trash-256.png" /><br />
+				<small>slett</small>
+	 		</div>
+ 		</div>
+ 		<div class="embedhowto">
+	 		<h4>Hvordan bruke denne videoen på UKM.no?</h4>
+	 		<p>Vi har gjort det enkelt å bruke (bygge inn / embedde) UKM-TV på UKM.no</p>
+	 		<p>Lim inn adressen til videoen i innlegget, så gjør systemet resten automatisk når siden vises</p>
+	 		<div class="alert">{{full_url}}</div>
+ 		</div>
+ 		<h4>{{title}}</h4>
+ 		<div class="clearfix"></div>
+ 		{{embed}}
  	</li>
  {{/each}}
 </ol>
