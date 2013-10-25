@@ -108,7 +108,7 @@
 	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
 		    if (jQuery.support.cors) {
 		        jQuery.ajax({
-		            url: 'http://videoconvertertest.ukm.no/jQupload_cors.php',
+		            url: 'http://videoconverter.ukm.no/jQupload_cors.php',
 		            type: 'HEAD'
 		        }).fail(function () {
 		        	var result = {'success': false,
