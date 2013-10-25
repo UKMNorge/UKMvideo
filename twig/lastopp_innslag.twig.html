@@ -6,52 +6,56 @@
 <input type="hidden" name="converter_pl_id" name="converter_pl_id" value="{{monstring.pl_id}}" />
 <input type="hidden" name="converter_type" name="converter_type" value="innslag" />
 <input type="hidden" name="converter_b_id" name="converter_b_id" value="{{innslag.b_id}}" />
+<input type="hidden" name="converter_blog_id" name="converter_b_id" value="{{blog_id}}" />
 
-<div class="videoopplaster pull-left span5">
-	<form action="?page=UKMvideo&list=innslag&filter={{filter}}#innslag_{{innslag.b_id}}" method="post">
-		
-		<div class="group" id="filechooser">
-			<label>Velg fil</label>
-			<input id="fileupload_band" type="file" name="files[]">
-		</div>
-
-		<div class="group alert alert-warning span4" id="uploading" style="display:none;">>
-			<label>Laster opp fil</label>
-			<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active"></progress>
-		</div>
-		<div class="clearfix"></div>
-		
-		<div class="alert alert alert-success span4" id="uploaded" style="display:none;">
-			<h3>Filen er lastet opp!</h3>
-			<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
-		</div>	
-		<div class="clearfix"></div>
-		
-		
-		<div class="group">
-			<label>Navn på innslag</label>
-			{{innslag.navn}}
-		</div>
-
-		<div class="group">
-			<label>Album</label>
-			{{monstring.navn}} {{monstring.season}}
-		</div>
-		
-		<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
-		<input type="hidden" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
-		
-		<div class="group">
-			<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
-		</div>
-	</form>
+<div id="fileupload_container">
+	<div class="videoopplaster pull-left span5">
+		<form action="?page=UKMvideo&list=innslag&filter={{filter}}#innslag_{{innslag.b_id}}" method="post">
+			
+			<div class="group" id="filechooser">
+				<label>Velg fil</label>
+				<input id="fileupload_band" type="file" name="files[]">
+			</div>
+	
+			<div class="group alert alert-warning span4" id="uploading" style="display:none;">>
+				<label>Laster opp fil</label>
+				<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active"></progress>
+			</div>
+			<div class="clearfix"></div>
+			
+			<div class="alert alert alert-success span4" id="uploaded" style="display:none;">
+				<h3>Filen er lastet opp!</h3>
+				<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
+			</div>	
+			<div class="clearfix"></div>
+			
+			
+			<div class="group">
+				<label>Navn på innslag:</label>
+				{{innslag.navn}}
+			</div>
+	
+			<div class="group">
+				<label>Album:</label>
+				{{monstring.navn}} {{monstring.season}}
+			</div>
+			
+			<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
+			<input type="hidden" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
+			
+			<div class="group">
+				<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
+			</div>
+		</form>
+	</div>
+	
+	<div class="dropzone pull-left span5">
+		<img src="http://ico.ukm.no/grafikk/dropzone.png" />
+	</div>
+	<div class="clearfix"></div>
 </div>
 
-<div class="dropzone pull-left span5">
-	<img src="http://ico.ukm.no/grafikk/dropzone.png" />
+<div id="fileupload_message" class="alert" style="display:none;">
+	
 </div>
-
-
-
-<div class="clearfix"></div>
 {% endblock %}

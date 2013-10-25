@@ -17,4 +17,7 @@ $innslag->navn = $inn->g('b_name');
 $INFOS['innslag'] = $innslag;
 
 
+global $blog_id;
+$INFOS['blog_id'] = $blog_id;
+
 $INFOS['filter'] = $_GET['filter'];

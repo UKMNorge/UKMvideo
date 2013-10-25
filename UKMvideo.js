@@ -71,22 +71,75 @@
 	
 
 ////////////////////////////////////////////////////////////////////////////////////////
-// REDIGER / LEGG TIL VIDEO
+// INNSLAG: LAST OPP VIDEO
 ////////////////////////////////////////////////////////////////////////////////////////
+	jQuery(document).ready(function(){
+	    jQuery('#fileupload_band').fileupload({
+	        // Uncomment the following to send cross-domain cookies:
+	        xhrFields: {withCredentials: true},
+	        url: 'http://videoconverter.ukm.no/jQupload_recieve.php',
+	        fileTypes: '^video\/(.)+',
+	        autoUpload: true,
+	        formData: {season: jQuery('#converter_season').val(),
+		        	   pl_id: jQuery('#converter_pl_id').val(), 
+		        	   pl_type: jQuery('#converter_type').val(),
+		        	   b_id: jQuery('#converter_b_id').val(),
+		        	   blog_id: jQuery('#converter_blog_id').val() 
+		        	   },
+	        progressall: function (e, data) {
+		        var progress = parseInt(data.loaded / data.total * 100, 10);
+		        jQuery('#uploadprogress').attr('value', progress);
+		    },
+	    }).bind('fileuploaddone', function(e, data){
+			    if(!data.result.success) {
+				    alertError(data.result.message);
+			    } else {
+				   	jQuery('#uploading').slideUp();
+				   	jQuery('#uploaded').slideDown();
+				    jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
+				    jQuery('#ukm_band_id').val(data.result.files[0].ukm);
+				    jQuery('#submitbutton').parents('form').submit();
+				}
+		}).bind('fileuploadstart', function(){
+			jQuery('#filechooser').slideUp();
+			jQuery('#uploading').slideDown();
+		});
+		
+	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
+		    if (jQuery.support.cors) {
+		        jQuery.ajax({
+		            url: 'http://videoconverter.ukm.no/jQupload_cors.php',
+		            type: 'HEAD'
+		        }).fail(function () {
+		        	var result = {'success': false,
+			        			  'message': 'Beklager, videoserveren er ikke tilgjengelig akkurat nå'};
+		            fileUploadError( result );
+		        });
+		    }
+		}
+	});
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////
+// FILEUPLOAD: HJELPERE
+////////////////////////////////////////////////////////////////////////////////////////
+	function fileUploadError(result) {
+		jQuery('#fileupload_container').slideUp();
+		
+		jQuery('#fileupload_message').html('<h3>En feil oppsto!</h3>' + result.message).addClass('alert-error').slideDown();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 /*
