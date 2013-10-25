@@ -9,13 +9,18 @@ if( !isset( $_POST['innslag'] ) ) {
 	$innslag = new innslag( $_POST['innslag'] );
 	$related = $innslag->related_items();
 	
-	if(is_array($related['tv']))
-	foreach($related['tv'] as $key => $tv) {
-		$tv->embed = $tv->embedcode(500);
-	}
 	
+	if(is_array($related['tv'])) {
+		$videos = array();
+		foreach($related['tv'] as $key => $tv) {
+			$tv->embed = $tv->embedcode(500);
+			$videos[] = $tv;
+		}
+	} else {
+		$videos = $related['tv'];
+	}
 	$AJAX_DATA = array( 'success' => true,	
 						'id' => $_POST['innslag'],
-						'related' => $related['tv']
+						'related' => $videos,
 					  );
 }
