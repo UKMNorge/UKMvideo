@@ -40,11 +40,11 @@
 							var hbt_video_liste = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
-						} else
+						} else {
 							alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
 							details_hide( jQuery('#innslag_' + response.id) );
 						}
-					);
+					});
 	}
 	function details_hide( innslag ) {
 		innslag.find('.details_hide').hide();
