@@ -43,4 +43,5 @@ function details_hide( innslag ) {
 
 	innslag.find('.details').slideUp();
 	innslag.find('.loader').slideUp();
+	innslag.find('.loaded').html('');
 }
