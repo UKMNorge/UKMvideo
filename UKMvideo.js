@@ -77,11 +77,14 @@ var timers = new Array();
 						},
 						function(response){
 							console.group('CHECK LENGTH OF ' + response.id);
+							console.log(response.check);
+							console.log(response.num_working);
+
 							if(check.length != response.count_working) {
-								console.log('CHECK: ');
-								console.log(response.check);
-								console.log(response.num_working);
+								console.log('Something different!');
 								//details_show( innslag );
+							} else {
+								console.log('Same same');
 							}
 							console.groupEnd();
 						});
