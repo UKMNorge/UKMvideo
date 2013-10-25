@@ -7,7 +7,7 @@ if( !isset( $_POST['innslag'] ) ) {
 					  );
 } else {
 	$innslag = new innslag( $_POST['innslag'] );
-	$related = $innslag->related();
+	$related = $innslag->related_items();
 	
 	$AJAX_DATA = array( 'success' => true,	
 						'id' => $_POST['innslag'],
