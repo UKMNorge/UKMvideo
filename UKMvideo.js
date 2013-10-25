@@ -108,13 +108,13 @@
 	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
 		    if (jQuery.support.cors) {
 		        jQuery.ajax({
-		            url: 'http://videoconverter.ukm.no/jQupload_cors.php',
+		            url: 'http://videoconvertertest.ukm.no/jQupload_cors.php',
 		            type: 'HEAD'
 		        }).fail(function () {
 		        	var result = {'success': false,
 			        			  'message': 'Beklager, videoserveren er ikke tilgjengelig akkurat nå'};
 		            fileUploadError( result );
-		        }).success(function(){console.warn('WTF');});
+		        });
 		    }
 		}
 	});
