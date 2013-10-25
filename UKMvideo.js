@@ -45,3 +45,29 @@ function details_hide( innslag ) {
 	innslag.find('.loader').slideUp();
 	innslag.find('.loaded').html('');
 }
+
+
+
+
+////////////////////////
+// VIDEOER I INNSLAG
+
+jQuery(document).on('click','.videoaction.embed', function(){
+var video = jQuery(this).parents('li.video');
+	video.find('.embedhowto').slideToggle();
+	video.find('.embedcode').slideToggle();
+});
+
+jQuery(document).on('click','.videoaction.delete', function(){
+	var video = jQuery(this).parents('li.video');
+	alert('Kommer snart!');
+});
+
+jQuery(document).on('click','.videoaction.edit', function(){
+	var video = jQuery(this).parents('li.video');
+	var filter = jQuery.urlParam('filter');
+	var innslag = video.parents('li').attr('data-innslag');
+	var id = video.attr('data-video');
+	window.location.href = '?page=UKMvideo&action=innslag&filter='+filter+'&innslag='+innslag+'&id='+id;
+	window.location.reload();
+});

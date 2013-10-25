@@ -13,7 +13,7 @@ if( !isset( $_POST['innslag'] ) ) {
 	if(is_array($related['tv'])) {
 		$videos = array();
 		foreach($related['tv'] as $key => $tv) {
-			$tv->embed = $tv->embedcode(500);
+			$tv->embed = $tv->embedcode(600);
 			$videos[] = $tv;
 		}
 	} else {
