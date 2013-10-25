@@ -9,6 +9,10 @@ if( !isset( $_POST['innslag'] ) ) {
 	$innslag = new innslag( $_POST['innslag'] );
 	$related = $innslag->related_items();
 	
+	foreach($related['tv'] as $key => $tv) {
+		$tv->embed = $tv->embedcode(500);
+	}
+	
 	$AJAX_DATA = array( 'success' => true,	
 						'id' => $_POST['innslag'],
 						'related' => $related['tv']

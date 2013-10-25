@@ -24,8 +24,14 @@ function details_show( innslag ) {
 					if(!response.success) {
 						alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
 						details_hide( jQuery('#innslag_' + response.id) );
+					} else if(response.related.length == 0) {
+						var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-ingen').html() );
+						jQuery('#innslag_'+response.id).find('.loader').slideUp();
+						jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_ingen( response.related ) );
 					} else {
-						
+						var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
+						jQuery('#innslag_'+response.id).find('.loader').slideUp();
+						jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_ingen( response.related ) );						
 					}
 				});
 }
