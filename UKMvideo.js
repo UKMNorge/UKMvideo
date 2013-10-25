@@ -42,7 +42,7 @@ var timers = new Array();
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
 							if(response.autoreload) {
-								timers[response.id] = setTimeout(function(){details_show(jQuery('#innslag_'+response.id))},5000);
+								timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
 							} else {
 								clearTimeout(timers[response.id]);
 							}
@@ -60,6 +60,27 @@ var timers = new Array();
 		innslag.find('.loader').slideUp();
 		innslag.find('.loaded').html('');
 		clearTimeout(timers[innslag.attr('data-innslag')]);
+	}
+
+	function videos_check( innslag ) {
+		var check = new Array();
+		innslag.find('.video-working').each(function(){
+			check.push(jQuery(this).attr('data-video'));
+		});
+		
+		if(check.length > 0) {
+			jQuery.post(ajaxurl,
+						{'action': 'UKMvideo_load',
+						 'load': 'video_status',
+						 'innslag': innslag.attr('data-innslag')
+						},
+						function(response){
+							if(check.length != response.count_working)
+								details_show( innslag );
+						});
+		} else {
+			clearTimeout(timers[innslag.attr('data-innslag')]);
+		}
 	}
 
 ////////////////////////////////////////////////////////////////////////////////////////
