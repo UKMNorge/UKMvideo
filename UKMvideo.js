@@ -72,14 +72,15 @@ var timers = new Array();
 			jQuery.post(ajaxurl,
 						{'action': 'UKMvideo_load',
 						 'load': 'video_status',
-						 'innslag': innslag.attr('data-innslag')
+						 'innslag': innslag.attr('data-innslag'),
+						 'check': check
 						},
 						function(response){
 							console.group('CHECK LENGTH OF ' + response.id);
 							if(check.length != response.count_working) {
 								console.log('CHECK: ');
-								console.log(check);
-								console.log(response.count_working);
+								console.log(response.check);
+								console.log(response.num_working);
 								//details_show( innslag );
 							}
 							console.groupEnd();
