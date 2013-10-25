@@ -85,8 +85,9 @@ var timers = new Array();
 
 							if(check.length != response.num_working) {
 								console.log('Something different!');
-								//details_show( innslag );
+								details_show( innslag );
 							} else {
+								timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
 								console.log('Same same');
 							}
 							console.groupEnd();
