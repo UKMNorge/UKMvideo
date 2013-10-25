@@ -8,6 +8,13 @@ jQuery(document).on('click', '.details_hide', function(e){
 	details_hide( jQuery(this).parents('li') );
 });
 
+jQuery(document).on('click','.upload', function(){
+	var innslag = jQuery(this).parents('li').attr('data-innslag');
+	var filter = jQuery.urlParam('filter');
+	window.location.href = window.location.href.split('?')[0] +
+						   '?page=UKMvideo&action=innslag&filter='+filter+'&innslag='+innslag+'&id=new';
+});
+
 
 function details_show( innslag ) {
 	innslag.find('.details_hide').show();
