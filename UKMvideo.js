@@ -124,9 +124,11 @@
 // FILEUPLOAD: HJELPERE
 ////////////////////////////////////////////////////////////////////////////////////////
 	function fileUploadError(result) {
+		var hbt_lastopp_error = Handlebars.compile( jQuery('handlebars-lastopp-error').html() );
+		
 		jQuery('#fileupload_container').slideUp();
 		
-		jQuery('#fileupload_message').html('<h3>En feil oppsto!</h3>' + result.message).addClass('alert-error').slideDown();
+		jQuery('#fileupload_message').html( hbt_lastopp_error( result.message )).slideDown();
 		
 	}
 	
