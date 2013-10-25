@@ -68,8 +68,6 @@ jQuery(document).on('click','.videoaction.edit', function(){
 	var filter = jQuery.urlParam('filter');
 	var innslag = video.parents('li').attr('data-innslag');
 	var id = video.attr('data-video');
-	querystring = '?page=UKMvideo&action=innslag&filter='+filter+'&innslag='+innslag+'&id='+id;
-	console.log('path: ' + querystring);
-	window.location.href = querystring;
-	window.location.reload();
+	window.location.href = window.location.href.split('?')[0] +
+						   '?page=UKMvideo&action=innslag&filter='+filter+'&innslag='+innslag+'&id='+id;
 });
