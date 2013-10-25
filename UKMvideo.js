@@ -33,7 +33,7 @@ function details_show( innslag ) {
 						console.log('Innslag '+ response.id +': Lag liste video');
 						var hbt_video_liste = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
 						jQuery('#innslag_'+response.id).find('.loader').slideUp();
-						jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response.related ) );
+						jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
 					}
 				});
 }
