@@ -76,7 +76,10 @@ var timers = new Array();
 						},
 						function(response){
 							if(check.length != response.count_working) {
-								details_show( innslag );
+								console.log('CHECK: ');
+								console.log(check);
+								console.log(response.count_working);
+								//details_show( innslag );
 							}
 						});
 		} else {
