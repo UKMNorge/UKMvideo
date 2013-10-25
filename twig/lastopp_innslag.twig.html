@@ -1,0 +1,43 @@
+{% extends "layout.twig.html" %}
+
+{% block content %}
+<h2>Last opp ny film av {{innslag.navn}}</h2>
+<input type="text" name="converter_season" name="converter_season" value="{{monstring.season}}" />
+<input type="text" name="converter_pl_id" name="converter_pl_id" value="{{monstring.pl_id}}" />
+<input type="text" name="converter_type" name="converter_type" value="innslag" />
+<input type="text" name="converter_b_id" name="converter_b_id" value="{{innslag.b_id}}" />
+<div class="videoopplaster">
+	<form action="?page=UKMvideo&list={{liste}}&filter={{filter}}#innslag_{{innslag.b_id}}" method="post">
+		<div class="group" id="filechooser">
+			<label>Velg fil</label>
+			<input id="fileupload_band" type="file" name="files[]">
+		</div>
+		<div class="group" id="uploading">
+			<label>Laster opp fil</label>
+			<progress value="0" max="100" id="uploadprogress"></progress>
+		</div>
+		<div class="group" id="uploaded">
+			<h2>Filen er lastet opp!</h2>
+			<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
+		</div>	
+		<div class="group">
+			<label>Navn på innslag</label>
+			{{innslag.navn}}
+		</div>
+
+		<div class="group">
+			<label>Album</label>
+			{{monstring.navn}} {{monstring.season}}
+		</div>
+		<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
+		<input type="hidden" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
+		<div class="group">
+			<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
+		</div>
+	</form>
+</div>
+<div class="dropzone">
+	<img src="http://ico.ukm.no/grafikk/dropzone.png" />
+</div>
+<div class="clearfix"></div>
+{% endblock %}
