@@ -75,7 +75,7 @@ var timers = new Array();
 						 'innslag': innslag.attr('data-innslag')
 						},
 						function(response){
-							console.group('CHECK LENGTH OF '. response.id);
+							console.group('CHECK LENGTH OF ' + response.id);
 							if(check.length != response.count_working) {
 								console.log('CHECK: ');
 								console.log(check);
