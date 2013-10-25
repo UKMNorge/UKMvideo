@@ -10,6 +10,7 @@ if( !isset( $_POST['innslag'] ) ) {
 	$related = $innslag->related();
 	
 	$AJAX_DATA = array( 'success' => true,	
+						'id' => $_POST['innslag'],
 						'related' => $related['tv']
 					  );
 }
