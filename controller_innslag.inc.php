@@ -28,13 +28,18 @@ if( isset( $INFOS['program'] ) ) {
 						array('bid' => $innslag['b_id']));
 		$conv = $conv->run();
 		while( $r = mysql_fetch_assoc( $conv ) ) {
-			$converting[] = $r;
+			if(!empty($r['file'])) {
+				$moving[] = $r;
+			} else {
+				$converting[] = $r;
+			}
 		}
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
 						 'num_videos' => sizeof($related['tv']) + sizeof($converting),
 						 'converting' => $converting,
+						 'moving' => $moving,
 						);
 		$alle_innslag[] = $innslagdata;
 	}

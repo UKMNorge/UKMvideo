@@ -1,5 +1,33 @@
 <div class="clearfix"></div>
 <ol class="unstyled">
+ {{#each converting}}
+ 	<li class="video" id="video_cron_{{id}}" data-video="false" data-cron="{{cron_id}}">
+ 		<h4>Konverterer film...</h4>
+ 		<div class="alert alert-info">
+ 			Filen har fått konverterings-ID {{cron_id}} og står nå i kø for konvertering
+ 		</div>
+ 		<div class="clearfix"></div>
+ 		<div class="embedcode">
+	 		<img src="//ico.ukm.no/loading/converting.gif" height="200" />
+ 		</div>
+
+ 	</li>
+ {{/each}}
+ {{#each moving}}
+ 	<li class="video" id="video_cron_{{id}}" data-video="false" data-cron="{{cron_id}}">
+ 		<h4>Flytter film...</h4>
+ 		<div class="alert alert-info">
+ 			Filmen med konverterings-ID {{cron_id}} flyttes nå over til lagringsserver, og registreres i UKM-TV.<br />
+ 			Kort tid gjenstår før filmen er tilgjengelig i <a href="//tv.ukm.no/">UKM-TV</a>.
+ 		</div>
+ 		<div class="clearfix"></div>
+ 		<div class="embedcode">
+	 		<img src="//ico.ukm.no/loading/moving.gif" height="200" />
+ 		</div>
+
+ 	</li>
+ {{/each}}
+
  {{#each related}}
  	<li class="video" id="video_{{id}}" data-video="{{id}}">
  		<div class="pull-right videoactions">
