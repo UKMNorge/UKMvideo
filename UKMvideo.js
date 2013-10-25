@@ -10,7 +10,7 @@ jQuery(document).on('click', '.details_hide', function(e){
 
 jQuery(document).on('click','.upload', function(){
 	var innslag = jQuery(this).parents('li').attr('data-innslag');
-	var filter = jQuery.urlParam('filter');
+	var filter = jQuery.getUrlVar('filter');
 	window.location.href = window.location.href.split('?')[0] +
 						   '?page=UKMvideo&action=innslag&filter='+filter+'&innslag='+innslag+'&id=new';
 });
