@@ -24,6 +24,8 @@ function details_show( innslag ) {
 					if(!response.success) {
 						alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
 						details_hide( jQuery('#innslag_' + response.id) );
+					} else {
+						
 					}
 				});
 }
