@@ -92,7 +92,7 @@
 		    },
 	    }).bind('fileuploaddone', function(e, data){
 			    if(!data.result.success) {
-				    alertError(data.result.message);
+				    fileUploadError( data.result );
 			    } else {
 				   	jQuery('#uploading').slideUp();
 				   	jQuery('#uploaded').slideDown();
