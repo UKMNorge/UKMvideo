@@ -18,7 +18,7 @@ function details_show( innslag ) {
 	
 	jQuery.post(ajaxurl,
 				{'action':	'UKMvideo_load',
-				 'load':	'load_innslag_detaljer',
+				 'load':	'innslag_detaljer',
 				 'innslag':	innslag.attr('data-innslag')
 				}, function(response) {
 					if(!response.success) {
