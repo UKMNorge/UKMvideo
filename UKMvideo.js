@@ -129,7 +129,7 @@
 		
 		jQuery('#fileupload_container').slideUp();
 		
-		jQuery('#fileupload_message').html( hbt_lastopp_error( result.message )).slideDown();
+		jQuery('#fileupload_message').html( hbt_lastopp_error( result )).slideDown();
 		
 	}
 	
