@@ -7,6 +7,7 @@ $pl = new monstring( get_option('pl_id') );
 $monstring = new StdClass;
 $monstring->navn = $pl->g('pl_name');
 $monstring->season = $pl->g('season');
+$monstring->pl_id = $pl->g('pl_id');
 $INFOS['monstring'] = $monstring; 
 
 $inn = new innslag( $_GET['innslag'] );
