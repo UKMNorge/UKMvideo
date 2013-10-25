@@ -72,7 +72,7 @@ jQuery(document).on('click','.videoaction.delete', function(){
 
 jQuery(document).on('click','.videoaction.edit', function(){
 	var video = jQuery(this).parents('li.video');
-	var filter = jQuery.urlParam('filter');
+	var filter = jQuery.getUrlVar('filter');
 	var innslag = video.parents('li').attr('data-innslag');
 	var id = video.attr('data-video');
 	window.location.href = window.location.href.split('?')[0] +
