@@ -75,12 +75,14 @@ var timers = new Array();
 						 'innslag': innslag.attr('data-innslag')
 						},
 						function(response){
+							console.group('CHECK LENGTH OF '. response.id);
 							if(check.length != response.count_working) {
 								console.log('CHECK: ');
 								console.log(check);
 								console.log(response.count_working);
 								//details_show( innslag );
 							}
+							console.groupEnd();
 						});
 		} else {
 			clearTimeout(timers[innslag.attr('data-innslag')]);
