@@ -9,6 +9,7 @@ if( !isset( $_POST['innslag'] ) ) {
 	$innslag = new innslag( $_POST['innslag'] );
 	$related = $innslag->related_items();
 	
+	if(is_array($related['tv']))
 	foreach($related['tv'] as $key => $tv) {
 		$tv->embed = $tv->embedcode(500);
 	}
