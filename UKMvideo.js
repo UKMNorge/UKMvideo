@@ -103,6 +103,8 @@
 		}).bind('fileuploadstart', function(){
 			jQuery('#filechooser').slideUp();
 			jQuery('#uploading').slideDown();
+		}).bind('fileuploaderror', function(){
+			console.error('OH, SOME ERROR!');
 		});
 		
 	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
