@@ -114,7 +114,7 @@
 		        	var result = {'success': false,
 			        			  'message': 'Beklager, videoserveren er ikke tilgjengelig akkurat nå'};
 		            fileUploadError( result );
-		        });
+		        }).success(function(){console.warn('WTF');});
 		    }
 		}
 	});
