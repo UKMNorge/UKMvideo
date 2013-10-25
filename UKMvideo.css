@@ -39,6 +39,19 @@
 
 
 
+.video .videoaction {
+	float: left;
+	padding: 10px;
+	text-align: center;
+}
+.video .videoactions img {
+	width:20px;
+	margin:0 0 -8px;
+	padding:0;
+}
+
+
+
 .overunder {
 	text-align:center;
 	font-weight:700;
