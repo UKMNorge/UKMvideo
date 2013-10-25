@@ -30,21 +30,21 @@
 					 'load':	'innslag_detaljer',
 					 'innslag':	innslag.attr('data-innslag')
 					}, function(response) {
-						if(!response.success) {
-							alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
-							details_hide( jQuery('#innslag_' + response.id) );
-						} else if(response.related == undefined || response.related == null || response.related.length == 0) {
+						if(response.related == undefined || response.related == null || response.related.length == 0) {
 							console.log('Innslag '+ response.id +': Ingen video');
 							var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-ingen').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_ingen( response.related ) );
-						} else {
+						} else if (response.success) {
 							console.log('Innslag '+ response.id +': Lag liste video');
 							var hbt_video_liste = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
+						} else
+							alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
+							details_hide( jQuery('#innslag_' + response.id) );
 						}
-					});
+					);
 	}
 	function details_hide( innslag ) {
 		innslag.find('.details_hide').hide();
