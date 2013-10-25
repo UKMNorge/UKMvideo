@@ -75,8 +75,9 @@ var timers = new Array();
 						 'innslag': innslag.attr('data-innslag')
 						},
 						function(response){
-							if(check.length != response.count_working)
+							if(check.length != response.count_working) {
 								details_show( innslag );
+							}
 						});
 		} else {
 			clearTimeout(timers[innslag.attr('data-innslag')]);
