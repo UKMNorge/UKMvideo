@@ -42,5 +42,6 @@ if( !isset( $_POST['innslag'] ) ) {
 						'related' => $videos,
 						'converting' => $converting,
 						'moving' => $moving,
+						'autoreload' => mysql_num_rows( $conv ) > 0,
 					  );
 }

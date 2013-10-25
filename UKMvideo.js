@@ -1,3 +1,4 @@
+var timers = new Array();
 ////////////////////////////////////////////////////////////////////////////////////////
 // LISTE OVER INNSLAG
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -40,6 +41,15 @@
 							var hbt_video_liste = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
+							if(response.autoreload) {
+								var timers[response.id] = setTimeout( 
+															function( response ){
+																details_show( jQuery('#innslag_' + response.id) )
+															},
+															2000);
+							} else {
+								clearTimeout(timers[response.id]);
+							}
 						} else {
 							alert('Beklager, en feil oppsto ved henting av informasjon fra serveren. Vennligst prøv igjen');
 							details_hide( jQuery('#innslag_' + response.id) );
