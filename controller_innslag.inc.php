@@ -22,6 +22,7 @@ if( isset( $INFOS['program'] ) ) {
 		$related = $inn->related_items();
 		
 		$converting = array();
+		$moving = array();
 		$conv = new SQL("SELECT *
 						 FROM `ukm_related_video`
 						 WHERE `b_id` = '#bid'",
@@ -37,7 +38,7 @@ if( isset( $INFOS['program'] ) ) {
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_videos' => sizeof($related['tv']) + sizeof($converting),
+						 'num_videos' => sizeof($related['tv']) + sizeof($converting) + sizeof($moving),
 						 'converting' => $converting,
 						 'moving' => $moving,
 						);
