@@ -42,7 +42,7 @@ var timers = new Array();
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
 							if(response.autoreload) {
-								timers[response.id] = setTimeout(function(){details_show(jQuery('#innslag_'+response.id))},2000);
+								timers[response.id] = setTimeout(function(){details_show(jQuery('#innslag_'+response.id))},5000);
 							} else {
 								clearTimeout(timers[response.id]);
 							}
