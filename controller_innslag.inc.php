@@ -21,9 +21,20 @@ if( isset( $INFOS['program'] ) ) {
 		$inn = new innslag($innslag['b_id']);
 		$related = $inn->related_items();
 		
+		$converting = array();
+		$conv = new SQL("SELECT *
+						 FROM `ukm_related_video`
+						 WHERE `b_id` = '#bid'",
+						array('bid' => $innslag['b_id']));
+		$conv = $conv->run();
+		while( $r = mysql_fetch_assoc( $conv ) ) {
+			$converting[] = $r;
+		}
+		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_videos' => sizeof($related['tv']),
+						 'num_videos' => sizeof($related['tv']) + sizeof($converting),
+						 'converting' => $converting,
 						);
 		$alle_innslag[] = $innslagdata;
 	}
