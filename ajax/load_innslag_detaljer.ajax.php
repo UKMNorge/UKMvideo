@@ -19,8 +19,28 @@ if( !isset( $_POST['innslag'] ) ) {
 	} else {
 		$videos = $related['tv'];
 	}
+	
+	
+	$converting = array();
+	$moving = array();
+	$conv = new SQL("SELECT *
+					 FROM `ukm_related_video`
+					 WHERE `b_id` = '#bid'",
+					array('bid' => $innslag['b_id']));
+	$conv = $conv->run();
+	while( $r = mysql_fetch_assoc( $conv ) ) {
+		if(!empty($r['file'])) {
+			$moving[] = $r;
+		} else {
+			$converting[] = $r;
+		}
+	}
+
+	
 	$AJAX_DATA = array( 'success' => true,	
 						'id' => $_POST['innslag'],
 						'related' => $videos,
+						'converting' => $converting,
+						'moving' => $moving,
 					  );
 }

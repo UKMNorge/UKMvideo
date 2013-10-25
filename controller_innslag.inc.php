@@ -21,24 +21,18 @@ if( isset( $INFOS['program'] ) ) {
 		$inn = new innslag($innslag['b_id']);
 		$related = $inn->related_items();
 		
-		$converting = array();
-		$moving = array();
 		$conv = new SQL("SELECT *
 						 FROM `ukm_related_video`
 						 WHERE `b_id` = '#bid'",
 						array('bid' => $innslag['b_id']));
 		$conv = $conv->run();
 		while( $r = mysql_fetch_assoc( $conv ) ) {
-			if(!empty($r['file'])) {
-				$moving[] = $r;
-			} else {
-				$converting[] = $r;
-			}
+			$coming[] = $r;
 		}
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_videos' => sizeof($related['tv']) + sizeof($converting) + sizeof($moving),
+						 'num_videos' => sizeof($related['tv']) + sizeof($converting) + sizeof($coming),
 						 'converting' => $converting,
 						 'moving' => $moving,
 						);
