@@ -42,8 +42,10 @@ var timers = new Array();
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
 							if(response.autoreload) {
+								console.log('Set timer ' + response.id);
 								timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
 							} else {
+								console.log('Clear timer ' + response.id);
 								clearTimeout(timers[response.id]);
 							}
 						} else {
@@ -59,6 +61,7 @@ var timers = new Array();
 		innslag.find('.details').slideUp();
 		innslag.find('.loader').slideUp();
 		innslag.find('.loaded').html('');
+		console.log('Clear timer ' + innslag.attr('data-innslag'));
 		clearTimeout(timers[innslag.attr('data-innslag')]);
 	}
 
@@ -80,7 +83,7 @@ var timers = new Array();
 							console.log(response.check);
 							console.log(response.num_working);
 
-							if(check.length != response.count_working) {
+							if(check.length != response.num_working) {
 								console.log('Something different!');
 								//details_show( innslag );
 							} else {
@@ -89,6 +92,7 @@ var timers = new Array();
 							console.groupEnd();
 						});
 		} else {
+			console.log('Clear timer ' + innslag.attr('data-innslag'));
 			clearTimeout(timers[innslag.attr('data-innslag')]);
 		}
 	}
