@@ -46,7 +46,7 @@ function UKMvideo() {
 
 	switch( $_GET['action'] ) {
 		case 'lastopp_innslag':
-			require_once('controller_upload.inc.php');
+			require_once('controller_lastopp_innslag.inc.php');
 			break;
 		case 'innslag':
 			require_once('controller_innslag.inc.php');

@@ -7,7 +7,7 @@
 <input type="text" name="converter_type" name="converter_type" value="innslag" />
 <input type="text" name="converter_b_id" name="converter_b_id" value="{{innslag.b_id}}" />
 <div class="videoopplaster">
-	<form action="?page=UKMvideo&list={{liste}}&filter={{filter}}#innslag_{{innslag.b_id}}" method="post">
+	<form action="?page=UKMvideo&list=innslag&filter={{filter}}#innslag_{{innslag.b_id}}" method="post">
 		<div class="group" id="filechooser">
 			<label>Velg fil</label>
 			<input id="fileupload_band" type="file" name="files[]">
@@ -29,8 +29,8 @@
 			<label>Album</label>
 			{{monstring.navn}} {{monstring.season}}
 		</div>
-		<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
-		<input type="hidden" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
+		<input type="text" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
+		<input type="text" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
 		<div class="group">
 			<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
 		</div>
