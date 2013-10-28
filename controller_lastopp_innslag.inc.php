@@ -21,4 +21,4 @@ global $blog_id;
 $INFOS['blog_id'] = $blog_id;
 
 $INFOS['filter'] = $_GET['filter'];
-var_dump($INFOS);
+var_dump($_GET);
