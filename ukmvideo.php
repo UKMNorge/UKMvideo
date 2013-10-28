@@ -59,6 +59,7 @@ function UKMvideo() {
 			break;
 	}
 	$INFOS['active'] = $_GET['action'];
+	$INFOS['STATUS'] = $STATUS;
 	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));
 	
 	echo HANDLEBARS( dirname(__FILE__) );
