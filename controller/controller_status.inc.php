@@ -24,7 +24,9 @@ require_once('UKM/curl.class.php');
 	
 	if(!$status_videoconverter) {
 		$STATUS->critical->status = true;
-		$STATUS->critical->message = 'Videoconverteren svarer ikke, og det er derfor ikke mulig å laste opp video!';
+		$STATUS->critical->message = "Webserveren får ikke kontakt med videoconverteren. 
+									  Dette gjør at det ikke er mulig å laste opp video akkurat nå.
+									  Opplastede videoer vil heller ikke bli konvertert mens videoconverteren er nede";
 	} elseif( $status_videoconverter->diskspace < $WARN->diskspace*1024*1024) {
 		$disk_human = $status_videoconverter->diskspace / (1024 * 1024);
 		$STATUS->warning->status = true;
