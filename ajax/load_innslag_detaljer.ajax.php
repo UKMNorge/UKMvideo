@@ -8,7 +8,8 @@ if( !isset( $_POST['innslag'] ) ) {
 } else {
 	$innslag = new innslag( $_POST['innslag'] );
 	$related = $innslag->related_items();
-	
+
+	$videos = array();	
 	
 	if(is_array($related['tv'])) {
 		$videos = array();
@@ -16,10 +17,7 @@ if( !isset( $_POST['innslag'] ) ) {
 			$tv->embed = $tv->embedcode(600);
 			$videos[] = $tv;
 		}
-	} else {
-		$videos = $related['tv'];
 	}
-	
 	
 	$converting = array();
 	$moving = array();
