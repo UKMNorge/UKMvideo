@@ -6,13 +6,13 @@
 	</div>
 {% elseif STATUS.warning.status == true %}
 	<div class="alert alert-warning alert-block">
-		<h3>Vi gjør oppmerksom:</h3>
+		<h3>Vi gjør oppmerksom!</h3>
 		<p>{{STATUS.warning.message}}</p>
 		<p><a href="mailto:support@ukm.no">Kontakt UKM Norge</a></p>
 	</div>
 {% elseif STATUS.info.status == true %}
 	<div class="alert alert-info alert-block">
 		<p>{{STATUS.info.message}}</p>
-		<p><a href="mailto:support@ukm.no">Kontakt UKM Norge</a></p>
+		<p>Du trenger ikke gjøre noe med dette</p>
 	</div>
 {% endif %}
