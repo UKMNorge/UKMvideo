@@ -43,6 +43,10 @@ function UKMvideo() {
 	require_once('UKM/monstring.class.php');
 	$monstring = new monstring(get_option('pl_id'));
 
+	if($_SERVER['REQUEST_METHOD'] == 'POST') {
+		var_dump($_POST);
+	}
+
 
 	switch( $_GET['action'] ) {
 		case 'lastopp_innslag':
