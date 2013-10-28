@@ -43,7 +43,7 @@ function UKMvideo() {
 	require_once('UKM/monstring.class.php');
 	$monstring = new monstring(get_option('pl_id'));
 
-	require_once('status.inc.php');
+	require_once('controller/controller_status.inc.php');
 
 	switch( $_GET['action'] ) {
 		case 'lastopp_innslag':
