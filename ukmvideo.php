@@ -49,7 +49,7 @@ function UKMvideo() {
 			break;
 		case 'innslag':
 			if($_SERVER['REQUEST_METHOD'] == 'POST')
-				require_once('save_video_innslag_uploaded.inc.php');
+				require_once('save/save_video_innslag_uploaded.inc.php');
 			require_once('controller_innslag.inc.php');
 			break;
 		case 'reportasje':
