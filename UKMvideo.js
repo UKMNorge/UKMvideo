@@ -125,7 +125,7 @@ var timers = new Array();
 	        autoUpload: true,
 	        formData: {'season': jQuery('#converter_season').val(),
 		        	   'pl_id': jQuery('#converter_pl_id').val(), 
-		        	   'pl_type': jQuery('#converter_type').val(),
+		        	   'type': jQuery('#converter_type').val(),
 		        	   'b_id': jQuery('#converter_b_id').val(),
 		        	   'blog_id': jQuery('#converter_blog_id').val() 
 		        	   },
