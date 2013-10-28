@@ -146,6 +146,7 @@ var timers = new Array();
 		}).bind('fileuploadstart', function(){
 			jQuery('#filechooser').slideUp();
 			jQuery('#uploading').slideDown();
+			jQuery('#fileupload_dropzone').fadeOut();
 		});
 		
 	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
