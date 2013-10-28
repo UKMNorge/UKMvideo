@@ -123,11 +123,11 @@ var timers = new Array();
 	        url: 'http://videoconverter.ukm.no/jQupload_recieve.php',
 	        fileTypes: '^video\/(.)+',
 	        autoUpload: true,
-	        formData: {season: jQuery('#converter_season').val(),
-		        	   pl_id: jQuery('#converter_pl_id').val(), 
-		        	   pl_type: jQuery('#converter_type').val(),
-		        	   b_id: jQuery('#converter_b_id').val(),
-		        	   blog_id: jQuery('#converter_blog_id').val() 
+	        formData: {'season': jQuery('#converter_season').val(),
+		        	   'pl_id': jQuery('#converter_pl_id').val(), 
+		        	   'pl_type': jQuery('#converter_type').val(),
+		        	   'b_id': jQuery('#converter_b_id').val(),
+		        	   'blog_id': jQuery('#converter_blog_id').val() 
 		        	   },
 	        progressall: function (e, data) {
 		        var progress = parseInt(data.loaded / data.total * 100, 10);
