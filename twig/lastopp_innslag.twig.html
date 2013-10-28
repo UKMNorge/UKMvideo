@@ -17,13 +17,13 @@
 				<input id="fileupload_band" type="file" name="files[]">
 			</div>
 	
-			<div class="group alert alert-warning span4" id="uploading" style="display:none;">
+			<div class="group alert alert-warning span9" id="uploading" style="display:none;">
 				<label>Laster opp fil</label>
 				<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90%"></progress>
 			</div>
 			<div class="clearfix"></div>
 			
-			<div class="alert alert alert-success span4" id="uploaded" style="display:none;">
+			<div class="alert alert alert-success span9" id="uploaded" style="display:none;">
 				<h3>Filen er lastet opp!</h3>
 				<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
 			</div>	
@@ -41,8 +41,7 @@
 			</div>
 			
 			<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id" />	
-			<input type="hidden" id="ukm_band_id" value="{{innslag.b_id}}" name="ukm_band_id" />	
-			
+			<input type="hidden" id="cron_id" value="0" name="cron_id" />
 			<div class="group">
 				<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
 			</div>

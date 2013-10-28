@@ -139,8 +139,8 @@ var timers = new Array();
 			    } else {
 				   	jQuery('#uploading').slideUp();
 				   	jQuery('#uploaded').slideDown();
+				    jQuery('#cron_id').val(data.result.files[0].cron_id);
 				    jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
-				    jQuery('#ukm_band_id').val(data.result.files[0].ukm);
 				    jQuery('#submitbutton').parents('form').submit();
 				}
 		}).bind('fileuploadstart', function(){
