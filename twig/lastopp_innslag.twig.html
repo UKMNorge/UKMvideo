@@ -2,11 +2,11 @@
 
 {% block content %}
 <h2>Last opp ny film av {{innslag.navn}}</h2>
-<input type="hidden" name="converter_season" name="converter_season" value="{{monstring.season}}" />
-<input type="hidden" name="converter_pl_id" name="converter_pl_id" value="{{monstring.pl_id}}" />
-<input type="hidden" name="converter_type" name="converter_type" value="innslag" />
-<input type="hidden" name="converter_b_id" name="converter_b_id" value="{{innslag.b_id}}" />
-<input type="hidden" name="converter_blog_id" name="converter_b_id" value="{{blog_id}}" />
+<input type="hidden" name="converter_season" id="converter_season" value="{{monstring.season}}" />
+<input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{monstring.pl_id}}" />
+<input type="hidden" name="converter_type" id="converter_type" value="innslag" />
+<input type="hidden" name="converter_b_id" id="converter_b_id" value="{{innslag.b_id}}" />
+<input type="hidden" name="converter_blog_id" id="converter_b_id" value="{{blog_id}}" />
 
 <div id="fileupload_container">
 	<div class="videoopplaster pull-left span5">
