@@ -43,16 +43,13 @@ function UKMvideo() {
 	require_once('UKM/monstring.class.php');
 	$monstring = new monstring(get_option('pl_id'));
 
-	if($_SERVER['REQUEST_METHOD'] == 'POST') {
-		var_dump($_POST);
-	}
-
-
 	switch( $_GET['action'] ) {
 		case 'lastopp_innslag':
 			require_once('controller_lastopp_innslag.inc.php');
 			break;
 		case 'innslag':
+			if($_SERVER['REQUEST_METHOD'] == 'POST')
+				require_once('save_video_innslag_uploaded.inc.php');
 			require_once('controller_innslag.inc.php');
 			break;
 		case 'reportasje':
