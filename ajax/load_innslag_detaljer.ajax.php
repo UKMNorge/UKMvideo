@@ -11,6 +11,7 @@ if( !isset( $_POST['innslag'] ) ) {
 
 	$videos = array();	
 	$cron_ids = array();
+	
 	if(is_array($related['tv'])) {
 		$videos = array();
 		foreach($related['tv'] as $key => $tv) {
@@ -28,7 +29,7 @@ if( !isset( $_POST['innslag'] ) ) {
 					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
 	while( $r = mysql_fetch_assoc( $conv ) ) {
-		if( in_array( $conv['cron_id'], $cron_ids))
+		if( in_array( $r['cron_id'], $cron_ids))
 			continue;
 			
 		if(!empty($r['file'])) {
