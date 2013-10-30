@@ -29,9 +29,12 @@ if( !isset( $_POST['innslag'] ) ) {
 					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
 	while( $r = mysql_fetch_assoc( $conv ) ) {
+		if( in_array( $r['file'], $unique_id) )
+			continue;
+			
 		if(!empty($r['file'])) {
 			$moving[] = $r;
-		} elseif( !in_array( $r['file'], $unique_id) ) {
+		} else {
 			$converting[] = $r;
 		}
 	}
