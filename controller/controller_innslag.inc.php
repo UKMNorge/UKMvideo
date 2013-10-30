@@ -20,14 +20,22 @@ if( isset( $INFOS['program'] ) ) {
 	foreach($INFOS['program'] as $innslag) {
 		$inn = new innslag($innslag['b_id']);
 		$related = $inn->related_items();
-		
+
+		$unique_id = array();
+		if(is_array($related['tv'])) {
+			foreach($related['tv'] as $key => $tv) {
+				$unique_id[] = $tv->file;
+			}
+		}
+
 		$conv = new SQL("SELECT *
 						 FROM `ukm_related_video`
 						 WHERE `b_id` = '#bid'",
 						array('bid' => $innslag['b_id']));
 		$conv = $conv->run();
 		while( $r = mysql_fetch_assoc( $conv ) ) {
-			$coming[] = $r;
+			if( !in_array( $r['file'], $unique_id) )
+				$coming[] = $r;
 		}
 		
 		$innslagdata = array('name' => $inn->g('b_name'),

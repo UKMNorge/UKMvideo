@@ -10,15 +10,14 @@ if( !isset( $_POST['innslag'] ) ) {
 	$related = $innslag->related_items();
 
 	$videos = array();	
-	$cron_ids = array();
+	$unique_id = array();
 	
 	if(is_array($related['tv'])) {
 		$videos = array();
 		foreach($related['tv'] as $key => $tv) {
 			$tv->embed = $tv->embedcode(600);
 			$videos[] = $tv;
-			$cron_ids[] = $tv->cron_id;
-			var_dump($tv);
+			$unique_id[] = $tv->file;
 		}
 	}
 	
@@ -30,12 +29,9 @@ if( !isset( $_POST['innslag'] ) ) {
 					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
 	while( $r = mysql_fetch_assoc( $conv ) ) {
-		if( in_array( $r['cron_id'], $cron_ids))
-			continue;
-			
 		if(!empty($r['file'])) {
 			$moving[] = $r;
-		} else {
+		} elseif( !in_array( $r['file'], $unique_id) ) {
 			$converting[] = $r;
 		}
 	}
