@@ -18,6 +18,7 @@ if( !isset( $_POST['innslag'] ) ) {
 			$tv->embed = $tv->embedcode(600);
 			$videos[] = $tv;
 			$cron_ids[] = $tv->cron_id;
+			var_dump($tv);
 		}
 	}
 	
