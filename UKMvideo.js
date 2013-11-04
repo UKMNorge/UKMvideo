@@ -11,6 +11,9 @@ var timers = new Array();
 		e.preventDefault();
 		details_hide( jQuery(this).parents('li') );
 	});
+	jQuery(document).on('change', '#film_sort_list', function(){
+		window.location.href = '?page=UKMvideo&action=innslag&filter=' + jQuery(this).val();
+	});
 	
 	jQuery(document).on('click','.upload', function(){
 		var innslag = jQuery(this).parents('li').attr('data-innslag');
