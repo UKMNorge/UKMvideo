@@ -7,12 +7,13 @@
 		<select class="pull-right" id="film_sort_list">
 			<option value="alfa" {{ sortering=='alfa' ? 'selected="selected"' : '' }}>Alfabetisk sortert</option>
 			{% for hendelse in hendelser %}
-			<option value="{{hendelse.id}}" {{ sortering==hendelse.id ? 'selected="selected"' : '' }}>{{hendelse.name}}</option>
+			<option value="{{hendelse.c_id}}" {{ sortering==hendelse.c_id ? 'selected="selected"' : '' }}>{{hendelse.c_name}}</option>
 			{% endfor %}
 		</select>
 		<h4>Sorter listen</h4>
 		<p>Bruk denne hvis du skal laste opp film fra forestillinger</p>
 	</div>
+	<div class="clearfix"></div>
 	<ol class="unstyled UKMvideo_width">
 		{% for innslag in program %}
 		<li class="well well-mini ett_innslag" id="innslag_{{innslag.id}}" data-innslag="{{innslag.id}}">
