@@ -122,7 +122,7 @@ var timers = new Array();
 			jQuery.post(ajaxurl, 
 				{ 'action': 'UKMvideo_action',
 				  'subaction': 'delete_video',
-				  'tv_id': video.attr('data-video');
+				  'tv_id': video.attr('data-video')
 				},
 				function(response) {
 					if(response.success) {
@@ -134,7 +134,6 @@ var timers = new Array();
 						alert('Beklager, en feil oppsto ved sletting!');
 					}
 				});
-			alert('Kommer snart!');
 		}
 	});
 	
