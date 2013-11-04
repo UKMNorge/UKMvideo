@@ -5,7 +5,7 @@
  		<img src="//ico.ukm.no/loading/converting.gif" height="40" class="pull-right" />
  		<h4 class="pull-left">Konverterer film {{cron_id}}...</h4>
  		<div class="clearfix"></div>
-		Filen har fått konverterings-ID {{cron_id}} og står nå i kø for konvertering
+		Filmen har fått id {{cron_id}}, står nå i kø for konvertering, og vil om kort tid bli synlig i dette vinduet, UKM-TV og nettsiden.
  		<div class="clearfix"></div>
  	</li>
  {{/each}}
@@ -14,7 +14,7 @@
  		<img src="//ico.ukm.no/loading/moving.gif" height="40" class="pull-right" />
  		<h4 class="pull-left">Flytter film {{cron_id}}...</h4>
  		<div class="clearfix"></div>
-		Filen har fått konverterings-ID {{cron_id}} og flyttes nå over til lagringsserver, og registreres i UKM-TV.<br />
+		Filmen med id {{cron_id}} er konvertert, og flyttes nå over til lagringsserver.<br />
  			Kort tid gjenstår før filmen er tilgjengelig i <a href="//tv.ukm.no/">UKM-TV</a>.
  		<div class="clearfix"></div>
  	</li>
@@ -23,32 +23,34 @@
  {{#each related}}
  	<li class="video well well-mini" id="video_{{id}}" data-video="{{id}}">
  		<div class="pull-right videoactions">
-
-	 		<div class="videoaction embed">
-				<img src="//ico.ukm.no/embed-close-256.png" /><br />
-				<small>bygg inn</small>
+	 		<div class="videoaction facebook clickable">
+				<img src="//ico.ukm.no/face-256.png" /><br />
+				<small>del på facebook</small>
 	 		</div>
 
-	 		<div class="videoaction delete">
+
+	 		<div class="videoaction embed clickable">
+				<img src="//ico.ukm.no/embed-close-256.png" /><br />
+				<small>bruk i innlegg</small>
+	 		</div>
+
+	 		<div class="videoaction delete clickable">
 				<img src="//ico.ukm.no/trash-256.png" /><br />
-				<small>slett</small>
+				<small>slett filmen</small>
 	 		</div>
  		</div>
  		<h4>{{title}}</h4>
 
  		<div class="clearfix"></div>
  		<div class="embedhowto well well-small" style="display: none;">
-	 		<h4>Hvordan bruke denne videoen på UKM.no?</h4>
-	 		<p>Vi har gjort det enkelt å bruke (bygge inn / embedde) UKM-TV på UKM.no</p>
-	 		<p>Kopier adressen i det gule feltet nedenfor, lim det inn på ønsket sted i innlegget, og systemet ordner resten automatisk når innlegget vises</p>
-	 		<p>
-	 			<strong>Tips:</strong>
-	 			Du kan også kopiere adressen direkte fra nettleseren din, når du er inne på tv.ukm.no
-	 		</p>
+	 		<p>Hvis du vil ha med filmen i et nyhetsinnlegg, kopierer du inn adressen i den gule boksen på ønsket sted i teksten, og systemet ordner resten automatisk når innlegget vises</p>
 	 		<div class="alert">{{full_url}}</div>
  		</div>
  		<div class="clearfix"></div>
  		<div class="embedcode">{{{embed}}}</div>
+ 		<div>
+ 		Denne filmen er nå synlig i UKM-TV på følgende adresse: <a href="{{full_url}}">{{full_url}}</a>. Klikk bygg inn for mer info.
+ 		</div>
  	</li>
  {{/each}}
 </ol>
