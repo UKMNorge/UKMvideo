@@ -36,7 +36,7 @@ function UKMvideo_ajax_load() {
 
 function UKMvideo() {
 	if(!isset($_GET['action']))
-		$_GET['action'] = 'innslag';
+		$_GET['action'] = 'tips';
 		
 	require_once('UKM/related.class.php');
 	require_once('UKM/innslag.class.php');
@@ -46,6 +46,8 @@ function UKMvideo() {
 	require_once('controller/controller_status.inc.php');
 
 	switch( $_GET['action'] ) {
+		case 'tips':
+			break;
 		case 'lastopp_innslag':
 			require_once('controller/controller_lastopp_innslag.inc.php');
 			break;
@@ -58,7 +60,7 @@ function UKMvideo() {
 			require_once('controller/controller_reportasje.inc.php');
 			break;
 	}
-	$INFOS['active'] = $_GET['action'];
+	$INFOS['tab_active'] = $_GET['action'];
 	$INFOS['STATUS'] = $STATUS;
 	
 	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));

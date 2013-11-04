@@ -1,33 +1,23 @@
 <div class="wrap" id="tvadmin_wrap">
-
 	{% embed "status.twig.html" %}{% endembed %}
-
-	<div class="span5 pull-right alert alert-warning">
-		<p>
-			<strong>OBS:</strong>
-			Videoopplasteren kan kreve en relativt ny nettleser.
-			<br />
-			Vi anbefaler
-			<a href="https://www.google.com/intl/no/chrome/browser/">Google Chrome</a>, 
-			<a href="http://www.mozilla.org/nb-NO/firefox/new/">Mozilla Firefox</a> eller 
-			<a href="http://windows.microsoft.com/en-US/internet-explorer/downloads/ie-9/worldwide-languages">Internet Explorer 9</a>.	
-		</p>
-		<p>Problemer med opplasting? <a href="mailto:support@ukm.no">Ta kontakt med support!</a></p>
-	</div>	
-
-
-	<img src="http://tv.ukm.no/img/ukmtv_logo.png" id="tvadmin_logo" class="pull-left" />
-	<h2>Administrer innhold</h2>
 	<div class="clearfix"></div>
 </div>
 
 
 <div class="UKM_tabs">
+	<a href="?page=UKMvideo&action=tips" {{ active_tab == 'tips' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Tips</span>
+			<img src="http://ico.ukm.no/people-256.png" width="25"  border="0" /><br />
+			<span class="tab_description">Viktige ting å tenke på før du begynner</span>
+		</div>
+	</a>
+
 	<a href="?page=UKMvideo&action=innslag" {{ active_tab == 'innslag' ? 'class="active"' : ''}}>
 		<div>
-			<span class="tab_header">Film av innslag</span>
+			<span class="tab_header">Mine innslag</span>
 			<img src="http://ico.ukm.no/people-256.png" width="25"  border="0" /><br />
-			<span class="tab_description"></span>
+			<span class="tab_description">Jobb med film av mine innslag</span>
 		</div>
 	</a>
 
@@ -35,14 +25,13 @@
 		<div>
 			<span class="tab_header">Videoreportasjer</span>
 			<img src="http://ico.ukm.no/video-256.png" width="25" border="0" /><br />
-			<span class="tab_description"></span>
+			<span class="tab_description">Jobb med videoreportasjer</span>
 		</div>
 	</a>
 </div>
 
-<div class="video_tabs_desc">
-	<span>
-	</span>
+<div class="UKM_tabs_desc">
+	<span> &nbsp; </span>
 </div>
 <div class="UKM_content_wrapper">
 	{% block content %}
