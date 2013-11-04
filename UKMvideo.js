@@ -36,7 +36,7 @@ var timers = new Array();
 					 'load':	'innslag_detaljer',
 					 'innslag':	innslag.attr('data-innslag')
 					}, function(response) {
-						if(response.related.length == 0 && response.working.length == 0 && response.converting.length == 0) {
+						if(response.related.length == 0 && response.moving.length == 0 && response.converting.length == 0) {
 							console.log('Innslag '+ response.id +': Ingen video');
 							var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-ingen').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
