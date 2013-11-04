@@ -1,3 +1,5 @@
+<h2>UKM-TV</h2>
+
 <div class="wrap" id="tvadmin_wrap">
 	{% embed "status.twig.html" %}{% endembed %}
 	<div class="clearfix"></div>
@@ -5,7 +7,7 @@
 
 
 <div class="UKM_tabs">
-	<a href="?page=UKMvideo&action=tips" {{ active_tab == 'tips' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo&action=tips" {{ tab_active == 'tips' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Tips</span>
 			<img src="http://ico.ukm.no/people-256.png" width="25"  border="0" /><br />
@@ -13,15 +15,15 @@
 		</div>
 	</a>
 
-	<a href="?page=UKMvideo&action=innslag" {{ active_tab == 'innslag' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo&action=innslag" {{ tab_active == 'innslag' ? 'class="active"' : ''}}>
 		<div>
-			<span class="tab_header">Mine innslag</span>
+			<span class="tab_header">Innslag</span>
 			<img src="http://ico.ukm.no/people-256.png" width="25"  border="0" /><br />
-			<span class="tab_description">Jobb med film av mine innslag</span>
+			<span class="tab_description">Jobb med film av innslag</span>
 		</div>
 	</a>
 
-	<a href="?page=UKMvideo&action=reportasje" {{ active_tab == 'reportasje' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo&action=reportasje" {{ tab_active == 'reportasje' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Videoreportasjer</span>
 			<img src="http://ico.ukm.no/video-256.png" width="25" border="0" /><br />
@@ -31,7 +33,7 @@
 </div>
 
 <div class="UKM_tabs_desc">
-	<span> &nbsp; </span>
+	<span></span>
 </div>
 <div class="UKM_content_wrapper">
 	{% block content %}
