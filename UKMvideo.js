@@ -14,6 +14,9 @@ var timers = new Array();
 	jQuery(document).on('change', '#film_sort_list', function(){
 		window.location.href = '?page=UKMvideo&action=innslag&filter=' + jQuery(this).val();
 	});
+	jQuery(document).on('click', '.facebook', function(){
+			window.open('//facebook.com/sharer.php?u='+jQuery(this).attr('data-url'), 'FBSHARE', 'width=500,height=300');
+	});
 	
 	jQuery(document).on('click','.upload', function(){
 		var innslag = jQuery(this).parents('li').attr('data-innslag');
@@ -114,7 +117,10 @@ var timers = new Array();
 	
 	jQuery(document).on('click','.videoaction.delete', function(){
 		var video = jQuery(this).parents('li.video');
-		alert('Kommer snart!');
+		confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
+		if(confirmed) {
+			alert('Kommer snart!');
+		}
 	});
 	
 
