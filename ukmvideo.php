@@ -13,12 +13,26 @@ if(is_admin()) {
 	add_action('admin_menu', 'UKMvideo_menu');
 	
 	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
+	add_action('wp_ajax_UKMvideo_action', 'UKMvideo_ajax_action');
 
 }
 
 function UKMvideo_menu() {
 	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 12);
 	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
+}
+
+function UKMvideo_action() {
+	header('Cache-Control: no-cache, must-revalidate');
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+	header('Content-type: application/json');
+	if(!isset( $_POST['subaction'] ) ) 
+		die(0);
+	
+	require_once('ajax/action_'. $_POST['subaction'] .'.ajax.php');
+	
+	die( json_encode( $AJAX_DATA ) );
+	
 }
 
 function UKMvideo_ajax_load() {

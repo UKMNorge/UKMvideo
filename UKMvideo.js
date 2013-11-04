@@ -119,6 +119,21 @@ var timers = new Array();
 		var video = jQuery(this).parents('li.video');
 		confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
 		if(confirmed) {
+			jQuery.post(ajaxurl, 
+				{ 'action': 'UKMvideo_action',
+				  'subaction': 'delete_video',
+				  'tv_id': video.attr('data-video');
+				},
+				function(response) {
+					if(response.success) {
+						jQuery('#video_' + response.id).slideUp(
+															function(){
+																jQuery(this).destroy();
+															});
+					} else {
+						alert('Beklager, en feil oppsto ved sletting!');
+					}
+				});
 			alert('Kommer snart!');
 		}
 	});
