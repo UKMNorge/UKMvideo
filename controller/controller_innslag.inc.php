@@ -7,14 +7,17 @@ require_once('UKM/forestilling.class.php');
 $monstring = new monstring( get_option('pl_id') );
 
 if( isset( $_GET['filter'] ) && is_numeric( $_GET['filter'] ) ) {
-	$hendelser = new forestilling( $_GET['filter'] );
-	$INFOS['program'] = $hendelser->innslag();
-} elseif( isset( $_GET['filter'] ) ) {
-	$INFOS['program'] = $monstring->innslag();
+	$hendelse = new forestilling( $_GET['filter'] );
+	$INFOS['program'] = $hendelse->innslag();
+	$INFOS['sortering'] = $_GET['filter'];
 } else {
-	$hendelser = $monstring->forestillinger();
-	$INFOS['hendelser'] = $hendelser;
+	$INFOS['program'] = $monstring->innslag();
+	$INFOS['sortering'] = 'alfa';
 }
+
+$hendelser = $monstring->forestillinger();
+$INFOS['hendelser'] = $hendelser;
+
 
 if( isset( $INFOS['program'] ) ) {
 	foreach($INFOS['program'] as $innslag) {
