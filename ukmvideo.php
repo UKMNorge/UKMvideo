@@ -22,7 +22,7 @@ function UKMvideo_menu() {
 	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
 }
 
-function UKMvideo_action() {
+function UKMvideo_ajax_action() {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 	header('Content-type: application/json');
