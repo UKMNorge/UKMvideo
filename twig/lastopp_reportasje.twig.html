@@ -46,6 +46,7 @@
 					{% for id,name in sets %}
 					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
 					{% endfor %}
+					<option value="new">Opprett nytt album</option>
 				</select>		
 
 				<div class="input-prepend" id="new_album" style="display:none;">
