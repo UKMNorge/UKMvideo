@@ -9,6 +9,7 @@
 	<ol class="unstyled UKMvideo_width">
 	{% for reportasje in reportasjer %}
 	<li class="well well-mini videoreportasje" id="videoreportasje_{{reportasje.v_id}}" data-videoreportasje="{{reportasje.v_id}}">
+		
 		<div class="header">
 			<div class="actions">
 
@@ -38,18 +39,20 @@
 			</div>
 			<div class="clearfix"></div>
 
-	 		<div class="embedhowto well well-small" style="display: none;">
-		 		<p>Hvis du vil ha med filmen i et nyhetsinnlegg, kopierer du inn adressen i den gule boksen på ønsket sted i teksten, og systemet ordner resten automatisk når innlegget vises</p>
-		 		<div class="alert">{{reportasje.full_url}}</div>
-	 		</div>
-	 		<div class="clearfix"></div>
-
-	 		<div class="embedcode">{{reportasje.embedcode|raw}}</div>
-
-	 		<div>
-	 			Denne filmen er nå synlig i UKM-TV på følgende adresse: <a href="{{reportasje.full_url}}" target="_blank">{{reportasje.full_url}}</a>.
-	 		</div>
-			</div>
+			{% if reportasje.converting == false %}
+		 		<div class="embedhowto well well-small" style="display: none;">
+			 		<p>Hvis du vil ha med filmen i et nyhetsinnlegg, kopierer du inn adressen i den gule boksen på ønsket sted i teksten, og systemet ordner resten automatisk når innlegget vises</p>
+			 		<div class="alert">{{reportasje.full_url}}</div>
+		 		</div>
+		 		<div class="clearfix"></div>
+	
+		 		<div class="embedcode">{{reportasje.embedcode|raw}}</div>
+	
+		 		<div>
+		 			Denne filmen er nå synlig i UKM-TV på følgende adresse: <a href="{{reportasje.full_url}}" target="_blank">{{reportasje.full_url}}</a>.
+		 		</div>
+		 	{% endif %}
+		</div> {# /header #}
 		<div class="clearfix"></div>
 	</li>
 	{% else %}
