@@ -1,8 +1,8 @@
 <?php
 if($_POST['video_id'] == 'new')
-	$sql = new SQLins('smartukm_standalone_video');
+	$sql = new SQLins('ukm_standalone_video');
 else 
-	$sql = new SQLins('smartukm_standalone_video', array('v_id' => $_POST['video_id']) );
+	$sql = new SQLins('ukm_standalone_video', array('v_id' => $_POST['video_id']) );
 
 
 
