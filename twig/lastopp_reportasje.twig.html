@@ -43,8 +43,8 @@
 			<div class="group">
 				<label>Album:</label>
 				<select name="reportasje_category" id="reportasje_category" class="span4">
-					{% for id,name in sets %}
-					<option value="{{id}}" {{ id==video_set ? 'selected="selected"' : ''}}>{{name}}</option>
+					{% for set in sets %}
+					<option value="{{set}}" {{ set==video_set ? 'selected="selected"' : ''}}>{{set}}</option>
 					{% endfor %}
 					<option value="new">Opprett nytt album</option>
 				</select>		
