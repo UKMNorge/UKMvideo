@@ -27,6 +27,9 @@ var timers = new Array();
 			jQuery('#new_album').slideUp();
 		}
 	});
+	jQuery(document).on('click', '.actions .edit', function(){
+		window.location.href = '?page=UKMvideo&action=lastopp_reportasje&id=' + jQuery(this).parents('li').attr('data-videoreportasje');
+	});
 	
 	jQuery(document).on('click','.upload', function(){
 		var innslag = jQuery(this).parents('li').attr('data-innslag');

@@ -34,8 +34,20 @@ while( $r = mysql_fetch_assoc($res) ) {
 $INFOS['set_basename'] = $basename;
 $INFOS['sets']	= $categories;
 
-
-$INFOS['video_id'] = 'new';
-$INFOS['video_title'] = '';
-$INFOS['video_set'] = '';
-$INFOS['video_description'] = '';
+if(isset($_GET['id'])) {
+	$INFOS['video_id'] = $_GET['id'];
+	
+	$sql = new SQL("SELECT * FROM `ukm_standalone_video`
+					WHERE `v_id` = '#vid'",
+					array('vid' => $_GET['id']));
+	$data = $sql->run('array');
+	
+	$INFOS['video_title'] = $data['video_name'];
+	$INFOS['video_set'] = $data['video_category'];
+	$INFOS['video_description'] = $data['video_description'];
+} else {	
+	$INFOS['video_id'] = 'new';
+	$INFOS['video_title'] = '';
+	$INFOS['video_set'] = '';
+	$INFOS['video_description'] = '';
+}
