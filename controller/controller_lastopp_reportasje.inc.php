@@ -29,7 +29,7 @@ if($blog_id == 1) {
 $res = $qry->run();
 while( $r = mysql_fetch_assoc($res) ) {
 	if(!in_array( $r['video_category'] , $categories))
-		$categories[] = $r['video_category'];
+		$categories[] = utf8_encode($r['video_category']);
 }
 
 
