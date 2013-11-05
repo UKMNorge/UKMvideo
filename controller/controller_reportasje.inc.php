@@ -4,12 +4,6 @@ require_once('UKM/tv.class.php');
 require_once('UKM/tv_files.class.php');
 require_once('UKM/monstring.class.php');
 
-function UKMv_get_film($v_id) {
-	
-}
-
-
-
 ///////////////////////////////////////////////////////////////
 
 $sql = new SQL("SELECT `cron_id` FROM `ukm_standalone_video` 
@@ -27,8 +21,11 @@ while( $r = mysql_fetch_assoc( $res )) {
 	
 	$TV = new tv(false, $film['cron_id']);
 	
-	var_dump($TV);
-	
+	if(!$TV->id) {
+		$converting = true;		
+	} else {
+		$converting = false;
+	}
 	
 	$films[] = $film;
 }

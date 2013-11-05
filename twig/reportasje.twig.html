@@ -16,15 +16,18 @@
 					<img src="//ico.ukm.no/pencil-256.png" /><br />
 					<small>Rediger</small>
 				</div>
-				<div class="pull-left embed clickable">
-					<img src="//ico.ukm.no/embed-close-256.png" /><br />
-					<small>Bruk i nyhetsinnlegg</small>
-				</div>
-
-				<div class="pull-left facebook clickable">
-					<img src="//ico.ukm.no/face-256.png" /><br />
-					<small>Del på facebook</small>
-				</div>
+				
+				{% if converting = false %}
+					<div class="pull-left embed clickable">
+						<img src="//ico.ukm.no/embed-close-256.png" /><br />
+						<small>Bruk i nyhetsinnlegg</small>
+					</div>
+	
+					<div class="pull-left facebook clickable">
+						<img src="//ico.ukm.no/face-256.png" /><br />
+						<small>Del på facebook</small>
+					</div>
+				{% endif %}
 
 				<h1>{{reportasje.video_name}}</h1>
 			</div>
