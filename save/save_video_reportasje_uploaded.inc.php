@@ -31,8 +31,10 @@ $sql->run();
 
 //  UPDATE WITH UKM-TV IF EXISTS
 	$TV = new tv(false, $_POST['cron_id']);
+	var_dump($TV);
 	if($TV->id) {
 		$register = new UKMCURL();
 		$register->post( array('type' => 'standalone') );
 		$register->request('http://api.ukm.no/video:tv_update/'.$_POST['cron_id']);
+		var_dump($register);
 	}
