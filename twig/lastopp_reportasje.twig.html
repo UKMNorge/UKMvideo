@@ -52,7 +52,7 @@
 				<div class="clearfix"></div>
 				<div class="input-prepend" id="new_album" style="display:none;">
 				  <span class="add-on">{{set_basename}}</span>
-				  <input class="span3 input-block-level" id="prependedInput" type="text" placeholder="Navn på nytt album">
+				  <input class="span3 input-block-level" id="prependedInput" type="text" placeholder="Navn på nytt album" name="reportasje_new_album">
 				</div>
 			</div>
 
@@ -64,7 +64,7 @@
 			
 			<input type="hidden" id="b_id" value="0" name="b_id" />	
 			<input type="hidden" id="cron_id" value="0" name="cron_id" />
-			<input type="hidden" id="video_id" value="0" name="{{video_id}}" />
+			<input type="hidden" id="video_id" value="{{video_id}}" name="video_id" />
 			<div class="group">
 				<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
 			</div>
