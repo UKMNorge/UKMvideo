@@ -65,6 +65,9 @@ function UKMvideo() {
 		case 'lastopp_innslag':
 			require_once('controller/controller_lastopp_innslag.inc.php');
 			break;
+		case 'lastopp_reportasje':
+			require_once('controller/controller_lastopp_reportasje.inc.php');
+			break;
 		case 'innslag':
 			if($_SERVER['REQUEST_METHOD'] == 'POST')
 				require_once('save/save_video_innslag_uploaded.inc.php');

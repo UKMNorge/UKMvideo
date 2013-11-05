@@ -1,0 +1,80 @@
+{% extends "layout.twig.html" %}
+
+{% block content %}
+
+<div class="clearfix"></div>
+
+<h2>Last opp videoreportasje</h2>
+<input type="hidden" name="converter_season" id="converter_season" value="{{monstring.season}}" />
+<input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{monstring.pl_id}}" />
+<input type="hidden" name="converter_type" id="converter_type" value="innslag" />
+<input type="hidden" name="converter_b_id" id="converter_b_id" value="0" />
+<input type="hidden" name="converter_blog_id" id="converter_blog_id" value="{{blog_id}}" />
+
+<div id="fileupload_container">
+	<div class="videoopplaster pull-left span5">
+		<form action="?page=UKMvideo&list=reportasje" method="post">
+			
+			<div class="group" id="filechooser">
+				<label>Velg fil</label>
+				<input id="fileupload_reportasje" type="file" name="files[]">
+			</div>
+	
+			<div class="group alert alert-warning span9" id="uploading" style="display:none;">
+				<label>Laster opp fil</label>
+				<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90%"></progress>
+			</div>
+			<div class="clearfix"></div>
+			
+			<div class="alert alert alert-success span9" id="uploaded" style="display:none;">
+				<h3>Filen er lastet opp!</h3>
+				<div id="success_one_sec_please" style="display:none;">
+					<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
+				</div>
+			</div>	
+			<div class="clearfix"></div>
+			
+			
+			<div class="group">
+				<label>Tittel</label>
+				<input type="text" placeholder="Tittel på videoreportasjen" name="reportasje_title" />
+			</div>
+	
+			<div class="group">
+				<label>Album:</label>
+				<select name="reportasje_category">
+					{% for id,name in sets %}
+					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
+					{% endfor %}
+				</select>		
+
+				<div class="input-prepend" id="new_album" style="display:none;">
+				  <span class="add-on">{{basename}}</span>
+				  <input class="span2" id="prependedInput" type="text" placeholder="Navn på nytt album">
+				</div>
+			</div>
+
+			<div class="group">
+				<label>Beskrivelse</label>
+				<textarea name="reportasje_description"></textarea>
+			</div>
+
+			
+			<input type="hidden" id="b_id" value="0" name="b_id" />	
+			<input type="hidden" id="cron_id" value="0" name="cron_id" />
+			<div class="group">
+				<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
+			</div>
+		</form>
+	</div>
+	
+	<div class="dropzone pull-left span5" id="fileupload_dropzone">
+		<img src="http://ico.ukm.no/grafikk/dropzone.png" />
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div id="fileupload_message" style="display:none;">
+	
+</div>
+{% endblock %}
