@@ -293,7 +293,11 @@ var timers = new Array();
 		}
 	});
 
-	
+	jQuery('.videoReportasje').each(function(){
+		if(jQuery(this).attr('data-converting') == 'true') {
+			console.log('Pull status for ' + jQuery(this).attr('data-videoreportasje');
+		}
+	});
 	
 	
 	
