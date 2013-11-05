@@ -20,6 +20,7 @@ while( $r = mysql_fetch_assoc( $res )) {
 	$film = $film->run('array');
 	
 	$TV = new tv(false, $film['cron_id']);
+	var_dump($TV);
 	
 	$film['converting'] = !$TV->id;
 	
