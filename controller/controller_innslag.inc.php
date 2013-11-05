@@ -47,6 +47,9 @@ if( isset( $INFOS['program'] ) ) {
 						 'converting' => $converting,
 						 'moving' => $moving,
 						);
+		if(isset($_POST['b_id']) && $_POST['b_id'] == $inn->g('b_id'))
+			$innslagdata['recentlyUploaded'] = true;
+
 		$alle_innslag[] = $innslagdata;
 	}
 	$INFOS['program'] = $alle_innslag;

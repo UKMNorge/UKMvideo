@@ -15,7 +15,7 @@
 	<div class="clearfix"></div>
 	<ol class="unstyled UKMvideo_width">
 		{% for innslag in program %}
-		<li class="well well-mini ett_innslag" id="innslag_{{innslag.id}}" data-innslag="{{innslag.id}}">
+		<li class="well well-mini ett_innslag {% if innslag.recentlyUploaded is defined %}alert-info{% endif %}" id="innslag_{{innslag.id}}" data-innslag="{{innslag.id}}">
 			<div class="header">
 				<div class="actions">
 				
