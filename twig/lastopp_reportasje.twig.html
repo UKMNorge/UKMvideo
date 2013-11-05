@@ -15,7 +15,7 @@
 	<div class="videoopplaster pull-left span5">
 		<form action="?page=UKMvideo&list=reportasje" method="post">
 			
-			<div class="group" id="filechooser">
+			<div class="span3" id="filechooser">
 				<label>Velg fil</label>
 				<input id="fileupload_reportasje" type="file" name="files[]">
 			</div>
@@ -37,12 +37,12 @@
 			
 			<div class="group">
 				<label>Tittel</label>
-				<input type="text" name="reportasje_title" />
+				<input type="text" name="reportasje_title" class="input-block-level span3" />
 			</div>
 	
 			<div class="group">
 				<label>Album:</label>
-				<select name="reportasje_category" id="reportasje_category">
+				<select name="reportasje_category" id="reportasje_category" class="span3">
 					{% for id,name in sets %}
 					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
 					{% endfor %}
@@ -52,7 +52,7 @@
 				<div class="clearfix"></div>
 				<div class="input-prepend" id="new_album" style="display:none;">
 				  <span class="add-on">{{set_basename}}</span>
-				  <input class="span2" id="prependedInput" type="text" placeholder="Navn på nytt album">
+				  <input class="span3 input-block-level" id="prependedInput" type="text" placeholder="Navn på nytt album">
 				</div>
 			</div>
 
