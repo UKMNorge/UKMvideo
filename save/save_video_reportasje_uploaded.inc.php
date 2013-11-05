@@ -39,16 +39,10 @@ $sql->run();
 						   array('vid' => $_POST['video_id'] ));
 		$cron_id = $select->run('field','cron_id');
 	}
-	$TV = new tv(false, $cron_id);
+	$TV = new tv(false, $cron_id);	
 
-	var_dump($TV);
-	
-/*
-
-	if($TV->id) {
+	if( $TV->id != false) {
 		$register = new UKMCURL();
 		$register->post( array('type' => 'standalone') );
-		$register->request('http://api.ukm.no/video:tv_update/'.$_POST['cron_id']);
-		var_dump($register);
+		$register->request('http://api.ukm.no/video:tv_update/'.$cron_id);
 	}
-*/
