@@ -19,10 +19,10 @@ if($blog_id == 1) {
 	
 	$categories = array( $basename .' videoreportasjer' );
 	$qry = new SQL("SELECT * 
-					FROM `ukm_tv_categories`
+					FROM `ukm_standalone_video`
 					WHERE `pl_id` = '#plid'
-					GROUP BY `c_name`
-					ORDER BY `c_name` ASC",
+					GROUP BY `video_category`
+					ORDER BY `video_category` ASC",
 				array('plid' => get_option('pl_id')));
 }
 $res = $qry->run();
