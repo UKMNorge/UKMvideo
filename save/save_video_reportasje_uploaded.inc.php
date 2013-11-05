@@ -1,4 +1,7 @@
 <?php
+require_once('UKM/tv.class.php');
+require_once('UKM/curl.class.php');
+
 if($_POST['video_id'] == 'new')
 	$sql = new SQLins('ukm_standalone_video');
 else 
@@ -24,3 +27,12 @@ $sql->add('pl_id', get_option('pl_id'));
 
 //echo $sql->debug();
 $sql->run();
+
+
+//  UPDATE WITH UKM-TV IF EXISTS
+	$TV = new tv(false, $_POST['cron_id']);
+	if($TV->id) {
+		$register = new UKMCURL();
+		$register->post( array('type' => 'standalone') );
+		$register->request('http://api.ukm.no/video:tv_update/'.$_POST['cron_id']);
+	}
