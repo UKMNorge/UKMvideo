@@ -59,6 +59,13 @@
 		 		</div>
 
 		 		<div class="clearfix"></div>
+		 	{% else %}
+		 		<div class="clearfix"></div>
+		 		<div class="alert alert-info">
+			 		Filmen har fått id {{reportasje.cron_id}}, står nå i kø for konvertering, og vil om kort tid bli synlig i dette vinduet, UKM-TV og nettsiden.
+			 		<br />
+			 		Alt dette skjer på vår videoserver. Du kan derfor fortsette ditt arbeid, og trenger ikke å ha denne siden åpen mens konverteringen pågår.
+		 		</div>
 		 	{% endif %}
 		</div> {# /header #}
 		<div class="clearfix"></div>
