@@ -74,6 +74,9 @@ function UKMvideo() {
 			require_once('controller/controller_innslag.inc.php');
 			break;
 		case 'reportasje':
+			if($_SERVER['REQUEST_METHOD'] == 'POST')
+				require_once('save/save_video_reportasje_uploaded.inc.php');
+
 			require_once('controller/controller_reportasje.inc.php');
 			break;
 	}
