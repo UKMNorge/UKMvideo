@@ -296,24 +296,34 @@ var timers = new Array();
 		}
 	});
 
-	jQuery('.videoReportasje').each(function(){
-		if(jQuery(this).attr('data-converting') == 'true') {
-			console.log('Pull status for ' + jQuery(this).attr('data-videoreportasje') );
+jQuery(document).ready(function(){
+	jQuery('.videoreportasje').each(function(){
+		videoreportasje = jQuery(this);
+		if(videoreportasje.attr('data-converting') == 'true') {
+			videoreportasje_convert_status( jQuery(this).attr('data-cron') );
 		}
 	});
-	
-	
-	
-	
+});
 
-
-/*
-	jQuery(document).on('click','.videoaction.edit', function(){
-		var video = jQuery(this).parents('li.video');
-		var filter = jQuery.getUrlVar('filter');
-		var innslag = video.parents('li').attr('data-innslag');
-		var id = video.attr('data-video');
-		window.location.href = window.location.href.split('?')[0] +
-							   '?page=UKMvideo&action=lastopp_innslag&filter='+filter+'&innslag='+innslag+'&id='+id;
-	});
-*/
+function videoreportasje_convert_status( cron_id ) {
+	jQuery.post(ajaxurl, 
+				{'action': 'UKMvideo_load',
+				 'load': 'tv_status',
+				 'cron_id': cron_id
+				},
+				function(response){
+					if(response.success) {
+						if(response.reload) {
+							window.location.href = window.location.href;
+							window.location.reload();
+						} else {
+							setTimeout(function(){
+								videoreportasje_convert_status( response.cron_id )
+							}, 5000);
+						}
+					} else {
+						alert('En feil har oppstått ved oppdatering av konverteringsstatus. Kontakt UKM Norge');
+					}
+				}
+			);
+}
