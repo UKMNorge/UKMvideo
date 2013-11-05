@@ -27,8 +27,8 @@ if($blog_id == 1) {
 }
 $res = $qry->run();
 while( $r = mysql_fetch_assoc($res) ) {
-	if(!in_array( $r['c_name'] , $categories))
-		$categories[] = $r['c_name'];
+	if(!in_array( $r['video_category'] , $categories))
+		$categories[] = $r['video_category'];
 }
 
 
