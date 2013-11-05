@@ -27,9 +27,16 @@
 						<img src="//ico.ukm.no/face-256.png" /><br />
 						<small>Del på facebook</small>
 					</div>
+				{% else %}
+					<div class="pull-left converting">
+				 		<img src="//ico.ukm.no/loading/converting.gif" height="40" class="pull-right" />
+					</div>
 				{% endif %}
 
 				<h1>{{reportasje.video_name}}</h1>
+				{% if reportasje.converting %}
+					<p>Filen har fått ID {{reportasje.cron_id}}</p>
+				{% endif %}
 			</div>
 			<div class="clearfix"></div>
 			<img src="{{reportasje.video_image}}" class="pull-right" />
