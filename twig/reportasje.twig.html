@@ -2,11 +2,10 @@
 
 {% block content %}
 	
-	<div class="UKMvideo_width">
-		<button class="pull-right btn btn-success btn-medium">Last opp ny reportasje</button>
+	<div class="UKMvideo_width" id="add_reportasje_container">
+		<button class="pull-right btn btn-success btn-medium" id="add_reportasje">Last opp ny reportasje</button>
 		<div class="clearfix"></div>
 	</div>
-	
 	<ol class="unstyled UKMvideo_width">
 	{% for reportasje in reportasjer %}
 	<li class="well well-mini videoreportasje" id="videoreportasje_{{reportasje.v_id}}" data-videoreportasje="{{reportasje.v_id}}">
