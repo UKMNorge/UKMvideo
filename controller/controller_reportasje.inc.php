@@ -22,7 +22,7 @@ while( $r = mysql_fetch_assoc( $res )) {
 	$TV = new tv(false, $film['cron_id']);
 
 	if($TV->id) {
-		$film['embedcode'] 		= $TV->embedcode(600);
+		$film['embedcode'] 		= $TV->embedcode(470);
 		$film['converting'] 	= false;
 		$film['full_url']		= $TV->full_url;
 		$film['category_url']	= $TV->category_url;

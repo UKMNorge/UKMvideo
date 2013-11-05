@@ -100,3 +100,21 @@ line-height: 14px;
 #add_reportasje_container {
 	margin-bottom: 10px;
 }
+
+.videoreportasje div.actions {
+ width: 250px;
+ border: 1px solid #ff00ff;
+float: left;
+}
+.videoreportasje h1 {
+ float: left;
+}
+.videoreportasje .actions div {
+	width:60px;
+	text-align:center;
+        line-height: 14px;
+        height: 50px;
+}
+.videoreportasje .actions .converting img {
+     margin: 5px 20px 2px;
+}
