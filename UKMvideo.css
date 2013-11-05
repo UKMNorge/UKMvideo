@@ -2,11 +2,12 @@
 	width:750px;
 }
 
-.ett_innslag {
+.ett_innslag, .videoreportasje {
 	padding:4px;
 }
 
-.ett_innslag h1 {
+.ett_innslag h1,
+.videoreportasje h1 {
 	font-size:14px;
 	border-left:1px solid #ccc;
 	float:left;
@@ -15,14 +16,17 @@
 	padding:0 0 0 20px;
 }
 
-.ett_innslag .actions div {
+.ett_innslag .actions div,
+.videoreportasje .actions div {
 	width:60px;
 	text-align:center;
+line-height: 14px;
 }
 
-.ett_innslag .actions img {
+.ett_innslag .actions img,
+.videoreportasje .actions img {
 	width:20px;
-	margin:0 0 -8px;
+	margin:0 0 0px;
 	padding:0;
 }
 
