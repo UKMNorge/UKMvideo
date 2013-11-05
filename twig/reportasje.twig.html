@@ -29,12 +29,14 @@
 					</div>
 				{% else %}
 					<div class="pull-left converting">
-				 		<img src="//ico.ukm.no/loading/converting.gif" height="40" class="pull-right" />
+				 		<img src="//ico.ukm.no/loading/converting.gif" class="pull-right" />
+				 		Konverterer...
 					</div>
 				{% endif %}
 
 				<h1>{{reportasje.video_name}}</h1>
 				{% if reportasje.converting %}
+					<div class="clearfix"></div>
 					<p>Filen har fått ID {{reportasje.cron_id}}</p>
 				{% endif %}
 			</div>
