@@ -278,7 +278,7 @@ var timers = new Array();
 			jQuery.post(ajaxurl, 
 				{ 'action': 'UKMvideo_action',
 				  'subaction': 'delete_video',
-				  'tv_id': video.attr('data-videoreportasje')
+				  'tv_id': video.attr('data-tvid')
 				},
 				function(response) {
 					if(response.success) {

@@ -26,6 +26,7 @@ while( $r = mysql_fetch_assoc( $res )) {
 		$film['converting'] 	= false;
 		$film['full_url']		= $TV->full_url;
 		$film['category_url']	= $TV->category_url;
+		$film['tv_id']			= $TV->id;
 	} else {
 		$film['converting'] 	= true;
 	}
