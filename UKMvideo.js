@@ -39,6 +39,7 @@ var timers = new Array();
 	jQuery(document).on('click','.upload', function(){
 		var innslag = jQuery(this).parents('li').attr('data-innslag');
 		var filter = jQuery.getUrlVar('filter');
+		console.log(filter);
 		if(filter != undefined && filter != null)
 			filter = filter.split('#')[0];
 		var query_string = window.location.href.split('?')[0];
