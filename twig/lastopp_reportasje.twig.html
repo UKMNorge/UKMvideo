@@ -37,12 +37,12 @@
 			
 			<div class="group">
 				<label>Tittel</label>
-				<input type="text" placeholder="Tittel på videoreportasjen" name="reportasje_title" />
+				<input type="text" name="reportasje_title" />
 			</div>
 	
 			<div class="group">
 				<label>Album:</label>
-				<select name="reportasje_category">
+				<select name="reportasje_category" id="reportasje_category">
 					{% for id,name in sets %}
 					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
 					{% endfor %}
