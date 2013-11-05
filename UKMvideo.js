@@ -271,7 +271,7 @@ var timers = new Array();
 ////////////////////////////////////////////////////////////////////////////////////////
 // SLETT VIDEOREPORTASJER
 ////////////////////////////////////////////////////////////////////////////////////////	
-	jQuery(document).on('click','.videoactions .deleteReportasje', function(){
+	jQuery(document).on('click','.deleteReportasje', function(){
 		var video = jQuery(this).parents('li.videoreportasje');
 		confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
 		if(confirmed) {
