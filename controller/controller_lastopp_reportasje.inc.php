@@ -20,9 +20,10 @@ if($blog_id == 1) {
 	$categories = array( $basename .' videoreportasjer' );
 	$qry = new SQL("SELECT * 
 					FROM `ukm_tv_categories`
-					WHERE `c_name` LIKE '#name%'
+					WHERE `pl_id` = '#plid'
+					GROUP BY `c_name`
 					ORDER BY `c_name` ASC",
-				array('name' => $basename));
+				array('plid' => get_option('pl_id')));
 }
 $res = $qry->run();
 while( $r = mysql_fetch_assoc($res) ) {
