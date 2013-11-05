@@ -15,9 +15,9 @@
 	<div class="videoopplaster pull-left span5">
 		<form action="?page=UKMvideo&list=reportasje" method="post">
 			
-			<div class="span3" id="filechooser">
+			<div class="span3" id="filechooser" style="border: none;">
 				<label>Velg fil</label>
-				<input id="fileupload_reportasje" type="file" name="files[]">
+				<input id="fileupload_reportasje" type="file" name="files[]" style="border: none">
 			</div>
 	
 			<div class="group alert alert-warning span9" id="uploading" style="display:none;">
@@ -37,12 +37,12 @@
 			
 			<div class="group">
 				<label>Tittel</label>
-				<input type="text" name="reportasje_title" class="input-block-level span3" />
+				<input type="text" name="reportasje_title" class="input-block-level span4" />
 			</div>
 	
 			<div class="group">
 				<label>Album:</label>
-				<select name="reportasje_category" id="reportasje_category" class="span3">
+				<select name="reportasje_category" id="reportasje_category" class="span4">
 					{% for id,name in sets %}
 					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
 					{% endfor %}
@@ -52,13 +52,13 @@
 				<div class="clearfix"></div>
 				<div class="input-prepend" id="new_album" style="display:none;">
 				  <span class="add-on">{{set_basename}}</span>
-				  <input class="span3 input-block-level" id="prependedInput" type="text" placeholder="Navn på nytt album">
+				  <input class="span4 input-block-level" id="prependedInput" type="text" placeholder="Navn på nytt album">
 				</div>
 			</div>
 
 			<div class="group">
 				<label>Beskrivelse</label>
-				<textarea name="reportasje_description"></textarea>
+				<textarea name="reportasje_description" class="span4"></textarea>
 			</div>
 
 			
