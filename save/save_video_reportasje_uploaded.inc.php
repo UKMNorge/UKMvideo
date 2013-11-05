@@ -1,8 +1,4 @@
 <?php
-
-var_dump($_POST);
-
-
 if($_POST['video_id'] == 'new')
 	$sql = new SQLins('smartukm_standalone_video');
 else 
@@ -25,4 +21,4 @@ $sql->add('video_description', $_POST['reportasje_description']);
 $sql->add('video_category', $kategori);
 $sql->add('pl_id', get_option('pl_id'));
 
-echo $sql->debug();
+$sql->run();
