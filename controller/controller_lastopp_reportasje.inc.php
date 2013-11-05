@@ -54,12 +54,6 @@ if(isset($_GET['id'])) {
 	$INFOS['video_description'] = '';
 }
 
-
-var_dump($INFOS);
-
-
-
-
 $monstring = new StdClass;
 $monstring->navn = $pl->g('pl_name');
 $monstring->season = $pl->g('season');
