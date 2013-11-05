@@ -298,8 +298,7 @@ var timers = new Array();
 
 jQuery(document).ready(function(){
 	jQuery('.videoreportasje').each(function(){
-		videoreportasje = jQuery(this);
-		if(videoreportasje.attr('data-converting') == 'true') {
+		if(jQuery(this).attr('data-converting') == 'true') {
 			videoreportasje_convert_status( jQuery(this).attr('data-cron') );
 		}
 	});
