@@ -33,3 +33,9 @@ while( $r = mysql_fetch_assoc($res) ) {
 
 $INFOS['set_basename'] = $basename;
 $INFOS['sets']	= $categories;
+
+
+$INFOS['video_id'] = 'new';
+$INFOS['video_title'] = '';
+$INFOS['video_set'] = '';
+$INFOS['video_description'] = '';

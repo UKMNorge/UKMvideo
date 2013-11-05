@@ -4,7 +4,8 @@
 
 <div class="clearfix"></div>
 
-<h2>Last opp videoreportasje</h2>
+<h2>{% if video_id == 'new' %}Last opp{% else %}Rediger{% endif %} videoreportasje</h2>
+
 <input type="hidden" name="converter_season" id="converter_season" value="{{monstring.season}}" />
 <input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{monstring.pl_id}}" />
 <input type="hidden" name="converter_type" id="converter_type" value="innslag" />
@@ -15,36 +16,37 @@
 	<div class="videoopplaster pull-left span5">
 		<form action="?page=UKMvideo&list=reportasje" method="post">
 			
-			<div class="span3" id="filechooser" style="border: none;">
-				<label>Velg fil</label>
-				<input id="fileupload_reportasje" type="file" name="files[]" style="border: none">
-			</div>
-	
-			<div class="group alert alert-warning span9" id="uploading" style="display:none;">
-				<label>Laster opp fil</label>
-				<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90%"></progress>
-			</div>
-			<div class="clearfix"></div>
-			
-			<div class="alert alert alert-success span9" id="uploaded" style="display:none;">
-				<h3>Filen er lastet opp!</h3>
-				<div id="success_one_sec_please" style="display:none;">
-					<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
+			{% if video_id == 'new' %}
+				<div class="span3" id="filechooser" style="border: none;">
+					<label>Velg fil</label>
+					<input id="fileupload_reportasje" type="file" name="files[]" style="border: none">
 				</div>
-			</div>	
-			<div class="clearfix"></div>
-			
+		
+				<div class="group alert alert-warning span9" id="uploading" style="display:none;">
+					<label>Laster opp fil</label>
+					<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90%"></progress>
+				</div>
+				<div class="clearfix"></div>
+				
+				<div class="alert alert alert-success span9" id="uploaded" style="display:none;">
+					<h3>Filen er lastet opp!</h3>
+					<div id="success_one_sec_please" style="display:none;">
+						<strong>Du kan nå trykke lagre, filmen er sendt til konvertering</strong>
+					</div>
+				</div>	
+				<div class="clearfix"></div>
+			{% endif %}
 			
 			<div class="group">
 				<label>Tittel</label>
-				<input type="text" name="reportasje_title" class="input-block-level span4" />
+				<input type="text" name="reportasje_title" class="input-block-level span4" value="{{video_title}}" />
 			</div>
 	
 			<div class="group">
 				<label>Album:</label>
 				<select name="reportasje_category" id="reportasje_category" class="span4">
 					{% for id,name in sets %}
-					<option value="{{id}}" {{ id==selected_set ? 'selected="selected"' : ''}}>{{name}}</option>
+					<option value="{{id}}" {{ id==video_set ? 'selected="selected"' : ''}}>{{name}}</option>
 					{% endfor %}
 					<option value="new">Opprett nytt album</option>
 				</select>		
@@ -58,12 +60,13 @@
 
 			<div class="group">
 				<label>Beskrivelse</label>
-				<textarea name="reportasje_description" class="span4"></textarea>
+				<textarea name="reportasje_description" class="span4">{{video_description}}</textarea>
 			</div>
 
 			
 			<input type="hidden" id="b_id" value="0" name="b_id" />	
 			<input type="hidden" id="cron_id" value="0" name="cron_id" />
+			<input type="hidden" id="video_id" value="0" name="{{video_id}}" />
 			<div class="group">
 				<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" disabled="disabled" />
 			</div>
