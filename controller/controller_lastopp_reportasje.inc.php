@@ -7,6 +7,8 @@ require_once('UKM/monstring.class.php');
 
 ///////////////////////////////////////////////////////////////
 // CATEGORIES
+$pl = new monstring(get_option('pl_id'));
+
 global $blog_id;
 if($blog_id == 1) {
 	$categories = array();
@@ -14,7 +16,6 @@ if($blog_id == 1) {
 					FROM `ukm_tv_categories`
 					ORDER BY `c_name` ASC");
 } else {
-	$pl = new monstring(get_option('pl_id'));
 	$basename = $pl->g('pl_name') .' '. $pl->g('season');
 	
 	$categories = array( $basename .' videoreportasjer' );
@@ -52,3 +53,16 @@ if(isset($_GET['id'])) {
 	$INFOS['video_set'] = '';
 	$INFOS['video_description'] = '';
 }
+
+
+
+
+$monstring = new StdClass;
+$monstring->navn = $pl->g('pl_name');
+$monstring->season = $pl->g('season');
+$monstring->pl_id = $pl->g('pl_id');
+$INFOS['monstring'] = $monstring; 
+
+$INFOS['blog_id'] = $blog_id;
+
+$INFOS['filter'] = $_GET['filter'];
