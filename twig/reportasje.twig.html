@@ -35,13 +35,9 @@
 				{% endif %}
 
 				<h1>{{reportasje.video_name}}</h1>
-				{% if reportasje.converting %}
-					<div class="clearfix"></div>
-					<p>Filen har fått ID {{reportasje.cron_id}}</p>
-				{% endif %}
 			</div>
 			<div class="clearfix"></div>
-			<img src="{{reportasje.video_image}}" class="pull-right" />
+			<img src="http://video.ukm.no/{{reportasje.video_image}}" class="pull-right" />
 		</div>
 		<div class="clearfix"></div>
 	</li>
