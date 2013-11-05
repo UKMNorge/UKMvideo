@@ -22,7 +22,7 @@ $sql->add('video_name', utf8_encode($_POST['reportasje_title']));
 if((int)$_POST['cron_id'] > 0)
 	$sql->add('cron_id', $_POST['cron_id']);
 $sql->add('video_description', utf8_encode($_POST['reportasje_description']));
-$sql->add('video_category', $kategori);
+$sql->add('video_category', trim($kategori));
 $sql->add('pl_id', get_option('pl_id'));
 
 //echo $sql->debug();
