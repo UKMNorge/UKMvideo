@@ -12,33 +12,30 @@
 		
 		<div class="header">
 			<div class="actions">
-			
+
+				<div class="pull-left edit clickable">
+					<img src="//ico.ukm.no/pencil-256.png" /><br />
+					<small>Rediger</small>
+				</div>
+				
 				{% if reportasje.converting == false %}
-
-					<div class="pull-right facebook clickable" data-url="{{reportasje.full_url}}">
-						<img src="//ico.ukm.no/face-256.png" /><br />
-						<small>Del på facebook</small>
-					</div>
-
-					<div class="pull-right embed clickable">
+					<div class="pull-left embed clickable">
 						<img src="//ico.ukm.no/embed-close-256.png" /><br />
 						<small>Bruk i nyhetsinnlegg</small>
 					</div>
 	
+					<div class="pull-left facebook clickable" data-url="{{reportasje.full_url}}">
+						<img src="//ico.ukm.no/face-256.png" /><br />
+						<small>Del på facebook</small>
+					</div>
 				{% else %}
-					<div class="pull-right converting">
+					<div class="pull-left converting">
 				 		<img src="//ico.ukm.no/loading/converting.gif" class="pull-right" />
 				 		Konverterer...
 					</div>
 				{% endif %}
-							
-				<div class="pull-right edit clickable">
-					<img src="//ico.ukm.no/pencil-256.png" /><br />
-					<small>Rediger</small>
-				</div>
 
 				<h1>{{reportasje.video_name}}</h1>
-
 			</div>
 			<div class="clearfix"></div>
 

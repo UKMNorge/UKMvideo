@@ -96,3 +96,7 @@ line-height: 14px;
 .clickable {
 	cursor:pointer;
 }
+
+#add_reportasje_container {
+	margin-bottom: 10px;
+}
