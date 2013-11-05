@@ -268,8 +268,31 @@ var timers = new Array();
 	
 	
 	
-	
-	
+////////////////////////////////////////////////////////////////////////////////////////
+// SLETT VIDEOREPORTASJER
+////////////////////////////////////////////////////////////////////////////////////////	
+	jQuery(document).on('click','.videoaction.deleteReportasje', function(){
+		var video = jQuery(this).parents('li.videoreportasje');
+		confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
+		if(confirmed) {
+			jQuery.post(ajaxurl, 
+				{ 'action': 'UKMvideo_action',
+				  'subaction': 'delete_video',
+				  'tv_id': video.attr('data-videoreportasje')
+				},
+				function(response) {
+					if(response.success) {
+						jQuery('#videoreportasje_' + response.id).slideUp(
+															function(){
+																jQuery(this).destroy();
+															});
+					} else {
+						alert('Beklager, en feil oppsto ved sletting!');
+					}
+				});
+		}
+	});
+
 	
 	
 	
