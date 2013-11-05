@@ -2,6 +2,7 @@
 require_once('UKM/sql.class.php');
 require_once('UKM/tv.class.php');
 require_once('UKM/tv_files.class.php');
+require_once('UKM/monstring.class.php');
 
 function UKMv_get_film($v_id) {
 	$sql = new SQL("SELECT *, 
@@ -35,6 +36,7 @@ if($blog_id == 1) {
 					FROM `ukm_tv_categories`
 					ORDER BY `c_name` ASC");
 } else {
+	$pl = new monstring(get_option('pl_id'));
 	$basename = $pl->g('pl_name') .' '. $pl->g('season');
 	
 	$categories = array( $basename .' videoreportasjer' );
