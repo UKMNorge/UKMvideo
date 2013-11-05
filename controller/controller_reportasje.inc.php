@@ -21,11 +21,7 @@ while( $r = mysql_fetch_assoc( $res )) {
 	
 	$TV = new tv(false, $film['cron_id']);
 	
-	if(!$TV->id) {
-		$converting = true;		
-	} else {
-		$converting = false;
-	}
+	$film['converting'] = !$TV->id;
 	
 	$films[] = $film;
 }
