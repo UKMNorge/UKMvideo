@@ -45,4 +45,5 @@ $sql->run();
 		$register = new UKMCURL();
 		$register->post( array('type' => 'standalone') );
 		$register->request('http://api.ukm.no/video:tv_update/'.$cron_id);
+		var_dump($register);
 	}
