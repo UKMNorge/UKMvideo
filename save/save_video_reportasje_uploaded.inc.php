@@ -30,8 +30,17 @@ $sql->run();
 
 
 //  UPDATE WITH UKM-TV IF EXISTS
-	$TV = new tv(false, $_POST['cron_id']);
-	var_dump($TV);
+	if((int)$_POST['cron_id'] > 0)
+		$cron_id = $_POST['cron_id'];
+	else {
+		$select = new SQL("SELECT `cron_id`
+						   FROM `ukm_standalone_video`
+						   WHERE `v_id` = '#vid'",
+						   array('vid' => $_POST['video_id'] ));
+		$cron_id = $select->run('field','cron_id');
+	}
+	$TV = new tv(false, $cron_id);
+
 	if($TV->id) {
 		$register = new UKMCURL();
 		$register->post( array('type' => 'standalone') );
