@@ -26,6 +26,7 @@ if($blog_id == 1) {
 					ORDER BY `video_category` ASC",
 				array('plid' => get_option('pl_id')));
 }
+echo $qry->debug();
 $res = $qry->run();
 while( $r = mysql_fetch_assoc($res) ) {
 	if(!in_array( $r['video_category'] , $categories))
