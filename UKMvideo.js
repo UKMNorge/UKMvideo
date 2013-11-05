@@ -30,6 +30,11 @@ var timers = new Array();
 	jQuery(document).on('click', '.actions .edit', function(){
 		window.location.href = '?page=UKMvideo&action=lastopp_reportasje&id=' + jQuery(this).parents('li').attr('data-videoreportasje');
 	});
+	jQuery(document).on('click', 'li.videoreportasje .embed', function() {
+		video = jQuery(this).parents('li.videoreportasje');
+		video.find('div.preview').slideToggle();
+		video.find('div.embedhowto').slideToggle();
+	});
 	
 	jQuery(document).on('click','.upload', function(){
 		var innslag = jQuery(this).parents('li').attr('data-innslag');
