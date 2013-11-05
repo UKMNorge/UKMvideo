@@ -41,6 +41,8 @@ var timers = new Array();
 		var filter = jQuery.getUrlVar('filter');
 		if(typeof(filter) == 'string') {
 			filter = filter.split('#')[0];
+		} else {
+			filter = '';
 		}
 		var query_string = window.location.href.split('?')[0];
 		query_string = query_string.split('#')[0];
