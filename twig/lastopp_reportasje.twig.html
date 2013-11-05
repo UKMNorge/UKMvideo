@@ -70,10 +70,14 @@
 			</div>
 		</form>
 	</div>
-	
+
+	{% if video_id == 'new' %}	
 	<div class="dropzone pull-left span5" id="fileupload_dropzone">
 		<img src="http://ico.ukm.no/grafikk/dropzone.png" />
 	</div>
+	{% else %}
+		
+	{% endif %}
 	<div class="clearfix"></div>
 </div>
 
