@@ -283,10 +283,7 @@ var timers = new Array();
 				},
 				function(response) {
 					if(response.success) {
-						jQuery('#videoreportasje_' + response.video_id).slideUp(
-															function(){
-																jQuery(this).destroy();
-															});
+						jQuery('#videoreportasje_' + response.video_id).slideUp();
 					} else {
 						alert('Beklager, en feil oppsto ved sletting!');
 					}
