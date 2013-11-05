@@ -23,7 +23,7 @@
 						<small>Bruk i nyhetsinnlegg</small>
 					</div>
 	
-					<div class="pull-left facebook clickable">
+					<div class="pull-left facebook clickable" data-url="{{reportasje.full_url}}">
 						<img src="//ico.ukm.no/face-256.png" /><br />
 						<small>Del på facebook</small>
 					</div>
@@ -37,8 +37,19 @@
 				<h1>{{reportasje.video_name}}</h1>
 			</div>
 			<div class="clearfix"></div>
-			<img src="http://video.ukm.no/{{reportasje.video_image}}" class="pull-right thumbnail" />
-		</div>
+
+	 		<div class="embedhowto well well-small" style="display: none;">
+		 		<p>Hvis du vil ha med filmen i et nyhetsinnlegg, kopierer du inn adressen i den gule boksen på ønsket sted i teksten, og systemet ordner resten automatisk når innlegget vises</p>
+		 		<div class="alert">{{reportasje.full_url}}</div>
+	 		</div>
+	 		<div class="clearfix"></div>
+
+	 		<div class="embedcode">{{reportasje.embedcode|raw}}</div>
+
+	 		<div>
+	 			Denne filmen er nå synlig i UKM-TV på følgende adresse: <a href="{{reportasje.full_url}}" target="_blank">{{reportasje.full_url}}</a>.
+	 		</div>
+			</div>
 		<div class="clearfix"></div>
 	</li>
 	{% else %}

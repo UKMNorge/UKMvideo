@@ -20,9 +20,15 @@ while( $r = mysql_fetch_assoc( $res )) {
 	$film = $film->run('array');
 	
 	$TV = new tv(false, $film['cron_id']);
-	var_dump($TV);
-	
-	$film['converting'] = !$TV->id;
+
+	if($TV->id) {
+		$film['embedcode'] 		= $TV->embedcode(600);
+		$film['converting'] 	= false;
+		$film['full_url']		= $TV->full_url;
+		$film['category_url']	= $TV->category_url;
+	} else {
+		$film['converting'] 	= true;
+	}
 	
 	$films[] = $film;
 }
