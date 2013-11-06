@@ -44,6 +44,7 @@ if( isset( $INFOS['program'] ) ) {
 									WHERE `tv_file` LIKE '%#cronid%'
 									AND `tv_deleted` = 'true'",
 									array('cronid' => $r['cron_id']));
+				echo $sqlTest->debug();
 				$sqlTest->run();
 				if(mysql_num_rows( $sqlTest ) == 0)
 					$coming[] = $r;
