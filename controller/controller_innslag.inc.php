@@ -39,8 +39,15 @@ if( isset( $INFOS['program'] ) ) {
 						array('bid' => $innslag['b_id']));
 		$conv = $conv->run();
 		while( $r = mysql_fetch_assoc( $conv ) ) {
-			if( !in_array( $r['file'], $unique_id) )
-				$coming[] = $r;
+			if( !in_array( $r['file'], $unique_id) ) {
+				$sqlTest = new SQL("SELECT * FROM `ukm_tv_files`
+									WHERE `tv_file` LIKE '%#cronid%'
+									AND `tv_deleted` = 'true'",
+									array('cronid' => $r['cron_id']));
+				$sqlTest->run();
+				if(mysql_num_rows( $sqlTest ) == 0)
+					$coming[] = $r;
+			}	
 		}
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
