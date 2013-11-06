@@ -32,6 +32,14 @@ if( !isset( $_POST['innslag'] ) ) {
 		if( in_array( $r['file'], $unique_id) )
 			continue;
 			
+		$sqlTest = new SQL("SELECT * FROM `ukm_tv_files`
+									WHERE `tv_file` LIKE '%#cronid%'
+									AND `tv_deleted` = 'true'",
+									array('cronid' => $r['cron_id']));
+				$resTest = $sqlTest->run();
+		if(mysql_num_rows( $resTest ) > 0)
+			continue;
+			
 		if(!empty($r['file'])) {
 			$moving[] = $r;
 		} else {
