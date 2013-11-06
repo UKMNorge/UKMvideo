@@ -22,6 +22,8 @@ $INFOS['hendelser'] = $hendelser;
 if( isset( $INFOS['program'] ) ) {
 	foreach($INFOS['program'] as $innslag) {
 		$inn = new innslag($innslag['b_id']);
+		if(!$inn->tittellos())
+			continue;
 		$related = $inn->related_items();
 
 		$unique_id = array();
