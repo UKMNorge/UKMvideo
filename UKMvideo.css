@@ -118,3 +118,7 @@ float: left;
 .videoreportasje .actions .converting img {
      margin: 5px 20px 2px;
 }
+
+ol#tips {
+	margin-left: 25px;
+}

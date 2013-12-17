@@ -10,7 +10,7 @@ Author URI: http://www.ukm-norge.no
 
 if(is_admin()) {
 	require_once('UKM/inc/handlebars.inc.php');
-	add_action('admin_menu', 'UKMvideo_menu');
+	add_action('UKM_admin_menu', 'UKMvideo_menu');
 	
 	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
 	add_action('wp_ajax_UKMvideo_action', 'UKMvideo_ajax_action');
@@ -18,8 +18,8 @@ if(is_admin()) {
 }
 
 function UKMvideo_menu() {
-	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 12);
-	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
+	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
+	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
 }
 
 function UKMvideo_ajax_action() {
