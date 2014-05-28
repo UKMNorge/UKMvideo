@@ -63,20 +63,20 @@ var timers = new Array();
 					 'innslag':	innslag.attr('data-innslag')
 					}, function(response) {
 						if(response.related.length == 0 && response.moving.length == 0 && response.converting.length == 0) {
-							console.log('Innslag '+ response.id +': Ingen video');
+							//console.log('Innslag '+ response.id +': Ingen video');
 							var hbt_video_ingen = Handlebars.compile( jQuery('#handlebars-innslag-video-ingen').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_ingen( response.related ) );
 						} else if (response.success) {
-							console.log('Innslag '+ response.id +': Lag liste video');
+							//console.log('Innslag '+ response.id +': Lag liste video');
 							var hbt_video_liste = Handlebars.compile( jQuery('#handlebars-innslag-video-liste').html() );
 							jQuery('#innslag_'+response.id).find('.loader').slideUp();
 							jQuery('#innslag_'+response.id).find('.loaded').html( hbt_video_liste( response ) );
 							if(response.autoreload) {
-								console.log('Set timer ' + response.id);
+								//console.log('Set timer ' + response.id);
 								timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
 							} else {
-								console.log('Clear timer ' + response.id);
+								//console.log('Clear timer ' + response.id);
 								clearTimeout(timers[response.id]);
 							}
 						} else {
@@ -92,7 +92,7 @@ var timers = new Array();
 		innslag.find('.details').slideUp();
 		innslag.find('.loader').slideUp();
 		innslag.find('.loaded').html('');
-		console.log('Clear timer ' + innslag.attr('data-innslag'));
+		//console.log('Clear timer ' + innslag.attr('data-innslag'));
 		clearTimeout(timers[innslag.attr('data-innslag')]);
 	}
 
@@ -110,21 +110,21 @@ var timers = new Array();
 						 'check': check
 						},
 						function(response){
-							console.group('CHECK LENGTH OF ' + response.id);
-							console.log(response.check);
-							console.log(response.num_working);
+							//console.group('CHECK LENGTH OF ' + response.id);
+							//console.log(response.check);
+							//console.log(response.num_working);
 
 							if(check.length != response.num_working) {
-								console.log('Something different!');
+								//console.log('Something different!');
 								details_show( innslag );
 							} else {
 								timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
-								console.log('Same same');
+								//console.log('Same same');
 							}
-							console.groupEnd();
+							//console.groupEnd();
 						});
 		} else {
-			console.log('Clear timer ' + innslag.attr('data-innslag'));
+			//console.log('Clear timer ' + innslag.attr('data-innslag'));
 			clearTimeout(timers[innslag.attr('data-innslag')]);
 		}
 	}
@@ -266,7 +266,7 @@ var timers = new Array();
 // FILEUPLOAD: HJELPERE
 ////////////////////////////////////////////////////////////////////////////////////////
 	function fileUploadError(result) {
-		console.error(result);
+		//console.error(result);
 		var hbt_lastopp_error = Handlebars.compile( jQuery('#handlebars-lastopp-error').html() );
 		
 		jQuery('#fileupload_container').slideUp();
