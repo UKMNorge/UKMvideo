@@ -6,6 +6,8 @@ var timers = new Array();
 ////////////////////////////////////////////////////////////////////////////////////////
 // LISTE OVER INNSLAG
 ////////////////////////////////////////////////////////////////////////////////////////
+	// Bind to document and delegate to make sure the handler is attached also
+	// to elements added in the future
 	jQuery(document).on('click', '.details_show', function(e){
 		e.preventDefault();
 		details_show( jQuery(this).parents('li') );
