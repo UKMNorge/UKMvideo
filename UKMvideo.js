@@ -2,7 +2,7 @@ var UKM_CONFIG = {
     VIDEOCONVERTER_BASE_URL: 'http://videoconverter.ukm.dev',
 };
 
-var timers = new Array();
+var timers = [];
 ////////////////////////////////////////////////////////////////////////////////////////
 // LISTE OVER INNSLAG
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ jQuery(document).on('click', '.actions .edit', function(){
 });
 
 jQuery(document).on('click', 'li.videoreportasje .embed', function() {
-    video = jQuery(this).parents('li.videoreportasje');
+    var video = jQuery(this).parents('li.videoreportasje');
     video.find('div.preview').slideToggle();
     video.find('div.embedhowto').slideToggle();
 });
@@ -109,7 +109,7 @@ function details_hide( innslag ) {
 }
 
 function videos_check( innslag ) {
-    var check = new Array();
+    var check = [];
     innslag.find('.video-working').each(function(){
         check.push(jQuery(this).attr('data-video'));
     });
@@ -130,7 +130,7 @@ function videos_check( innslag ) {
                             //console.log('Something different!');
                             details_show( innslag );
                         } else {
-                            timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id))},5000);
+                            timers[response.id] = setTimeout(function(){videos_check(jQuery('#innslag_'+response.id)); },5000);
                             //console.log('Same same');
                         }
                         //console.groupEnd();
@@ -145,14 +145,14 @@ function videos_check( innslag ) {
 // VIDEOER TILHØRENDE INNSLAG
 ////////////////////////////////////////////////////////////////////////////////////////
 jQuery(document).on('click','.videoaction.embed', function(){
-var video = jQuery(this).parents('li.video');
+    var video = jQuery(this).parents('li.video');
     video.find('.embedhowto').slideToggle();
     video.find('.embedcode').slideToggle();
 });
 
 jQuery(document).on('click','.videoaction.delete', function(){
     var video = jQuery(this).parents('li.video');
-    confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
+    var confirmed = confirm('Er du sikker på at du vil slette denne filmen?');
     if(confirmed) {
         jQuery.post(ajaxurl,
             { 'action': 'UKMvideo_action',
@@ -194,16 +194,16 @@ jQuery(document).ready(function(){
             jQuery('#uploadprogress').attr('value', progress);
         },
     }).bind('fileuploaddone', function(e, data){
-            if(!data.result.success) {
-                fileUploadError( data.result );
-            } else {
-                jQuery('#uploading').slideUp();
-                jQuery('#uploaded').slideDown();
-                jQuery('#cron_id').val(data.result.files[0].cron_id);
-                jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
-                setTimeout(function(){jQuery('#success_one_sec_please').slideDown()}, 2000);
-                jQuery('#submitbutton').parents('form').submit();
-            }
+        if(!data.result.success) {
+            fileUploadError( data.result );
+        } else {
+            jQuery('#uploading').slideUp();
+            jQuery('#uploaded').slideDown();
+            jQuery('#cron_id').val(data.result.files[0].cron_id);
+            jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
+            setTimeout(function(){jQuery('#success_one_sec_please').slideDown()}, 2000);
+            jQuery('#submitbutton').parents('form').submit();
+        }
     }).bind('fileuploadstart', function(){
         jQuery('#filechooser').slideUp();
         jQuery('#uploading').slideDown();
@@ -245,21 +245,21 @@ jQuery(document).ready(function(){
             jQuery('#uploadprogress').attr('value', progress);
         },
     }).bind('fileuploaddone', function(e, data){
-            if(!data.result.success) {
-                fileUploadError( data.result );
-            } else {
-                jQuery('#uploading').slideUp();
-                jQuery('#uploaded').slideDown();
-                jQuery('#cron_id').val(data.result.files[0].cron_id);
-                jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
-            }
+        if(!data.result.success) {
+            fileUploadError( data.result );
+        } else {
+            jQuery('#uploading').slideUp();
+            jQuery('#uploaded').slideDown();
+            jQuery('#cron_id').val(data.result.files[0].cron_id);
+            jQuery('#submitbutton').attr('disabled','').removeAttr('disabled');
+        }
     }).bind('fileuploadstart', function(){
         jQuery('#filechooser').slideUp();
         jQuery('#uploading').slideDown();
         jQuery('#fileupload_dropzone').fadeOut();
     });
 
-   if(jQuery('#fileupload_reportasje').html() !== 'undefined' && jQuery('#fileupload_reportasje').html() !== undefined) {
+    if(jQuery('#fileupload_reportasje').html() !== 'undefined' && jQuery('#fileupload_reportasje').html() !== undefined) {
         if (jQuery.support.cors) {
             jQuery.ajax({
                 url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
@@ -334,7 +334,7 @@ function videoreportasje_convert_status( cron_id ) {
                             window.location.reload();
                         } else {
                             setTimeout(function(){
-                                videoreportasje_convert_status( response.cron_id )
+                                videoreportasje_convert_status( response.cron_id );
                             }, 5000);
                         }
                     } else {
