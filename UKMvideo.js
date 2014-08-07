@@ -180,7 +180,7 @@ jQuery(document).ready(function(){
     jQuery('#fileupload_band').fileupload({
         // Uncomment the following to send cross-domain cookies:
         xhrFields: {withCredentials: true},
-        url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
+        url: UKM_CONFIG.VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
         fileTypes: '^video\/(.)+',
         autoUpload: true,
         formData: {'season': jQuery('#converter_season').val(),
@@ -213,7 +213,7 @@ jQuery(document).ready(function(){
    if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
         if (jQuery.support.cors) {
             jQuery.ajax({
-                url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
+                url: UKM_CONFIG.VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
                 type: 'HEAD'
             }).fail(function () {
                 var result = {'success': false,
@@ -231,7 +231,7 @@ jQuery(document).ready(function(){
     jQuery('#fileupload_reportasje').fileupload({
         // Uncomment the following to send cross-domain cookies:
         xhrFields: {withCredentials: true},
-        url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
+        url: UKM_CONFIG.VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
         fileTypes: '^video\/(.)+',
         autoUpload: true,
         formData: {'season': jQuery('#converter_season').val(),
@@ -262,7 +262,7 @@ jQuery(document).ready(function(){
     if(jQuery('#fileupload_reportasje').html() !== 'undefined' && jQuery('#fileupload_reportasje').html() !== undefined) {
         if (jQuery.support.cors) {
             jQuery.ajax({
-                url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
+                url: UKM_CONFIG.VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
                 type: 'HEAD'
             }).fail(function () {
                 var result = {'success': false,
