@@ -1,3 +1,7 @@
+var UKM_CONFIG = {
+	VIDEOCONVERTER_BASE_URL: 'http://videoconverter.ukm.dev',
+};
+
 var timers = new Array();
 ////////////////////////////////////////////////////////////////////////////////////////
 // LISTE OVER INNSLAG
@@ -168,7 +172,7 @@ var timers = new Array();
 	    jQuery('#fileupload_band').fileupload({
 	        // Uncomment the following to send cross-domain cookies:
 	        xhrFields: {withCredentials: true},
-	        url: 'http://videoconverter.ukm.no/jQupload_recieve.php',
+	        url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
 	        fileTypes: '^video\/(.)+',
 	        autoUpload: true,
 	        formData: {'season': jQuery('#converter_season').val(),
@@ -201,7 +205,7 @@ var timers = new Array();
 	   if(jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
 		    if (jQuery.support.cors) {
 		        jQuery.ajax({
-		            url: 'http://videoconverter.ukm.no/jQupload_cors.php',
+		            url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
 		            type: 'HEAD'
 		        }).fail(function () {
 		        	var result = {'success': false,
@@ -219,7 +223,7 @@ var timers = new Array();
 	    jQuery('#fileupload_reportasje').fileupload({
 	        // Uncomment the following to send cross-domain cookies:
 	        xhrFields: {withCredentials: true},
-	        url: 'http://videoconverter.ukm.no/jQupload_recieve.php',
+	        url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_recieve.php',
 	        fileTypes: '^video\/(.)+',
 	        autoUpload: true,
 	        formData: {'season': jQuery('#converter_season').val(),
@@ -250,7 +254,7 @@ var timers = new Array();
 	   if(jQuery('#fileupload_reportasje').html() !== 'undefined' && jQuery('#fileupload_reportasje').html() !== undefined) {
 		    if (jQuery.support.cors) {
 		        jQuery.ajax({
-		            url: 'http://videoconverter.ukm.no/jQupload_cors.php',
+		            url: UKM_CONFIG.UKM_VIDEOCONVERTER_BASE_URL + '/jQupload_cors.php',
 		            type: 'HEAD'
 		        }).fail(function () {
 		        	var result = {'success': false,
