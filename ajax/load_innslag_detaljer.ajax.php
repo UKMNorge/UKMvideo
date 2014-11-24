@@ -29,7 +29,7 @@ if( !isset( $_POST['innslag'] ) ) {
 					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
 	while( $r = mysql_fetch_assoc( $conv ) ) {
-		if( in_array( $r['file'], $unique_id) )
+		if( in_array( $r['file'], $unique_id) && !empty( $r['file'] ) )
 			continue;
 			
 		$sqlTest = new SQL("SELECT * FROM `ukm_tv_files`
