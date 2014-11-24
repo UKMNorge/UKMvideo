@@ -1,8 +1,3 @@
-// TODO (mariusmandal): This should be resolved from the UKM_HOSTNAME php config to not repeat it twice.
-var UKM_CONFIG = {
-    VIDEOCONVERTER_BASE_URL: 'http://videoconverter.ukm.dev',
-};
-
 var timers = [];
 ////////////////////////////////////////////////////////////////////////////////////////
 // LISTE OVER INNSLAG

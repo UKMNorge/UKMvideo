@@ -82,6 +82,7 @@ function UKMvideo() {
 	}
 	$INFOS['tab_active'] = $_GET['action'];
 	$INFOS['STATUS'] = $STATUS;
+	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
 	
 	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));
 	
