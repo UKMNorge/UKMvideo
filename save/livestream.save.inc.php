@@ -28,3 +28,5 @@ update_option('ukm_live_embedcode', $_POST['live_embedcode'] );
 $INFOS['error']['type'] = 'success';
 $INFOS['error']['title'] = 'Lagret!';
 $INFOS['error']['message'] = 'Livestream-detaljer er lagret';
+
+do_action('UKMpush_to_front_generate_object');
