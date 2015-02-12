@@ -1,7 +1,14 @@
 {% extends "layout.twig.html" %}
 
 {% block content %}
-<div>
+<div class="UKMwidth">
+	{% if is_superadmin and site_type != 'fylke' and site_type != 'land' %}
+		<div class="alert alert-info">
+			<h4>{{ livestream_aktiv ? 'Dea' : 'A' }}ktivér livestream</h4>
+			<a href="?page=UKMvideo&action=livestream&subaction={{ livestream_aktiv ? 'dea' : 'a' }}ktiver" class="btn btn-success btn-md pull-right">{{ livestream_aktiv ? 'Dea' : 'A' }}ktivér</a>
+			<p>Lokalmønstringer har vanligvis ikke tilgang til Livestream-fanen. Her kan UKM Norge aktivere/deaktivere for gjeldende lokalmønstring</p>
+		</div>
+	{% endif %}
 	<h3>Tips til videoopplasting</h3>
 	<p>
 		<strong>Tenk over hva du laster opp:</strong>

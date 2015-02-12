@@ -36,12 +36,30 @@ var UKM_CONFIG = {
 			<span class="tab_description">Jobb med videoreportasjer</span>
 		</div>
 	</a>
+	
+	{% if livestream_aktiv %}
+	<a href="?page=UKMvideo&action=livestream" {{ tab_active == 'livestream' ? 'class="active"' : ''}}>
+		<div>
+			<span class="tab_header">Direktesending</span>
+			<img src="http://ico.ukm.no/livestream-32.png" width="25" border="0" /><br />
+			<span class="tab_description">Informasjon og oppsett</span>
+		</div>
+	</a>
+	{% endif %}
 </div>
 
 <div class="UKM_tabs_desc">
 	<span></span>
 </div>
 <div class="UKM_content_wrapper">
+	{% if error is defined %}
+		<div class="UKMwidth">
+			<div class="alert {{error.type == 'danger' ? 'alert-error alert-danger' : 'alert-'~error.type }}">
+				<h4>{{error.title}}</h4>
+				<p>{{error.message}}</p>
+			</div>
+		</div>
+	{% endif %}
 	{% block content %}
 	{% endblock %}
 </div>

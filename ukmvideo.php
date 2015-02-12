@@ -15,6 +15,7 @@ if(is_admin()) {
 	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
 	add_action('wp_ajax_UKMvideo_action', 'UKMvideo_ajax_action');
 
+	add_action('network_admin_menu', 'UKMvideo_menu_network');
 }
 
 function UKMvideo_menu() {
@@ -22,6 +23,10 @@ function UKMvideo_menu() {
 	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
 }
 
+function UKMvideo_menu_network() {
+	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo_network','UKMvideo_network', 'http://ico.ukm.no/video-16.png', 100);
+	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
+} 
 function UKMvideo_ajax_action() {
 	header('Cache-Control: no-cache, must-revalidate');
 	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -47,6 +52,15 @@ function UKMvideo_ajax_load() {
 	die( json_encode( $AJAX_DATA ) );
 }
 
+function UKMvideo_network() {
+	require_once('controller/controller_status.inc.php');
+	#$INFOS['STATUS'] = $STATUS;
+	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
+	
+	require_once('controller/network_admin.controller.php');
+		
+	echo TWIG('network_admin.twig.html', $INFOS, dirname(__FILE__));
+}
 
 function UKMvideo() {
 	if(!isset($_GET['action']))
@@ -79,9 +93,16 @@ function UKMvideo() {
 
 			require_once('controller/controller_reportasje.inc.php');
 			break;
+		case 'livestream':
+			if($_SERVER['REQUEST_METHOD'] == 'POST' || (isset($_GET['subaction']) && strpos($_GET['subaction'], 'aktiver') !== false ) )
+				require_once('save/livestream.save.inc.php');
+
+			break;
 	}
+	require_once('controller/livestream.controller.php');
+
 	$INFOS['tab_active'] = $_GET['action'];
-	$INFOS['STATUS'] = $STATUS;
+	#$INFOS['STATUS'] = $STATUS;
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
 	
 	echo TWIG($_GET['action'].'.twig.html', $INFOS, dirname(__FILE__));
@@ -91,9 +112,14 @@ function UKMvideo() {
 
 function UKMvideo_scripts_and_styles(){
 	wp_enqueue_script('handlebars_js');
-	wp_enqueue_script('bootstrap_js');
-	wp_enqueue_style('bootstrap_css');
-
+	if( $_GET['action'] == 'livestream' ) {
+		wp_enqueue_script('WPbootstrap3_js');
+		wp_enqueue_style('WPbootstrap3_css');
+	} else {
+		wp_enqueue_script('bootstrap_js');
+		wp_enqueue_style('bootstrap_css');		
+	}
+	
 	wp_enqueue_style('UKMresources_tabs');
 
 	wp_enqueue_style( 'UKMvideo_css', plugin_dir_url( __FILE__ ) . 'UKMvideo.css');
