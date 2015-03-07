@@ -23,6 +23,9 @@ $INFOS['hendelser'] = $hendelser;
 
 $pl = new monstring( get_option('pl_id') );
 $monstring = new StdClass();
+$monstring->navn = $pl->g('pl_name');
+$monstring->season = $pl->g('season');
+$monstring->pl_id = $pl->g('pl_id');
 $monstring->start = $pl->get('pl_start');
 $monstring->stopp = $pl->get('pl_stop');
 

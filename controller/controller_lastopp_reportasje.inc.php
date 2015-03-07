@@ -54,12 +54,6 @@ if(isset($_GET['id'])) {
 	$INFOS['video_description'] = '';
 }
 
-$monstring = new StdClass;
-$monstring->navn = $pl->g('pl_name');
-$monstring->season = $pl->g('season');
-$monstring->pl_id = $pl->g('pl_id');
-$INFOS['monstring'] = $monstring; 
-
 $INFOS['blog_id'] = $blog_id;
 
 $INFOS['filter'] = $_GET['filter'];
