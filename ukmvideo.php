@@ -19,7 +19,7 @@ if(is_admin()) {
 }
 
 function UKMvideo_menu() {
-	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
+	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'edit_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
 	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
 }
 
