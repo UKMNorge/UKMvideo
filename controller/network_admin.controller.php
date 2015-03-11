@@ -9,3 +9,4 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $INFOS['livestream_password'] = get_site_option('ukm_livestream_password');
+$INFOS['livestream_username'] = get_site_option('ukm_livestream_username');
