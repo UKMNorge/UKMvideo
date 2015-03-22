@@ -16,8 +16,7 @@ if( isset( $_GET['filter'] ) && is_numeric( $_GET['filter'] ) ) {
 }
 
 $hendelser = $monstring->forestillinger();
-$INFOS['hendelser'] = $hendelser;
-
+$INFOS['filter_hendelser'] = $hendelser;
 
 if( isset( $INFOS['program'] ) ) {
 	foreach($INFOS['program'] as $innslag) {

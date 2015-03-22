@@ -6,7 +6,7 @@
 	<div class="span8">
 		<select class="pull-right" id="film_sort_list">
 			<option value="alfa" {{ sortering=='alfa' ? 'selected="selected"' : '' }}>Alfabetisk sortert</option>
-			{% for hendelse in hendelser %}
+			{% for hendelse in filter_hendelser %}
 			<option value="{{hendelse.c_id}}" {{ sortering==hendelse.c_id ? 'selected="selected"' : '' }}>{{hendelse.c_name}}</option>
 			{% endfor %}
 		</select>
