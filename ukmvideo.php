@@ -20,13 +20,6 @@ if(is_admin()) {
 
 function UKMvideo_menu() {
 	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'edit_posts', 'UKMvideo','UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'edit_posts', 'UKMvideo&action=innslag', 1);
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'edit_posts', 'UKMvideo&action=reportasje', 2);
-	
-	if ($site_type == 'land' || $site_type == 'fylke' || get_option('livestream_aktiv') ) {
-		UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Direktesending', 'edit_posts', 'UKMvideo&action=livestream', 3);
-	}
-
 	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
 }
 
