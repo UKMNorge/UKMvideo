@@ -21,16 +21,20 @@ if(is_admin()) {
 function UKMvideo_menu() {
 	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'editor', 'UKMvideo', 'UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
 
-	add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'editor', 'admin.php?page=UKMvideo_innslag', 'UKMvideo_innslag');
-	add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'edit_posts', 'admin.php?page=UKMvideo_reportasje', 'UKMvideo_reportasjer');
-	add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp videoreportasje', 'edit_posts', 'admin.php?page=UKMvideo_lastopp_reportasje', 'UKMvideo_ny_reportasje');
-	add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp innslag', 'edit_posts', 'admin.php?page=UKMvideo_lastopp_innslag', 'UKMvideo_nytt_innslag');
+	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'edit_posts', 'UKMvideo_innslag', 'UKMvideo_innslag');
+	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'edit_posts', 'UKMvideo_reportasje', 'UKMvideo_reportasje');
+	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp videoreportasje', 'edit_posts', 'UKMvideo_lastopp_reportasje', 'UKMvideo_ny_reportasje');
 
+	$site_type = get_option('site_type');
 	if ($site_type == 'land' || $site_type == 'fylke' || get_option('livestream_aktiv') ) {
 		UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Direktesending', 'edit_posts', 'UKMvideo_livestream', 'UKMvideo_livestream');
 	}
 
 	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
+	UKM_add_scripts_and_styles('UKMvideo_innslag', 'UKMvideo_scripts_and_styles' );
+	UKM_add_scripts_and_styles('UKMvideo_reportasje', 'UKMvideo_scripts_and_styles' );
+	UKM_add_scripts_and_styles('UKMvideo_lastopp_reportasje', 'UKMvideo_scripts_and_styles' );
+	UKM_add_scripts_and_styles('UKMvideo_livestream', 'UKMvideo_scripts_and_styles' );
 }
 
 function UKMvideo_menu_network() {
@@ -123,6 +127,8 @@ function UKMvideo_reportasje() {
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 		require_once('save/save_video_reportasje_uploaded.inc.php');
 	require_once('controller/controller_reportasje.inc.php');
+	require_once('controller/livestream.controller.php');
+	require_once('controller/controller_status.inc.php');
 
 	$INFOS['tab_active'] = 'reportasje';
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
@@ -133,7 +139,9 @@ function UKMvideo_reportasje() {
 
 function UKMvideo_ny_reportasje() {
 	require_once('controller/controller_lastopp_reportasje.inc.php');
-
+	require_once('controller/livestream.controller.php');
+	require_once('controller/controller_status.inc.php');
+	
 	$INFOS['tab_active'] = 'lastopp_reportasje';
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
 	
@@ -145,9 +153,12 @@ function UKMvideo_innslag() {
 	if($_SERVER['REQUEST_METHOD'] == 'POST')
 		require_once('save/save_video_innslag_uploaded.inc.php');
 	require_once('controller/controller_innslag.inc.php');
+	require_once('controller/livestream.controller.php');
+	require_once('controller/controller_status.inc.php');
 
 	$INFOS['tab_active'] = 'innslag';
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
+
 	
 	echo TWIG($INFOS['tab_active'].'.twig.html', $INFOS, dirname(__FILE__));
 	echo HANDLEBARS( dirname(__FILE__) );				
@@ -155,6 +166,8 @@ function UKMvideo_innslag() {
 
 function UKMvideo_nytt_innslag() {
 	require_once('controller/controller_lastopp_innslag.inc.php');
+	require_once('controller/livestream.controller.php');
+	require_once('controller/controller_status.inc.php');
 
 	$INFOS['tab_active'] = 'lastopp_innslag';
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
@@ -168,9 +181,10 @@ function UKMvideo_livestream() {
 	if($_SERVER['REQUEST_METHOD'] == 'POST' || (isset($_GET['subaction']) && strpos($_GET['subaction'], 'aktiver') !== false ) )
 		require_once('save/livestream.save.inc.php');
 	require_once('controller/livestream.controller.php');
+	require_once('controller/controller_status.inc.php');
 
 	$INFOS['tab_active'] = 'livestream';
-	#$INFOS['STATUS'] = $STATUS;
+	
 	$INFOS['ukm_hostname'] = UKM_HOSTNAME;
 	
 	echo TWIG($INFOS['tab_active'].'.twig.html', $INFOS, dirname(__FILE__));
