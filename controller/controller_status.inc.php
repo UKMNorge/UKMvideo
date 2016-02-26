@@ -32,3 +32,4 @@ if(!$status_videoconverter) {
     $STATUS->warning->status = true;
     $STATUS->warning->message = 'Videoconverteren har kun '. $disk_human .'GB ledig plass';
 }
+$INFOS['STATUS'] = $STATUS;

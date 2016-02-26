@@ -13,7 +13,7 @@ var UKM_CONFIG = {
 
 
 <div class="UKM_tabs">
-	<a href="?page=UKMvideo&action=tips" {{ tab_active == 'tips' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo" {{ tab_active == 'tips' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Tips</span>
 			<img src="http://ico.ukm.no/info-button-256.png" width="25"  border="0" /><br />
@@ -21,7 +21,7 @@ var UKM_CONFIG = {
 		</div>
 	</a>
 
-	<a href="?page=UKMvideo&action=innslag" {{ tab_active == 'innslag' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo_innslag" {{ tab_active == 'innslag' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Innslag</span>
 			<img src="http://ico.ukm.no/people-256.png" width="25"  border="0" /><br />
@@ -29,7 +29,7 @@ var UKM_CONFIG = {
 		</div>
 	</a>
 
-	<a href="?page=UKMvideo&action=reportasje" {{ tab_active == 'reportasje' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo_reportasje" {{ tab_active == 'reportasje' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Videoreportasjer</span>
 			<img src="http://ico.ukm.no/video-256.png" width="25" border="0" /><br />
@@ -38,7 +38,7 @@ var UKM_CONFIG = {
 	</a>
 	
 	{% if livestream_aktiv %}
-	<a href="?page=UKMvideo&action=livestream" {{ tab_active == 'livestream' ? 'class="active"' : ''}}>
+	<a href="?page=UKMvideo_livestream" {{ tab_active == 'livestream' ? 'class="active"' : ''}}>
 		<div>
 			<span class="tab_header">Direktesending</span>
 			<img src="http://ico.ukm.no/livestream-32.png" width="25" border="0" /><br />
