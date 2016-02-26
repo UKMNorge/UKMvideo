@@ -23,7 +23,7 @@ jQuery(document).on('click', '.facebook', function(){
 });
 
 jQuery(document).on('click', '#add_reportasje', function(){
-    window.location.href = '?page=UKMvideo&action=lastopp_reportasje';
+    window.location.href = '?page=UKMvideo_lastopp_reportasje';
 });
 
 jQuery(document).on('change', '#reportasje_category', function(){

@@ -23,7 +23,7 @@ function UKMvideo_menu() {
 
 	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'editor', 'UKMvideo_innslag', 'UKMvideo_innslag');
 	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'editor', 'UKMvideo_reportasje', 'UKMvideo_reportasje');
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp videoreportasje', 'editor', 'UKMvideo_lastopp_reportasje', 'UKMvideo_ny_reportasje');
+	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp videoreportasje', 'editor', 'UKMvideo_lastopp_reportasje', 'UKMvideo_lastopp_reportasje');
 
 	$site_type = get_option('site_type');
 	if ($site_type == 'land' || $site_type == 'fylke' || get_option('livestream_aktiv') ) {
@@ -137,7 +137,7 @@ function UKMvideo_reportasje() {
 	echo HANDLEBARS( dirname(__FILE__) );
 }
 
-function UKMvideo_ny_reportasje() {
+function UKMvideo_lastopp_reportasje() {
 	require_once('controller/controller_lastopp_reportasje.inc.php');
 	require_once('controller/livestream.controller.php');
 	require_once('controller/controller_status.inc.php');
