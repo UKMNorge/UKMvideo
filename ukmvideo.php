@@ -38,8 +38,9 @@ function UKMvideo_menu() {
 }
 
 function UKMvideo_menu_network() {
-	$page = add_menu_page('UKM-TV Administrer innhold', 'Video', 'publish_posts', 'UKMvideo_network','UKMvideo_network', 'http://ico.ukm.no/video-16.png', 100);
-	add_action( 'admin_print_styles-' . $page, 'UKMvideo_scripts_and_styles' );
+	$subpage = add_submenu_page('UKMTVwp_network', 'Livestream', 'Livestream', 'administrator', 'UKMvideo_network', 'UKMvideo_network');
+	add_action( 'admin_print_styles-' . $subpage, 'UKMTVwp_scripts_and_styles' );
+
 } 
 function UKMvideo_ajax_action() {
 	header('Cache-Control: no-cache, must-revalidate');
