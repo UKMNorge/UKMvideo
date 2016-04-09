@@ -17,6 +17,14 @@ $INFOS['is_superadmin'] = is_super_admin();
 $INFOS['live_link'] = get_option('ukm_live_link');
 $INFOS['live_embedcode'] = get_option('ukm_live_embedcode');
 
+// Rensk opp i URLer
+if( is_string( $INFOS['live_link'] ) ) {
+	$INFOS['live_link'] = stripslashes( $INFOS['live_link'] );
+}
+if( is_string( $INFOS['live_embedcode'] ) ) {
+	$INFOS['live_embedcode'] = stripslashes( $INFOS['live_embedcode'] );
+}
+
 $hendelser = get_option('ukm_hendelser_perioder' );
 
 $INFOS['hendelser'] = $hendelser;
