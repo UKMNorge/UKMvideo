@@ -46,3 +46,8 @@ $sql->run();
 		$register->post( array('type' => 'standalone') );
 		$register->request('http://api.ukm.no/video:tv_update/'.$cron_id);
 	}
+
+// Hvis filen er konvertert ferdig før bruker trykker lagre vil den stoppe opp
+// Dette scriptet på videoconverteren sjekker om det har skjedd, og vil i tilfelle resette status	
+$reset_converter = new UKMCURL();
+$reset_converter->request('http://videoconverter.ukm.no/api/reset_on_upload.php?cron_id='.$cron_id);
