@@ -24,7 +24,7 @@ if( isset( $INFOS['program'] ) ) {
 		if($inn->tittellos())
 			continue;
 		$related = $inn->related_items();
-
+		$coming = array();
 		$unique_id = array();
 		if(is_array($related['tv'])) {
 			foreach($related['tv'] as $key => $tv) {
