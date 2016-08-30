@@ -329,9 +329,13 @@ function videoreportasje_convert_status( cron_id ) {
                             window.location.href = window.location.href;
                             window.location.reload();
                         } else {
-                            setTimeout(function(){
-                                videoreportasje_convert_status( response.cron_id );
-                            }, 5000);
+	                        if( response.convert_failed ) {
+		                        jQuery('#cron_'+ response.cron_id +'_message').removeClass('alert-info').addClass('alert-danger').html('Beklager, konvertering av filmen har feilet. Kontakt <a href="mailto:support@ukm.no">UKM Norge</a> (CronID: '+ response.cron_id +')');
+	                        } else {
+	                            setTimeout(function(){
+	                                videoreportasje_convert_status( response.cron_id );
+	                            }, 5000);
+	                        }
                         }
                     } else {
                         alert('En feil har oppstått ved oppdatering av konverteringsstatus. Kontakt UKM Norge');
