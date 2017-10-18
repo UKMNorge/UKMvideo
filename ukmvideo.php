@@ -19,7 +19,7 @@ if(is_admin()) {
 }
 
 function UKMvideo_menu() {
-	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'edit_posts', 'UKMvideo', 'UKMvideo', 'http://ico.ukm.no/video-16.png', 2);
+	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'edit_posts', 'UKMvideo', 'UKMvideo', '//ico.ukm.no/video-16.png', 2);
 
 	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'edit_posts', 'UKMvideo_innslag', 'UKMvideo_innslag');
 	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'edit_posts', 'UKMvideo_reportasje', 'UKMvideo_reportasje');
@@ -208,7 +208,7 @@ function UKMvideo_scripts_and_styles(){
 	wp_enqueue_script( 'UKMvideo_js', plugin_dir_url( __FILE__ ) . 'UKMvideo.js');
 	
 	wp_enqueue_script('jquery');
-	wp_enqueue_script('jqueryGoogleUI', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
+	wp_enqueue_script('jqueryGoogleUI', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js');
 
 	wp_enqueue_style( 'blueimp-gallery-css', plugin_dir_url( __FILE__ ) . 'jqueryuploader/css/blueimp-gallery.min.css');
 

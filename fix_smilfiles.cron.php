@@ -18,7 +18,7 @@ while( $row = mysql_fetch_assoc( $res ) ) {
 	
 	$curl = new UKMCurl();
 	$curl->timeout( 5 );
-	$create_smil = $curl->request( 'http://video.ukm.no/create_smil.php?file='. $request );
+	$create_smil = $curl->request( 'https://video.ukm.no/create_smil.php?file='. $request );
 	
 
 	if( !$create_smil->success ) {

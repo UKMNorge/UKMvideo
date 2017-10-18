@@ -20,7 +20,7 @@ require_once('UKM/curl.class.php');
 // VIDEOCONVERTEREN
 $curl_videoconverter = new UKMCURL();
 $curl_videoconverter->timeout(2);
-$status_videoconverter = $curl_videoconverter->request('http://videoconverter.' . UKM_HOSTNAME . '/api/status.php');
+$status_videoconverter = $curl_videoconverter->request('https://videoconverter.' . UKM_HOSTNAME . '/api/status.php');
 
 if(!$status_videoconverter) {
     $STATUS->critical->status = true;

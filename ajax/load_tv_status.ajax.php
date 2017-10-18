@@ -9,7 +9,7 @@ if( false == $TV->id ) {
 	require_once('UKM/curl.class.php');
 	$curl_converter = new UKMCURL();
 	$curl_converter->timeout(2);
-	$status_converter = $curl_converter->request('http://videoconverter.'. UKM_HOSTNAME .'/api/convertStatus.php?cron_id='. $_POST['cron_id']);
+	$status_converter = $curl_converter->request('https://videoconverter.'. UKM_HOSTNAME .'/api/convertStatus.php?cron_id='. $_POST['cron_id']);
 	$status_convert = $status_converter->data;
 
 	// CHECK CONVERTER STATUS
