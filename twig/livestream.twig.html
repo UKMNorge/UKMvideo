@@ -75,15 +75,14 @@
 		Er tidspunktene feil kan du rette dette i <a href="?page=UKMMonstring">mønstrings-modulen</a>.
 	</p>
 	
-	{% if site_type == 'fylke' or site_type == 'land' %}
 	<p>
-		<b>Under forestillingene vil videovinduet vises på <a href="../">forsiden</a>.</b>
+		<b>Under forestillingene vil videovinduet vises på <a href="../">forsiden</a> (så fremt du har lagt inn embed-kode).</b>
 		<br />
 		Disse tidspunktene bestemmes av forestillingene du har opprettet i <a href="?page=UKMprogram_admin">program-modulen</a>.
 		<br />
 		Disse er nå satt til:
 	</p>
-	<ol class="list-unstyled">
+	<ol class="list-unstyled unstyled">
 		{% for hendelse in hendelser %}
 			<li>
 				<b>{{ hendelse.start|dato('d.M') }}</b>
@@ -97,7 +96,6 @@
 			<li class="alert alert-info">Ingen forestillinger er satt opp enda. Gjør dette i <a href="?page=UKMprogram_admin">program-modulen</a></li>
 		{% endfor %}
 	</ol>
-	{% endif %}
 	
 	<h3>Trinn 3: Stream sendingen</h3>
 	<p>
