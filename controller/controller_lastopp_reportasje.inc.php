@@ -27,7 +27,7 @@ if($blog_id == 1) {
 				array('plid' => get_option('pl_id')));
 }
 $res = $qry->run();
-while( $r = mysql_fetch_assoc($res) ) {
+while( $r = SQL::fetch($res) ) {
 	if(!in_array( $r['video_category'] , $categories))
 		$categories[] = utf8_encode($r['video_category']);
 }

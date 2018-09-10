@@ -5,6 +5,6 @@ $conv = new SQL("SELECT *
 				 AND `file` = ''",
 				array('bid' => $_POST['innslag']));
 $conv = $conv->run();
-$AJAX_DATA = array( 'num_working' => mysql_num_rows( $conv ),
+$AJAX_DATA = array( 'num_working' => SQL::fetch( $conv ),
 					'id' => $_POST['innslag'],
 					'check' => $_POST['check']);

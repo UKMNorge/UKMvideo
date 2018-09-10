@@ -12,7 +12,7 @@ $sql = new SQL("SELECT *
 			);
 $res = $sql->run();
 
-while( $row = mysql_fetch_assoc( $res ) ) {
+while( $row = SQL::fetch( $res ) ) {
 	echo '<h1>'. $row['tv_file'] .'</h1>';
 	$request = urlencode( $row['tv_file'] );
 	

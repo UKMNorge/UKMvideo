@@ -28,7 +28,7 @@ if( !isset( $_POST['innslag'] ) ) {
 					 WHERE `b_id` = '#bid'",
 					array('bid' => $innslag->get('b_id')));
 	$conv = $conv->run();
-	while( $r = mysql_fetch_assoc( $conv ) ) {
+	while( $r = SQL::fetch( $conv ) ) {
 		if( in_array( $r['file'], $unique_id) && !empty( $r['file'] ) )
 			continue;
 			
@@ -37,7 +37,7 @@ if( !isset( $_POST['innslag'] ) ) {
 									AND `tv_deleted` = 'true'",
 									array('cronid' => $r['cron_id']));
 				$resTest = $sqlTest->run();
-		if(mysql_num_rows( $resTest ) > 0)
+		if(SQL::fetch( $resTest ) > 0)
 			continue;
 			
 		if(!empty($r['file'])) {
@@ -53,6 +53,6 @@ if( !isset( $_POST['innslag'] ) ) {
 						'related' => $videos,
 						'converting' => $converting,
 						'moving' => $moving,
-						'autoreload' => mysql_num_rows( $conv ) > 0,
+						'autoreload' => SQL::fetch( $conv ) > 0,
 					  );
 }

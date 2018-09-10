@@ -11,7 +11,7 @@ $sql = new SQL("SELECT `cron_id` FROM `ukm_standalone_video`
 				ORDER BY `video_name` ASC",
 				array('plid' => get_option('pl_id')));
 $res = $sql->run();
-while( $r = mysql_fetch_assoc( $res )) {
+while( $r = SQL::fetch( $res )) {
 
 	$film = new SQL("SELECT *
 					FROM `ukm_standalone_video` 
