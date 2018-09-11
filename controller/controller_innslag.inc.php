@@ -51,7 +51,7 @@ if( isset( $INFOS['program'] ) ) {
 		
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_videos' => sizeof($related['tv']) + sizeof($coming),
+						 'num_videos' => (is_array( $related['tv'] ) ? sizeof($related['tv']) : 0 ) + (is_array( $coming ) ? sizeof($coming) : 0),
 						 'converting' => $converting,
 						 'moving' => $moving,
 						);
