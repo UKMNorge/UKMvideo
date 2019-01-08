@@ -5,6 +5,19 @@
 <div class="clearfix"></div>
 
 <h2>Last opp ny film av {{innslag.navn}}</h2>
+
+{% if innslag.samtykke.harNei %}
+    <div class="alert alert-danger span9">
+        <b>
+            {% if innslag.harTitler %}
+                {{ innslag.samtykke.countNei }} av {{ innslag.personer }} personer i {{ innslag.navn }} vil ikke at det lastes opp film av innslaget.
+            {% else %}
+                {{ innslag.navn }} vil ikke at vi laster opp film.
+            {% endif %}
+        </b>
+    </div>
+    <div class="clearfix"></div>
+{% endif %}
 <input type="hidden" name="converter_season" id="converter_season" value="{{monstring.season}}" />
 <input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{monstring.pl_id}}" />
 <input type="hidden" name="converter_type" id="converter_type" value="innslag" />

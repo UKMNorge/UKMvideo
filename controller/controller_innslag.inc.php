@@ -48,10 +48,17 @@ if( isset( $INFOS['program'] ) ) {
 					$coming[] = $r;
 			}	
 		}
-		
+        
+        $count = 0;
+        if( is_array( $related['tv'] ) ) {
+            $count += sizeof($related['tv']);
+        }
+        if( is_array( $coming ) ) {
+            $count += sizeof($coming);
+        }
 		$innslagdata = array('name' => $inn->g('b_name'),
 						 'id' => $inn->g('b_id'),
-						 'num_videos' => sizeof($related['tv']) + sizeof($coming),
+						 'num_videos' => $count,
 						 'converting' => $converting,
 						 'moving' => $moving,
 						);

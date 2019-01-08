@@ -3,18 +3,24 @@
 require_once('UKM/monstring.class.php');
 require_once('UKM/innslag.class.php');
 
-$pl = new monstring( get_option('pl_id') );
-$monstring = new StdClass;
-$monstring->navn = $pl->g('pl_name');
-$monstring->season = $pl->g('season');
-$monstring->pl_id = $pl->g('pl_id');
-$INFOS['monstring'] = $monstring; 
+$monstring = new monstring_v2( get_option('pl_id') );
+$innslag = $monstring->getInnslag()->get( $_GET['innslag'] );
 
-$inn = new innslag( $_GET['innslag'] );
-$innslag = new StdClass;
-$innslag->b_id = $inn->g('b_id');
-$innslag->navn = $inn->g('b_name');
-$INFOS['innslag'] = $innslag;
+$data = new StdClass;
+$data->navn = $monstring->getNavn();
+$data->season = $monstring->getSesong();
+$data->pl_id = $monstring->getId(); 
+$INFOS['monstring'] = $data; 
+
+$data = new StdClass;
+$data->b_id = $innslag->getId();
+$data->navn = $innslag->getNavn();
+$data->personer = $innslag->getPersoner()->getAntall();
+$data->harTitler = $innslag->getType()->harTitler();
+$data->samtykke = new stdClass();
+$data->samtykke->harNei = $innslag->getSamtykke()->harNei();
+$data->samtykke->countNei = $innslag->getSamtykke()->getNeiCount();
+$INFOS['innslag'] = $data;
 
 
 global $blog_id;
