@@ -10,37 +10,29 @@ Author URI: http://www.ukm-norge.no
 
 if(is_admin()) {
 	require_once('UKM/inc/handlebars.inc.php');
-	add_action('UKM_admin_menu', 'UKMvideo_menu');
-	add_filter('UKM_admin_menu_conditions', 'UKMvideo_menu_conditions');
+	add_action('admin_menu', 'UKMvideo_menu');
 	
 	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
 	add_action('wp_ajax_UKMvideo_action', 'UKMvideo_ajax_action');
 
 	add_action('network_admin_menu', 'UKMvideo_menu_network');
 }
-function UKMvideo_menu_conditions( $_CONDITIONS ) {
-	return array_merge( $_CONDITIONS, 
-		['UKMvideo' => 'monstring_er_registrert']
+
+function UKMvideo_menu() {	
+	$page = add_submenu_page(
+		'edit.php',
+		'UKM-TV Administrer innhold',
+		'Video',
+		'edit_posts',
+		'UKMvideo',
+		'UKMvideo', 
+		#'//ico.ukm.no/video-20.png',
+		13
 	);
-}
-
-function UKMvideo_menu() {
-	UKM_add_menu_page('content','UKM-TV Administrer innhold', 'Video', 'edit_posts', 'UKMvideo', 'UKMvideo', '//ico.ukm.no/video-16.png', 13);
-
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Innslag', 'edit_posts', 'UKMvideo_innslag', 'UKMvideo_innslag');
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Videoreportasjer', 'edit_posts', 'UKMvideo_reportasje', 'UKMvideo_reportasje');
-	UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Last opp videoreportasje', 'edit_posts', 'UKMvideo_lastopp_reportasje', 'UKMvideo_lastopp_reportasje');
-
-	$site_type = get_option('site_type');
-	if ($site_type == 'land' || $site_type == 'fylke' || get_option('livestream_aktiv') ) {
-		UKM_add_submenu_page('UKMvideo', 'UKM-TV Administrer innhold', 'Direktesending', 'edit_posts', 'UKMvideo_livestream', 'UKMvideo_livestream');
-	}
-
-	UKM_add_scripts_and_styles('UKMvideo', 'UKMvideo_scripts_and_styles' );
-	UKM_add_scripts_and_styles('UKMvideo_innslag', 'UKMvideo_scripts_and_styles' );
-	UKM_add_scripts_and_styles('UKMvideo_reportasje', 'UKMvideo_scripts_and_styles' );
-	UKM_add_scripts_and_styles('UKMvideo_lastopp_reportasje', 'UKMvideo_scripts_and_styles' );
-	UKM_add_scripts_and_styles('UKMvideo_livestream', 'UKMvideo_scripts_and_styles' );
+	add_action(
+		'admin_print_styles-' . $page,
+		'UKMvideo_scripts_and_styles'
+	);
 }
 
 function UKMvideo_menu_network() {
