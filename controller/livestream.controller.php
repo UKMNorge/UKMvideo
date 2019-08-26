@@ -34,7 +34,7 @@ $monstring = new StdClass();
 $monstring->navn = $pl->g('pl_name');
 $monstring->season = $pl->g('season');
 $monstring->pl_id = $pl->g('pl_id');
-$monstring->start = $pl->get('pl_start');
-$monstring->stopp = $pl->get('pl_stop');
+$monstring->start = $pl->get('old_pl_start');
+$monstring->stopp = $pl->get('old_pl_stop');
 
 $INFOS['monstring'] = $monstring;
