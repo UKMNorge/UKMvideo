@@ -10,7 +10,7 @@ Author URI: http://www.ukm-norge.no
 
 if(is_admin()) {
 	require_once('UKM/inc/handlebars.inc.php');
-	add_action('admin_menu', 'UKMvideo_menu');
+	#add_action('admin_menu', 'UKMvideo_menu');
 	
 	add_action('wp_ajax_UKMvideo_load', 'UKMvideo_ajax_load');
 	add_action('wp_ajax_UKMvideo_action', 'UKMvideo_ajax_action');
