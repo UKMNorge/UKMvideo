@@ -1,8 +1,6 @@
 <?php
 	
-$site_type = get_option('site_type');
-
-if( $site_type == 'land' || $site_type == 'fylke' ) {
+if( in_array( get_option('pl_eier_type'), ['land','fylke']) ) {
 	$INFOS['livestream_aktiv'] = true;
 } else {
 	$INFOS['livestream_aktiv'] = get_option('livestream_aktiv');
@@ -11,7 +9,7 @@ if( $site_type == 'land' || $site_type == 'fylke' ) {
 $INFOS['livestream_password'] = get_site_option('ukm_livestream_password');
 $INFOS['livestream_username'] = get_site_option('ukm_livestream_username');
 
-$INFOS['site_type'] = $site_type;
+$INFOS['site_type'] = get_option('site_type');
 $INFOS['is_superadmin'] = is_super_admin();
 
 $INFOS['live_link'] = get_option('ukm_live_link');
@@ -34,7 +32,7 @@ $monstring = new StdClass();
 $monstring->navn = $pl->g('pl_name');
 $monstring->season = $pl->g('season');
 $monstring->pl_id = $pl->g('pl_id');
-$monstring->start = $pl->get('pl_start');
-$monstring->stopp = $pl->get('pl_stop');
+$monstring->start = $pl->get('old_pl_start');
+$monstring->stopp = $pl->get('old_pl_stop');
 
 $INFOS['monstring'] = $monstring;
