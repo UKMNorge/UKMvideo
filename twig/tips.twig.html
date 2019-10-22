@@ -1,6 +1,4 @@
-{% extends "layout.twig.html" %}
-
-{% block content %}
+{% extends "layout.twig.html" %} {% block content %}
 <div class="UKMwidth">
     {% if is_superadmin and pl_eier_type in ['kommune','arrangement'] %}
     <div class="alert alert-info">
@@ -26,22 +24,20 @@
 </div>
 
 <div>
-	<h3>Bruk film i nyhetsinnlegg</h3>
- 	<p>
- 		Hvis du vil bruke en film fra UKM.no i et nyhetsinnlegg, 
- 		kopierer du inn adressen fra <a href="//tv.ukm.no" target="_blank">tv.ukm.no</a> på ønsket sted i teksten,
- 		og systemet ordner resten automatisk når innlegget vises.
-	</p>
+    <h3>Bruk film i nyhetsinnlegg</h3>
+    <p>
+        Hvis du vil bruke en film fra UKM.no i et nyhetsinnlegg, kopierer du inn adressen fra <a href="//tv.ukm.no" target="_blank">tv.ukm.no</a> på ønsket sted i teksten, og systemet ordner resten automatisk når innlegget vises.
+    </p>
 </div>
 
 <div>
-	<h3>Valg av nettleser</h3>
-	<p>Vi anbefaler
-		<a href="//www.google.com/intl/no/chrome/browser/">Google Chrome</a>, 
-		<a href="//www.mozilla.org/nb-NO/firefox/new/">Mozilla Firefox</a> eller 
-		<a href="//windows.microsoft.com/nb-no/internet-explorer/ie-9-worldwide-languages">Internet Explorer 9 eller nyere</a>.	
-	</p>
-	<p><strong>Videoopplasteren krever en relativt ny utgave av nettleseren.</strong></p>
-	<p>Problemer med opplasting? <a href="mailto:support@ukm.no">Ta kontakt med support!</a></p>
+    <h3>Valg av nettleser</h3>
+    <p>Vi anbefaler
+        <a href="//www.google.com/intl/no/chrome/browser/">Google Chrome</a>,
+        <a href="//www.mozilla.org/nb-NO/firefox/new/">Mozilla Firefox</a> eller
+        <a href="//windows.microsoft.com/nb-no/internet-explorer/ie-9-worldwide-languages">Internet Explorer 9 eller nyere</a>.
+    </p>
+    <p><strong>Videoopplasteren krever en relativt ny utgave av nettleseren.</strong></p>
+    <p>Problemer med opplasting? <a href="mailto:support@ukm.no">Ta kontakt med support!</a></p>
 </div>
 {% endblock %}
