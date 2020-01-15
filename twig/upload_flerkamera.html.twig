@@ -1,0 +1,79 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+
+	<div class="clearfix"></div>
+
+	<h2>Last opp ny film av
+		{{innslag.getNavn()}}</h2>
+
+	<p class="lead">
+		Når opplastingen er ferdig, vil opplasteren selv trykke på lagre-knappen og gå tilbake til
+		{{ hendelse.getNavn() }}
+	</p>
+
+	{% if innslag.getSamtykke().harNei() %}
+		<div class="alert alert-danger span9">
+			<b>
+				{% if innslag.harTitler() %}
+					{{ innslag.getSamtykke().getNeiCount() }}
+					av
+					{{ innslag.getPersoner().getAntall() }}
+					personer i
+					{{ innslag.getNavn() }}
+					vil ikke at det lastes opp film av innslaget.
+				{% else %}
+					{{ innslag.getNavn() }}
+					vil ikke at vi laster opp film.
+				{% endif %}
+			</b>
+		</div>
+		<div class="clearfix"></div>
+	{% endif %}
+	<input type="hidden" name="converter_season" id="converter_season" value="{{arrangement.getSesong()}}"/>
+	<input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{arrangement.getId()}}"/>
+	<input type="hidden" name="converter_type" id="converter_type" value="innslag"/>
+	<input type="hidden" name="converter_b_id" id="converter_b_id" value="{{innslag.getId()}}"/>
+	<input type="hidden" name="converter_blog_id" id="converter_blog_id" value="{{blog_id}}"/>
+
+	<form action="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{GET('hendelse')}}&last_upload={{innslag.getId()}}#innslag_{{innslag.getId()}}" method="post">
+		<div class="container-fluid" id="fileupload_container">
+			<div class="row" style="margin-top: 2em;">
+				<div class="col-xs-6">
+					<div class="dropzone" id="fileupload_dropzone">
+						<img src="//ico.ukm.no/grafikk/dropzone.png"/>
+					</div>
+					<div class="form-group alert alert-warning" id="uploading" style="display:none;">
+						<label>Laster opp fil</label>
+						<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90"/>
+					</div>
+					<div class="alert alert-success" id="uploaded" style="display:none;">
+						<h3>Filen er lastet opp!</h3>
+						<strong>Fyll ut skjemaet nedenfor, og trykk lagre!</strong>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div id="filechooser">
+						<label>eller velg fil</label>
+						<input id="fileupload_reportasje" class="form-control" type="file" name="files[]" style="border: none"/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top: 2em;">
+			<div class="col-xs-12">
+				<input type="hidden" id="b_id" value="{{innslag.b_id}}" name="b_id"/>
+				<input type="hidden" id="cron_id" value="0" name="cron_id"/>
+				<div class="form-group">
+					<input name="submit_video" class="btn btn-ukm btn-success" id="submitbutton" type="submit" value="Lagre" disabled="disabled"/>
+
+					eller
+
+					<a href="javascript:window.history.go(-1)">tilbake til oversikten</a>
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div id="fileupload_message" style="display:none;"></div>
+{% endblock %}

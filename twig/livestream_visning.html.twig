@@ -1,0 +1,41 @@
+<h4>Når og hvor vises sendingen?</h4>
+<p>
+	<b>Lenke til direktesendingen vises på
+		<a href="../">din nettside</a>
+		under hele mønstringen.
+	</b>
+	<br/>
+	Dvs fra det tidspunktet du har satt som mønstringsstart ({{ monstring.start|date('d.m H:i') }}) til det tidspunktet du har satt som mønstringsslutt ({{ monstring.stopp|date('d.m H:i') }}).
+	<br/>
+	Er tidspunktene feil kan du rette dette i
+	<a href="index.php">mønstrings-modulen</a>.
+</p>
+
+{#
+<p>
+	<b>Under forestillingene vil videovinduet vises på
+		<a href="../">forsiden</a>
+		(så fremt du har lagt inn embed-kode).</b>
+	<br/>
+	Disse tidspunktene bestemmes av forestillingene du har opprettet i
+	<a href="?page=UKMprogram_admin">program-modulen</a>.
+	<br/>
+	Disse er nå satt til:
+</p>
+<ol class="list-unstyled unstyled">
+	{% for hendelse in hendelser %}
+		<li>
+			<b>{{ hendelse.start|dato('d.M') }}</b>
+			Fra:
+			<b>{{ hendelse.start|date('H:i') }}</b>
+			Til:
+			<b>{{ hendelse.stop|date('H:i') }}</b>
+			&nbsp; 
+			({{ hendelse.navn }})</li>
+	{% else %}
+		<li class="alert alert-info">Ingen forestillinger er satt opp enda. Gjør dette i
+			<a href="?page=UKMprogram_admin">program-modulen</a>
+		</li>
+	{% endfor %}
+</ol>
+#}

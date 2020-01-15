@@ -1,38 +1,9 @@
 <?php
-	
-if( in_array( get_option('pl_eier_type'), ['land','fylke']) ) {
-	$INFOS['livestream_aktiv'] = true;
-} else {
-	$INFOS['livestream_aktiv'] = get_option('livestream_aktiv');
+
+if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+    update_option('ukm_live_link', $_POST['live_link'] );
+    update_option('ukm_live_embedcode', $_POST['live_embedcode'] );
+    UKMvideo::getFlashbag()->success('Livestream-detaljer er lagret');
+    UKMvideo::getViewData()['livestream']->link = $_POST['live_link']; 
 }
-
-$INFOS['livestream_password'] = get_site_option('ukm_livestream_password');
-$INFOS['livestream_username'] = get_site_option('ukm_livestream_username');
-
-$INFOS['site_type'] = get_option('site_type');
-$INFOS['is_superadmin'] = is_super_admin();
-
-$INFOS['live_link'] = get_option('ukm_live_link');
-$INFOS['live_embedcode'] = get_option('ukm_live_embedcode');
-
-// Rensk opp i URLer
-if( is_string( $INFOS['live_link'] ) ) {
-	$INFOS['live_link'] = stripslashes( $INFOS['live_link'] );
-}
-if( is_string( $INFOS['live_embedcode'] ) ) {
-	$INFOS['live_embedcode'] = stripslashes( $INFOS['live_embedcode'] );
-}
-
-$hendelser = get_option('ukm_hendelser_perioder' );
-
-$INFOS['hendelser'] = $hendelser;
-
-$pl = new monstring( get_option('pl_id') );
-$monstring = new StdClass();
-$monstring->navn = $pl->g('pl_name');
-$monstring->season = $pl->g('season');
-$monstring->pl_id = $pl->g('pl_id');
-$monstring->start = $pl->get('old_pl_start');
-$monstring->stopp = $pl->get('old_pl_stop');
-
-$INFOS['monstring'] = $monstring;
+#do_action('UKMpush_to_front_generate_object');

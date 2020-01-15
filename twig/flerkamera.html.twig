@@ -1,0 +1,89 @@
+<style>
+	.table-noborder th,
+	.table-noborder td {
+		border-top: none !important;
+	}
+</style>
+<div style="{{ not GET('innslag') ? 'max-width: 768px;'}}">
+	{% if GET('innslag') %}
+		{% include "upload_flerkamera.html.twig" %}
+	{% elseif GET('hendelse') %}
+		<h2>Last opp film for innslag i
+			{{ hendelse.getNavn() }}</h2>
+
+		{% set forrige = 0 %}
+		{% set forrige_navn = '' %}
+		<ol class="list-group">
+			{% for innslag in hendelse.getInnslag().getAll() %}
+				<li class="list-group-item">
+					<table class="table table-condensed table-noborder" style="margin-bottom:0;">
+						<tr>
+							<td width="50">
+								<div style="font-size: 2em; font-weight: bold; margin-bottom: 0; margin-top:0;">
+									{{ innslag.getFilmer().getAntall() }}
+								</div>
+								<div class="small" style="margin-top:-.6em;">film{{ innslag.getFilmer().getAntall() != 1 ? 'er' }}</div>
+							</td>
+							<td width="*%">
+								<a href="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{hendelse.getId()}}&innslag={{innslag.getId()}}" name="innslag_{{innslag.getId()}}">
+									{{ innslag.getNavn()}}
+								</a>
+								<br/>
+								{{ innslag.getPersoner().getAntall() }}
+								person{{innslag.getPersoner().getAntall() != 1 ? 'er'}}
+							</td>
+							<td width="20%">
+								{{ innslag.getType().getNavn()}}
+							</td>
+							<td width="10%">
+								<a href="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{hendelse.getId()}}&innslag={{innslag.getId()}}" class="btn btn-ukm btn-{{ GET('last_upload') and GET('last_upload') == forrige ? 'success' : 'primary'}}">last opp film</a>
+							</td>
+						</tr>
+					</table>
+					{% if GET('last_upload') and GET('last_upload') == forrige %}
+						<small class="text-muted pull-right">
+							Fordi forrige film du lastet opp var av
+							"{{ forrige_navn }}", er dette mest sannsynlig neste innslag du skal laste opp for nå.
+						</small>
+                        <div class="clearfix"></div>
+					{% endif %}
+				</li>
+				{% set forrige = innslag.getId() %}
+				{% set forrige_navn = innslag.getNavn() %}
+			{% else %}
+				<li class="list-group-item">
+					Det er ingen innslag i
+					{{hendelse.getNavn()}}.
+				</li>
+			{% endfor %}
+		</ol>
+
+        <p class="mt-2">
+            <a href="?page={{GET('page')}}&action={{GET('action')}}">
+                Tilbake til alle hendelser
+            </a>
+        </p>
+	{% else %}
+		<h2>Velg forestilling</h2>
+
+		<ol class="list-group">
+			{% for hendelse in arrangement.getProgram().getAbsoluteAll() %}
+				<li class="list-group-item">
+					<a href="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{hendelse.getId()}}">{{hendelse.getNavn()}}</a>
+				</li>
+			{% else %}
+				<li class="list-group-item">
+					Du må sette opp
+					<a href="admin.php?page=UKMprogram">minst én hendelse</a>
+					før du kan laste opp filmer av innslag.
+				</li>
+			{% endfor %}
+		</ol>
+
+        <p class="mt-2">
+            <a href="?page={{GET('page')}}">
+                Tilbake til film-oversikten
+            </a>
+        </p>
+	{% endif %}
+</div>

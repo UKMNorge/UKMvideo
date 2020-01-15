@@ -1,0 +1,83 @@
+{% extends "layout.html.twig" %}
+
+{% block content %}
+	<h2>
+		{{ video is defined ? 'Rediger' : 'Last opp'}}
+		videoreportasje
+	</h2>
+
+	{# DISSE INPUTS'ENE BRUKES KUN AV OPPLASTER-SCRIPTET, OG SKAL IKKE VÆRE MED FORM-SUBMIT #}
+	<input type="hidden" name="converter_season" id="converter_season" value="{{arrangement.getSesong()}}"/>
+	<input type="hidden" name="converter_pl_id" id="converter_pl_id" value="{{arrangement.getId()}}"/>
+	<input type="hidden" name="converter_type" id="converter_type" value="reportasje"/>
+	<input type="hidden" name="converter_b_id" id="converter_b_id" value="0"/>
+	<input type="hidden" name="converter_blog_id" id="converter_blog_id" value="{{blog_id}}"/>
+
+	<form action="?page=UKMvideo&action=reportasje" method="post">
+		<div class="container-fluid" id="fileupload_container">
+			<div class="row videoopplaster">
+				<div class="col-xs-12 col-sm-6">
+					<div class="form-group">
+						<label>Tittel</label>
+						<input type="text" name="reportasje_title" class="form-control" value="{{video.title}}"/>
+					</div>
+
+					<div class="form-group">
+						<label>Album:</label>
+						<select name="reportasje_category" id="reportasje_category" class="form-control">
+							{% for set in sets %}
+								<option value="{{set}}" {{ set==video.set ? 'selected="selected"' : ''}}>{{set}}</option>
+							{% endfor %}
+							<option value="new">Opprett nytt album</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<div class="input-group" id="new_album" style="display:none;">
+                            <div class="input-group-addon">
+                                {{set_basename}}
+                            </div>
+							<input class="form-control" id="prependedInput" type="text" placeholder="Navn på nytt album" name="reportasje_new_album"/>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label>Beskrivelse</label>
+						<textarea name="reportasje_description" class="form-control">{{video.description}}</textarea>
+					</div>
+
+					<div class="form-group">
+						<input name="submit_video" class="button-primary" id="submitbutton" type="submit" value="Lagre" {{ video is not defined ? 'disabled="disabled"'}}/>
+
+                        eller <a href="?page={{GET('page')}}">avbryt</a>
+
+					</div>
+				</div>
+				{% if video is not defined %}
+					<div class="col-xs-6 col-sm-6">
+						<div class="dropzone" id="fileupload_dropzone">
+							<img src="//ico.ukm.no/grafikk/dropzone.png"/>
+						</div>
+                        <br />
+                        <div id="filechooser">
+							<label>eller velg fil</label>
+							<input id="fileupload_reportasje" class="form-control" type="file" name="files[]" style="border: none"/>
+						</div>
+
+						<div class="form-group alert alert-warning" id="uploading" style="display:none;">
+							<label>Laster opp fil</label>
+							<progress value="0" max="100" id="uploadprogress" class="progress progress-striped active" style="width: 90"/>
+						</div>
+						<div class="alert alert-success" id="uploaded" style="display:none;">
+							<h3>Filen er lastet opp!</h3>
+							<strong>Fyll ut skjemaet nedenfor, og trykk lagre!</strong>
+						</div>
+					</div>
+				{% endif %}
+				<input type="hidden" id="b_id" value="0" name="b_id"/>
+				<input type="hidden" id="cron_id" value="0" name="cron_id"/>
+				<input type="hidden" id="video_id" value="{{ video is defined ? video.id : '0'}}" name="video_id"/>
+			</div>
+		</div>
+	</form>
+	<div id="fileupload_message" style="display:none;"></div>
+{% endblock %}
