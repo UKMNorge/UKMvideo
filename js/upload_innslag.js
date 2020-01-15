@@ -27,8 +27,10 @@ jQuery(document).ready(function() {
             jQuery('#uploaded').slideDown();
             jQuery('#cron_id').val(data.result.files[0].cron_id);
             jQuery('#submitbutton').attr('disabled', '').removeAttr('disabled');
-            setTimeout(function() { jQuery('#success_one_sec_please').slideDown() }, 2000);
-            jQuery('#submitbutton').parents('form').submit();
+            setTimeout(function() {
+                jQuery('#success_one_sec_please').slideDown();
+                jQuery('#submitbutton').parents('form').submit();
+            }, 2000);
         }
     }).bind('fileuploadstart', function() {
         jQuery('#filechooser').slideUp();
