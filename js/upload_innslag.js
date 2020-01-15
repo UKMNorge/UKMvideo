@@ -26,17 +26,9 @@ jQuery(document).ready(function() {
             jQuery('#uploading').slideUp();
             jQuery('#uploaded').slideDown();
             jQuery('#cron_id').val(data.result.files[0].cron_id);
-            jQuery('#submitbutton').attr('disabled', false).removeAttr('disabled');
-            setTimeout(function() {
-                    jQuery('#success_one_sec_please').slideDown();
-                },
-                2000
-            );
-            setTimeout(function() {
-                    jQuery('#submitbutton').click();
-                },
-                3000
-            );
+            jQuery('#submitbutton').attr('disabled', '').removeAttr('disabled');
+            setTimeout(function() { jQuery('#success_one_sec_please').slideDown() }, 2000);
+            jQuery('#submitbutton').parents('form').submit();
         }
     }).bind('fileuploadstart', function() {
         jQuery('#filechooser').slideUp();
