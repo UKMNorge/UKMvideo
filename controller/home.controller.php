@@ -6,7 +6,7 @@ use UKMNorge\Filmer\Write;
 $arrangement = new Arrangement( intval(get_option('pl_id')));
 
 if( isset($_GET['slett'] ) && isset($_GET['innslagId']) ) {
-    $innslag = $arrangement->geTInnslag()->get($_GET['innslagId']);
+    $innslag = $arrangement->getInnslag()->get($_GET['innslagId']);
     $film = $innslag->getFilmer()->get($_GET['slett']);
 
     if( $film->getTag('pl') != $arrangement->getId() ) {
