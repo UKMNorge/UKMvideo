@@ -4,16 +4,16 @@ use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\Filmer\Upload\Uploaded;
 
 $arrangement = new Arrangement(intval(get_option('pl_id')));
-$innslag = $arrangement->getInnslag()->get($_POST['b_id'], true);
 
 try {
-    Uploaded::registrerInnslag(
+    Uploaded::registrerReportasje(
         intval($_POST['cron_id']),
-        $innslag,
+        $_POST['reportasje_title'],
+        $_POST['reportasje_description'],
         $arrangement
     );
     UKMvideo::getFlashbag()->success(
-        'Film av '. $innslag->getNavn() .' er lastet opp og lagt i konverteringskø'
+        'Filmen er lastet opp og lagt i konverteringskø.'
     );
 } catch( Exception $e ) {
     UKMvideo::getFlashbag()->error(

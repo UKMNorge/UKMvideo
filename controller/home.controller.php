@@ -1,9 +1,14 @@
 <?php
 
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Filmer\Upload\Queue;
 use UKMNorge\Filmer\Write;
 
 $arrangement = new Arrangement( intval(get_option('pl_id')));
+
+if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+    UKMvideo::include('save/reportasje.save.php');
+}
 
 if( isset($_GET['slett'] ) && isset($_GET['innslagId']) ) {
     $innslag = $arrangement->getInnslag()->get($_GET['innslagId']);
@@ -31,3 +36,4 @@ if( isset($_GET['slett'] ) && isset($_GET['innslagId']) ) {
 UKMvideo::include('save/livestream.save.php');
 UKMvideo::addViewData('arrangement', $arrangement);
 UKMvideo::addViewData('is_superadmin', is_super_admin());
+UKMvideo::addViewData('convertQueue', Queue::getByArrangement($arrangement) );

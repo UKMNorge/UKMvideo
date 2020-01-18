@@ -18,16 +18,16 @@
 			<div class="col-12 col-md-8 col-lg-9">
 				<div>
 					{#
-                    <h2>UKM-TV</h2>
-					<div class="clearfix"></div>
-                    #}
+					                    <h2>UKM-TV</h2>
+										<div class="clearfix"></div>
+					                    #}
 					<div class="row">
 						<div class="col-xs-6">
 							<div class="pull-right" style="margin-top: .8em;">
 								<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
 							</div>
 							<h3>Filmer</h3>
-                            <div class="clearfix"></div>
+							<div class="clearfix"></div>
 							<ol class="list-group">
 								{% for film in filmer %}
 									<li class="list-group-item">
@@ -61,42 +61,43 @@
 								<a href="?page={{GET('page')}}&action=flerkamera" class="btn btn-ukm btn-sm btn-primary">Last opp film fra forestilling (flerkamera)</a>
 							</div>
 							<h3>Filmer av innslag</h3>
-                            <div class="clearfix"></div>
+							<div class="clearfix"></div>
 							<ol class="list-group">
 								{% for innslag in arrangement.getInnslag().getAll()|filter( innslag => innslag.getFilmer().getAntall() > 0 ) %}
-                                    {% for film in innslag.getFilmer().getAll() %}
-                                        <li class="list-group-item film">
-                                            <table style="width:100%;">
-                                                <tr>
-                                                    <td width="110" style="padding-right: 1em;">
-                                                        <img src="{{ film.getBildeUrl() }}" style="width:100%"/>
-                                                    </td>
-                                                    <td width="*%">
-                                                        <a href="{{film.getTvUrl()}}" target="_blank">
-                                                            <b>{{ film.getNavn() }}</b>
-                                                        </a>
-                                                        <br />
-                                                        {{ innslag.getNavn() }}
-                                                        @ {{ film.getKategori().getNavn() }}
-                                                    </td>
-                                                    <td>
-                                                        {#<a href="#" class="btn btn-ukm btn-xs">Rediger</a>#}
-                                                        <a href="#" class="kopierUrl btn btn-ukm btn-xs">Kopier URL</a>
-                                                        {% if film.getTag('pl') == arrangement.getId() %}
-                                                            <a href="?page={{GET('page')}}&slett={{film.getId()}}&innslagId={{innslag.getId()}}" class="btn btn-ukm btn-xs btn-danger" onclick="return confirm('Er du sikker på at du vil slette denne?');">Slett</a>
-                                                        {% endif %}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td></td>
-                                                    <td colspan="2" class="url" style="margin: 5px !important; display:none;">
-                                                        <input class="urlInput form-control" value="{{film.getTvUrl()}}" readonly />
-                                                        <div class="copied alert alert-success" style="display:none;">Kopiert!</div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </li>
-                                    {% endfor %}
+									{% for film in innslag.getFilmer().getAll() %}
+										<li class="list-group-item film">
+											<table style="width:100%;">
+												<tr>
+													<td width="110" style="padding-right: 1em;">
+														<img src="{{ film.getBildeUrl() }}" style="width:100%"/>
+													</td>
+													<td width="*%">
+														<a href="{{film.getTvUrl()}}" target="_blank">
+															<b>{{ film.getNavn() }}</b>
+														</a>
+														<br/>
+														{{ innslag.getNavn() }}
+														@
+														{{ film.getKategori().getNavn() }}
+													</td>
+													<td>
+														{#<a href="#" class="btn btn-ukm btn-xs">Rediger</a>#}
+														<a href="#" class="kopierUrl btn btn-ukm btn-xs">Kopier URL</a>
+														{% if film.getTag('pl') == arrangement.getId() %}
+															<a href="?page={{GET('page')}}&slett={{film.getId()}}&innslagId={{innslag.getId()}}" class="btn btn-ukm btn-xs btn-danger" onclick="return confirm('Er du sikker på at du vil slette denne?');">Slett</a>
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td></td>
+													<td colspan="2" class="url" style="margin: 5px !important; display:none;">
+														<input class="urlInput form-control" value="{{film.getTvUrl()}}" readonly/>
+														<div class="copied alert alert-success" style="display:none;">Kopiert!</div>
+													</td>
+												</tr>
+											</table>
+										</li>
+									{% endfor %}
 								{% else %}
 									<li class="list-group-item">
 										Du har ingen opplastede filmer av innslag.
@@ -112,7 +113,7 @@
 					<h3 class="mt-2">Bruk film i nyhetsinnlegg</h3>
 					<p>
 						Hvis du vil bruke en film fra UKM.no i et nyhetsinnlegg, kopierer du URL fra listen,
-												                        og limer inn det på ønsket sted i teksten. Systemet ordner resten automatisk når innlegget vises.
+																		                        og limer inn det på ønsket sted i teksten. Systemet ordner resten automatisk når innlegget vises.
 					</p>
 				</div>
 
@@ -138,12 +139,34 @@
 				</div>
 
 				<div class="card">
-					<h3>Tips til film-opplasting</h3>
+					<h3 class="mt-2">Konverteringskø</h3>
+                    <p>
+                        {% if convertQueue.getAntall() == 0 %}
+                            Alle dine filmer er konvertert og publisert i UKM-TV.
+                        {% else %}
+                            {{ convertQueue.getAntall() }} av dine filmer står i konverteringskø:
+
+                            <ol class="list-group">
+                                {% for film in convertQueue.getAll() %}
+                                    <li class="list-group-item">
+                                        {{ film.getTitle() }}
+                                        <br />
+                                        <small>{{ film.getType() }}
+                                        <span class="text-muted">(ID: {{ film.getCronId() }})</small></span>
+                                    </li>
+                                {% endfor %}
+                            </ol>
+                        {% endif %}
+					</p>
+				</div>
+
+				<div class="card">
+					<h3 class="mt-2">Tips til film-opplasting</h3>
 					<p>
 						<strong>Vi anbefaler følgende innstillinger</strong>
 						<small>
 							Har du dårlig nett må du kanskje velge dårligere kvalitet, 
-																					men så langt som mulig bør du prøve å holde deg til disse.
+																												men så langt som mulig bør du prøve å holde deg til disse.
 						</small>
 					</p>
 					<ol style="padding-left: 1em;">
