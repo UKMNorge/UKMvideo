@@ -1,7 +1,12 @@
 {% extends "layout.html.twig" %}
 
 {% block content %}
-	<style>
+	{% if not is_superadmin %}
+    <p>
+        Videopplasting er midlertidig deaktivert mens vi oppdaterer UKM-TV. Straks tilbake!
+    </p>
+    {% else %}
+    <style>
 		.mt-3 {
 			margin-top: 1.25em;
 		}
@@ -207,4 +212,5 @@
 			</div>
 		</div>
 	</div>
+    {% endif %}
 {% endblock %}
