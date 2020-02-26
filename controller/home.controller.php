@@ -27,7 +27,7 @@ if( isset($_GET['slett'] ) ) {
     if( $film ) {
         try {
             $res = Write::slett($film);
-            $innslag->getFilmer()->reset();
+            $filmer->reset();
             UKMvideo::getFlashbag()->success('Filmen er slettet');
         } catch( Exception $e ) {
             UKMvideo::getFlashbag()->error('Kunne ikke slette film. Systemet sa: '. $e->getMessage() );
