@@ -34,17 +34,17 @@
 							<h3>Filmer</h3>
 							<div class="clearfix"></div>
 							<ol class="list-group">
-								{% for film in filmer %}
+								{% for film in arrangement.getFilmer().getAll()|filter(film => film.getInnslagId() == 0) %}
 									<li class="list-group-item">
 										<table style="width:100%">
 											<tr>
 												<td width="110">
-													<img src="//placehold.it/100x56"/>
+													<img src="{{ film.getImageUrl() }}"/>
 												</td>
 												<td width="*%">
-													<b>Filmens navn</b>
+													<b>{{ film.getTitle() }}</b>
 													<br/>
-													Filmens beskrivelse kommer her ...
+													{{ film.getDescription() }}
 												</td>
 												<td>
 													<a href="#" class="btn btn-ukm btn-xs">Rediger</a>
