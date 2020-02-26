@@ -20,18 +20,21 @@ jQuery(document).on('click', '.kopierUrl', function(e) {
         urlContainer.find('input').select();
     });
 
+
+    // SETUP COPY
+    // thanks to: https://stackoverflow.com/a/47421284
+    var text = urlContainer.find('input').get(0); // Grab the node of the element
+    var selection = window.getSelection(); // Get the Selection object
+    var range = document.createRange(); // Create a new range
+    range.selectNodeContents(text); // Select the content of the node from line 1
+    selection.removeAllRanges(); // Delete any old ranges        
+    selection.addRange(range); // Add the range to 
+
     if (document.execCommand("copy")) {
         urlContainer.find('input').hide();
         urlContainer.find('.copied').slideDown(120);
 
-        // thanks to: https://stackoverflow.com/a/47421284
-        var text = urlContainer.find('input').get(0); // Grab the node of the element
-        var selection = window.getSelection(); // Get the Selection object
-        var range = document.createRange(); // Create a new range
-        range.selectNodeContents(text); // Select the content of the node from line 1
-        selection.removeAllRanges(); // Delete any old ranges        
-        selection.addRange(range); // Add the range to selection
-        document.execCommand('copy'); // Execute the command
+
 
         setTimeout(
             function() {
