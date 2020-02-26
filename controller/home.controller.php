@@ -18,7 +18,7 @@ if( isset($_GET['slett'] ) ) {
     }
     $film = $filmer->get(intval($_GET['slett']));
 
-    if( $film->getTag('arrangement') != $arrangement->getId() ) {
+    if( $film && $film->getTag('arrangement') != $arrangement->getId() ) {
         UKMvideo::getFlashbag()->error('Du kan kun slette filmer fra ditt eget arrangement');
         $film = false;
     }
