@@ -40,7 +40,7 @@ class UKMvideo extends Modul
             'edit.php',
             'Filmer',
             'Filmer',
-            'superadmin',#'edit_posts',
+            'edit_posts',
             'UKMvideo',
             ['UKMvideo','renderAdmin']
         );
