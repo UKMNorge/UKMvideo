@@ -35,7 +35,7 @@
 								<div class="clearfix"></div>
 								<ol class="list-group">
 									{% for film in arrangement.getFilmer().getAll()|filter(film => film.getInnslagId() == 0) %}
-										<li class="list-group-item">
+										<li class="list-group-item film">
 											<table style="width:100%">
 												<tr>
 													<td width="110">
