@@ -10,15 +10,19 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     UKMvideo::include('save/reportasje.save.php');
 }
 
-if( isset($_GET['slett'] ) && isset($_GET['innslagId']) ) {
-    $innslag = $arrangement->getInnslag()->get($_GET['innslagId']);
-    $film = $innslag->getFilmer()->get($_GET['slett']);
+if( isset($_GET['slett'] ) ) {
+    if( isset($_GET['innslagId']) ) {
+        $filmer = $arrangement->getInnslag()->get(intval($_GET['innslagId']))->getFilmer();
+    } else {
+        $filmer = $arrangement->getFilmer();
+    }
+    $film = $filmer->get(intval($_GET['slett']));
 
     if( $film->getTag('pl') != $arrangement->getId() ) {
         UKMvideo::getFlashbag()->error('Du kan kun slette filmer fra ditt eget arrangement');
         $film = false;
     }
-
+    
     // If !$film == slettet allerede (?).
     if( $film ) {
         try {
