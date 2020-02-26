@@ -2,96 +2,55 @@
 
 {% block content %}
 	{% if not is_superadmin %}
-    <p>
-        Videopplasting er midlertidig deaktivert mens vi oppdaterer UKM-TV. Straks tilbake!
-    </p>
-    {% else %}
-    <style>
-		.mt-3 {
-			margin-top: 1.25em;
-		}
-		.megacard {
-			margin-top: 20px;
-			background: #fff;
-			border: 1px solid #ccd0d4;
-			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-			background: #fff;
-		}
-	</style>
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-12 col-md-8 col-lg-9">
-				<div>
-					{#
-					                    <h2>UKM-TV</h2>
-										<div class="clearfix"></div>
-					                    #}
-					<div class="row">
-						<div class="col-xs-6">
-							<div class="pull-right" style="margin-top: .8em;">
-								<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
-							</div>
-							<h3>Filmer</h3>
-							<div class="clearfix"></div>
-							<ol class="list-group">
-								{% for film in arrangement.getFilmer().getAll()|filter(film => film.getInnslagId() == 0) %}
-									<li class="list-group-item">
-										<table style="width:100%">
-											<tr>
-												<td width="110">
-													<img src="{{ film.getImageUrl() }}" style="width: 90%;"/>
-												</td>
-												<td width="*%">
-													<b>{{ film.getTitle() }}</b>
-													<br/>
-													{{ film.getDescription() }}
-												</td>
-												<td width="180" align="right">
-													<a href="#" class="btn btn-ukm btn-xs">Rediger</a>
-													<a href="#" class="btn btn-ukm btn-xs">Kopier URL</a>
-                                                    {% if film.getTag('arrangement').getValue() == arrangement.getId() %}
-													    <a href="?page={{GET('page')}}&slett={{film.getId()}}" class="btn btn-ukm btn-xs btn-danger">Slett</a>
-                                                    {% endif %}
-												</td>
-											</tr>
-										</table>
-									</li>
-								{% else %}
-									<li class="list-group-item">
-										Du har ingen opplastede filmer.
-									</li>
-								{% endfor %}
-							</ol>
-						</div>
-						<div class="col-xs-6">
-							<div class="pull-right" style="margin-top: .8em;">
-								<a href="?page={{GET('page')}}&action=flerkamera" class="btn btn-ukm btn-sm btn-primary">Last opp film fra forestilling (flerkamera)</a>
-							</div>
-							<h3>Filmer av innslag</h3>
-							<div class="clearfix"></div>
-							<ol class="list-group">
-								{% for innslag in arrangement.getInnslag().getAll()|filter( innslag => innslag.getFilmer().getAntall() > 0 ) %}
-									{% for film in innslag.getFilmer().getAll() %}
-										<li class="list-group-item film">
-											<table style="width:100%;">
+		<p>
+			Videopplasting er midlertidig deaktivert mens vi oppdaterer UKM-TV. Straks tilbake!
+		</p>
+	{% else %}
+		<style>
+			.mt-3 {
+				margin-top: 1.25em;
+			}
+			.megacard {
+				margin-top: 20px;
+				background: #fff;
+				border: 1px solid #ccd0d4;
+				box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+				background: #fff;
+			}
+		</style>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 col-md-8 col-lg-9">
+					<div>
+						{#
+											                    <h2>UKM-TV</h2>
+																<div class="clearfix"></div>
+											                    #}
+						<div class="row">
+							<div class="col-xs-6">
+								<div class="pull-right" style="margin-top: .8em;">
+									<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
+								</div>
+								<h3>Filmer</h3>
+								<div class="clearfix"></div>
+								<ol class="list-group">
+									{% for film in arrangement.getFilmer().getAll()|filter(film => film.getInnslagId() == 0) %}
+										<li class="list-group-item">
+											<table style="width:100%">
 												<tr>
-													<td width="110" style="padding-right: 1em;">
-													    <img src="{{ film.getImageUrl() }}" style="width: 90%;"/>
+													<td width="110">
+														<img src="{{ film.getImageUrl() }}" style="width: 90%;"/>
 													</td>
 													<td width="*%">
-														<a href="{{film.getTvUrl()}}" target="_blank">
-															<b>{{ film.getNavn() }}</b>
-														</a>
+														<b>{{ film.getTitle() }}</b>
 														<br/>
-														{{ innslag.getNavn() }}
-														@
-														{{ film.getKategori().getNavn() }}
+														{{ film.getDescription() }}
 													</td>
-    -												<td width="180" align="right">
+													<td width="180" align="right">
 														{#<a href="#" class="btn btn-ukm btn-xs">Rediger</a>#}
-														<a href="#" class="kopierUrl btn btn-ukm btn-xs">Kopier URL</a>
+														<a href="#" class="btn btn-ukm btn-xs">Kopier URL</a>
 														{% if film.getTag('arrangement').getValue() == arrangement.getId() %}
-															<a href="?page={{GET('page')}}&slett={{film.getId()}}&innslagId={{innslag.getId()}}" class="btn btn-ukm btn-xs btn-danger" onclick="return confirm('Er du sikker på at du vil slette denne?');">Slett</a>
+															<a href="?page={{GET('page')}}&slett={{film.getId()}}" class="btn btn-ukm btn-xs btn-danger">Slett</a>
 														{% endif %}
 													</td>
 												</tr>
@@ -104,115 +63,168 @@
 												</tr>
 											</table>
 										</li>
+									{% else %}
+										<li class="list-group-item">
+											Du har ingen opplastede filmer.
+										</li>
 									{% endfor %}
-								{% else %}
-									<li class="list-group-item">
-										Du har ingen opplastede filmer av innslag.
-									</li>
-								{% endfor %}
-							</ol>
+								</ol>
+							</div>
+							<div class="col-xs-6">
+								<div class="pull-right" style="margin-top: .8em;">
+									<a href="?page={{GET('page')}}&action=flerkamera" class="btn btn-ukm btn-sm btn-primary">Last opp film fra forestilling (flerkamera)</a>
+								</div>
+								<h3>Filmer av innslag</h3>
+								<div class="clearfix"></div>
+								<ol class="list-group">
+									{% for innslag in arrangement.getInnslag().getAll()|filter( innslag => innslag.getFilmer().getAntall() > 0 ) %}
+										{% for film in innslag.getFilmer().getAll() %}
+											<li class="list-group-item film">
+												<table style="width:100%;">
+													<tr>
+														<td width="110" style="padding-right: 1em;">
+															<img src="{{ film.getImageUrl() }}" style="width: 90%;"/>
+														</td>
+														<td width="*%">
+															<a href="{{film.getTvUrl()}}" target="_blank">
+																<b>{{ film.getNavn() }}</b>
+															</a>
+															<br/>
+															{{ innslag.getNavn() }}
+															@
+															{{ film.getKategori().getNavn() }}
+														</td>
+														-
+														<td
+															width="180" align="right">
+															{#<a href="#" class="btn btn-ukm btn-xs">Rediger</a>#}
+															<a href="#" class="kopierUrl btn btn-ukm btn-xs">Kopier URL</a>
+															{% if film.getTag('arrangement').getValue() == arrangement.getId() %}
+																<a href="?page={{GET('page')}}&slett={{film.getId()}}&innslagId={{innslag.getId()}}" class="btn btn-ukm btn-xs btn-danger" onclick="return confirm('Er du sikker på at du vil slette denne?');">Slett</a>
+															{% endif %}
+														</td>
+													</tr>
+													<tr>
+														<td></td>
+														<td colspan="2" class="url" style="margin: 5px !important; display:none;">
+															<input class="urlInput form-control" value="{{film.getTvUrl()}}" readonly/>
+															<div class="copied alert alert-success" style="display:none;">Kopiert!</div>
+														</td>
+													</tr>
+												</table>
+											</li>
+										{% endfor %}
+									{% else %}
+										<li class="list-group-item">
+											Du har ingen opplastede filmer av innslag.
+										</li>
+									{% endfor %}
+								</ol>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-12 col-md-4 col-lg-3">
-				<div class="card">
-					<h3 class="mt-2">Bruk film i nyhetsinnlegg</h3>
-					<p>
-						Hvis du vil bruke en film fra UKM.no i et nyhetsinnlegg, kopierer du URL fra listen,
-																		                        og limer inn det på ønsket sted i teksten. Systemet ordner resten automatisk når innlegget vises.
-					</p>
-				</div>
-
-				<div class="card">
-					<h3 class="mt-2">Direktesending</h3>
-					{% if livestream.aktiv %}
+				<div class="col-12 col-md-4 col-lg-3">
+					<div class="card">
+						<h3 class="mt-2">Bruk film i nyhetsinnlegg</h3>
 						<p>
-							Hvis du skal sende direkte fra arrangementet ditt, finner du innstillinger og bruksanvisning her.
+							Hvis du vil bruke en film fra UKM.no i et nyhetsinnlegg, kopierer du URL fra listen,
+																									                        og limer inn det på ønsket sted i teksten. Systemet ordner resten automatisk når innlegget vises.
 						</p>
-						<a href="?page={{GET('page')}}&action=livestream" class="btn btn-ukm btn-xs">Les mer eller endre innstillinger</a>
-					{% else %}
+					</div>
+
+					<div class="card">
+						<h3 class="mt-2">Direktesending</h3>
+						{% if livestream.aktiv %}
+							<p>
+								Hvis du skal sende direkte fra arrangementet ditt, finner du innstillinger og bruksanvisning her.
+							</p>
+							<a href="?page={{GET('page')}}&action=livestream" class="btn btn-ukm btn-xs">Les mer eller endre innstillinger</a>
+						{% else %}
+							<p>
+								Du har ikke tilgang på direktesending (livestream).
+								<br/>
+								Kontakt
+								<a href="mailto:support@ukm.no?subject=Livestream">support@ukm.no</a>
+								hvis du skal sende direkte fra ditt arrangement.
+							</p>
+						{% endif %}
+						{% if is_superadmin and arrangement.getEierType() in ['kommune','arrangement'] %}
+							<a href="?page={{GET('page')}}&subaction=livestream-{{ livestream.aktiv ? 'dea' : 'a' }}ktiver" class="btn btn-ukm btn-xs superadmin">{{ livestream.aktiv ? 'Dea' : 'A' }}ktivér</a>
+						{% endif %}
+					</div>
+
+					<div class="card">
+						<h3 class="mt-2">Konverteringskø</h3>
 						<p>
-							Du har ikke tilgang på direktesending (livestream).
-							<br/>
-							Kontakt
-							<a href="mailto:support@ukm.no?subject=Livestream">support@ukm.no</a>
-							hvis du skal sende direkte fra ditt arrangement.
+							{% if convertQueue.getAntall() == 0 %}
+								Alle dine filmer er konvertert og publisert i UKM-TV.
+							{% else %}
+								{{ convertQueue.getAntall() }}
+								av dine filmer står i konverteringskø:
+
+								<ol class="list-group">
+									{% for film in convertQueue.getAll() %}
+										<li class="list-group-item">
+											{{ film.getTitle() }}
+											<br/>
+											<small>{{ film.getType() }}
+												<span class="text-muted">(ID:
+													{{ film.getCronId() }})</small>
+											</span>
+										</li>
+									{% endfor %}
+								</ol>
+							{% endif %}
 						</p>
-					{% endif %}
-					{% if is_superadmin and arrangement.getEierType() in ['kommune','arrangement'] %}
-						<a href="?page={{GET('page')}}&subaction=livestream-{{ livestream.aktiv ? 'dea' : 'a' }}ktiver" class="btn btn-ukm btn-xs superadmin">{{ livestream.aktiv ? 'Dea' : 'A' }}ktivér</a>
-					{% endif %}
-				</div>
+					</div>
 
-				<div class="card">
-					<h3 class="mt-2">Konverteringskø</h3>
-                    <p>
-                        {% if convertQueue.getAntall() == 0 %}
-                            Alle dine filmer er konvertert og publisert i UKM-TV.
-                        {% else %}
-                            {{ convertQueue.getAntall() }} av dine filmer står i konverteringskø:
-
-                            <ol class="list-group">
-                                {% for film in convertQueue.getAll() %}
-                                    <li class="list-group-item">
-                                        {{ film.getTitle() }}
-                                        <br />
-                                        <small>{{ film.getType() }}
-                                        <span class="text-muted">(ID: {{ film.getCronId() }})</small></span>
-                                    </li>
-                                {% endfor %}
-                            </ol>
-                        {% endif %}
-					</p>
-				</div>
-
-				<div class="card">
-					<h3 class="mt-2">Tips til film-opplasting</h3>
-					<p>
-						<strong>Vi anbefaler følgende innstillinger</strong>
-						<small>
-							Har du dårlig nett må du kanskje velge dårligere kvalitet, 
-																												men så langt som mulig bør du prøve å holde deg til disse.
-						</small>
-					</p>
-					<ol style="padding-left: 1em;">
-						<li>
-							<strong>Komprimering / filformat:</strong>
-							h264-komprimert MP4-fil
-						</li>
-						<li>
-							<strong>Frame rate:</strong>
-							25fps
-						</li>
-						<li>
-							<strong>Bit rate ved full HD: (1920x1080px):</strong>
-							15 000 kbit/s (15 Mbit/s)
-						</li>
-						<li>
-							<strong>Bit rate ved 720p (1280x1080px):</strong>
-							10 000 kbit/s (10 Mbit/s)
-						</li>
-						<li>
-							<strong>Interlaced:</strong>
-							Nei. Hvis originalopptaket ditt er interlaced må du deinterlace før opplasting.
-						</li>
-						<li>
-							<strong>Lydkodek:</strong>
-							AAC-LC Audio codec
-						</li>
-						<li>
-							<strong>Bit rate lyd:</strong>
-							320 kbit/s
-						</li>
-						<li>
-							<strong>Sampling rate:</strong>
-							48 kHz (48 000Hz)
-						</li>
-					</ol>
+					<div class="card">
+						<h3 class="mt-2">Tips til film-opplasting</h3>
+						<p>
+							<strong>Vi anbefaler følgende innstillinger</strong>
+							<small>
+								Har du dårlig nett må du kanskje velge dårligere kvalitet, 
+																																				men så langt som mulig bør du prøve å holde deg til disse.
+							</small>
+						</p>
+						<ol style="padding-left: 1em;">
+							<li>
+								<strong>Komprimering / filformat:</strong>
+								h264-komprimert MP4-fil
+							</li>
+							<li>
+								<strong>Frame rate:</strong>
+								25fps
+							</li>
+							<li>
+								<strong>Bit rate ved full HD: (1920x1080px):</strong>
+								15 000 kbit/s (15 Mbit/s)
+							</li>
+							<li>
+								<strong>Bit rate ved 720p (1280x1080px):</strong>
+								10 000 kbit/s (10 Mbit/s)
+							</li>
+							<li>
+								<strong>Interlaced:</strong>
+								Nei. Hvis originalopptaket ditt er interlaced må du deinterlace før opplasting.
+							</li>
+							<li>
+								<strong>Lydkodek:</strong>
+								AAC-LC Audio codec
+							</li>
+							<li>
+								<strong>Bit rate lyd:</strong>
+								320 kbit/s
+							</li>
+							<li>
+								<strong>Sampling rate:</strong>
+								48 kHz (48 000Hz)
+							</li>
+						</ol>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-    {% endif %}
+	{% endif %}
 {% endblock %}
