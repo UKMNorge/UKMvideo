@@ -18,7 +18,7 @@
 			<div class="col-12 col-md-8 col-lg-9">
 				<div>
 					<div class="row">
-						<div class="col-xs-6">
+						<div class="col-xs-12 col-sm-6">
 							<div class="pull-right" style="margin-top: .8em;">
 								<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
 							</div>
@@ -62,7 +62,7 @@
 								{% endfor %}
 							</ol>
 						</div>
-						<div class="col-xs-6">
+						<div class="col-xs-12 col-sm-6">
 							<div class="pull-right" style="margin-top: .8em;">
 								<a href="?page={{GET('page')}}&action=flerkamera" class="btn btn-ukm btn-sm btn-primary">Last opp film fra forestilling (flerkamera)</a>
 							</div>
@@ -131,7 +131,7 @@
 						<p>
 							Hvis du skal sende direkte fra arrangementet ditt, finner du innstillinger og bruksanvisning her.
 						</p>
-						<a href="?page={{GET('page')}}&action=livestream" class="btn btn-ukm btn-xs">Les mer eller endre innstillinger</a>
+						<a href="?page={{GET('page')}}&action=livestream" class="btn btn-ukm btn-xs">Les mer og endre sendeplan</a>
 					{% else %}
 						<p>
 							Du har ikke tilgang på direktesending (livestream).

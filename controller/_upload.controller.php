@@ -45,7 +45,7 @@ UKMvideo::addViewData('set_basename', $basename);
 UKMvideo::addViewData('sets', $categories);
 
 if(isset($_GET['id'])) {	
-	$sql = new SQL(
+	$sql = new Query(
         "SELECT * FROM `ukm_standalone_video`
         WHERE `v_id` = '#vid'",
         [

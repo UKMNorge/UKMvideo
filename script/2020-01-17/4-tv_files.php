@@ -50,9 +50,7 @@ while ($row = Query::fetch($res)) {
             ]
         );
     } else {
-        $modify = new Insert(
-            'ukm_uploaded_video'
-        );
+        $modify = new Insert('ukm_uploaded_video');
         $modify->add('cron_id', NULL);
 
         $data = explode('/', $row['tv_file']);

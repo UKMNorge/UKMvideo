@@ -64,9 +64,7 @@ while ($row = Query::fetch($res)) {
     } else {
         echo 'letsgo:<br />';
     }
-    $insert = new Insert(
-        'ukm_uploaded_video'
-    );
+    $insert = new Insert('ukm_uploaded_video');
     $insert->add('cron_id', $cron_id);
     $insert->add('file', $row['file']);
     $insert->add('arrangement_id', $arrangement_id);

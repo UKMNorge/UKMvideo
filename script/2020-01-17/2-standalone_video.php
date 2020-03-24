@@ -69,9 +69,7 @@ while ($row = Query::fetch($res)) {
     $title = makesurethisisutf8($row['video_name']);
     $description = makesurethisisutf8($row['video_description']);
 
-    $insert = new Insert(
-        'ukm_uploaded_video'
-    );
+    $insert = new Insert('ukm_uploaded_video');
     $insert->charset('utf8mb4');
     $insert->add('cron_id', $cron_id);
     $insert->add('file', $row['video_file']);
