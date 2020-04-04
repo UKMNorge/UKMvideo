@@ -20,14 +20,15 @@ jQuery('#detaljer_' + id).slideToggleBool(value === 'true');
 			<li class="list-group-item hendelse">
 				<div class="pull-right">
 					<div class="btn-group radioButtons" data-name="livestream_{{hendelse.getId()}}">
-						<button type="button" class="btn btn-default btn-xs dashicons dashicons-video-alt2 {{ arrangement.harNominasjon() ? 'selected' }}" value="true">&nbsp;</button>
-						<button type="button" class="btn btn-default btn-xs dashicons dashicons-hidden{{ not arrangement.harNominasjon() ? 'selected' }}" value="false">&nbsp;</button>
+						<button type="button" class="btn btn-default btn-xs dashicons dashicons-video-alt2 {{ hendelse.harSending() ? 'selected' }}" value="true">&nbsp;</button>
+						<button type="button" class="btn btn-default btn-xs dashicons dashicons-hidden {{ not hendelse.harSending() ? 'selected' }}" value="false">&nbsp;</button>
 					</div>
 				</div>
                 <small class="text-muted">{{ hendelse.getStart()|dato('D j. M H:i') }}</small>
                 <br />
-				<label>
-                    {{ hendelse.getNavn() }}</label>
+				<div class="bold">
+                    {{ hendelse.getNavn() }}
+                </div>
 				<div class="clearfix"></div>
 				<div id="detaljer_livestream_{{hendelse.getId()}}" {{ true ? 'style="display:none;"'}}>
 					{% include "livestream/hendelse.html.twig" %}
@@ -35,4 +36,8 @@ jQuery('#detaljer_' + id).slideToggleBool(value === 'true');
 			</li>
 		{% endfor %}
 	</ol>
+
+    <p>
+		<button type="submit" class="btn btn-success btn-ukm">Lagre</button>
+    </p>
 {% endif %}

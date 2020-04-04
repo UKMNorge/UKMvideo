@@ -7,11 +7,11 @@
 	</li>
 	<li>
 		Lim inn linken her:
-		<input value="{{ livestream.url }}" type="text" class="form-control" id="live_link" style="margin-bottom: 0;" name="live_link"/>
+		<input value="{{ arrangement.getMetaValue('live_link') }}" type="text" class="form-control" id="live_link" style="margin-bottom: 0;" name="live_link"/>
 	</li>
 	<li>
 		Lim inn embed-koden her:
-		<input value="{{ livestream.url }}" type="text" class="form-control" id="live_link" style="margin-bottom: 0;" name="live_link"/>
+		<input value="{{ arrangement.getMetaValue('live_embed')|strips }}" type="text" class="form-control" id="live_embed" style="margin-bottom: 0;" name="live_embed"/>
 		<p class="text-muted">
 			Bruk player size: 640 x 360, og standardinnstillinger ellers.
 		</p>
