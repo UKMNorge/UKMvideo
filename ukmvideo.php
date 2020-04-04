@@ -9,6 +9,7 @@ Author URI: http://www.ukm-norge.no
 */
 
 use UKMNorge\Wordpress\Modul;
+use UKMNorge\Meta\Write as MetaWrite;
 
 require_once('UKM/Autoloader.php');
 
@@ -36,7 +37,7 @@ class UKMvideo extends Modul
      */
     public static function meny()
     {
-        $page = add_submenu_page(
+        $film = add_submenu_page(
             'edit.php',
             'Filmer',
             'Filmer',
@@ -44,22 +45,56 @@ class UKMvideo extends Modul
             'UKMvideo',
             ['UKMvideo','renderAdmin']
         );
+
+        static::_checkForLivestreamActivation();
+
+        if( static::getArrangement()->getMetaValue('har_livestream') || in_array(static::getArrangement()->getEierType(), ['fylke','land']) ) {
+            $live = add_submenu_page(
+                'edit.php',
+                'Direktesending',
+                'Direktesending',
+                'edit_posts',
+                'UKMlive',
+                ['UKMvideo','renderAdminDirekte']
+            );
+        }
+
         add_action(
-            'admin_print_styles-' . $page,
+            'admin_print_styles-' . $film,
+            ['UKMvideo','scripts_and_styles']
+        );
+        add_action(
+            'admin_print_styles-' . $live,
             ['UKMvideo','scripts_and_styles']
         );
     }
 
-    public static function renderAdmin() {
-        $livestream = new stdClass();
-        $livestream->aktiv = in_array( get_option('pl_eier_type'), ['land','fylke']) ? true : get_option('livestream_aktiv');
-        $livestream->passord = get_site_option('ukm_livestream_password');
-        $livestream->brukernavn = get_site_option('ukm_livestream_username');
-        $livestream->url = get_option('ukm_live_link');
-        $livestream->embed = get_option('ukm_live_embedcode');
-        UKMvideo::addViewData('livestream', $livestream);
+    public static function renderAdminDirekte() {
+        static::setAction('livestream');
+        return static::renderAdmin();
+    }
 
-        parent::renderAdmin();
+    public static function _checkForLivestreamActivation() {
+        // Aktiver direktesending
+        if( ! in_array($_GET['page'], ['UKMvideo','UKMlive'])) {
+            return false;
+        }
+
+        if( isset($_GET['subaction']) && in_array($_GET['subaction'], ['livestream-aktiver', 'livestream-deaktiver']) ) {
+            if( is_super_admin() ) {
+                if( $_GET['subaction'] == 'livestream-aktiver') {
+                    $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+                    MetaWrite::set($meta);
+                    UKMvideo::getFlash()->success('Direktesending er aktivert, og menyvalget er lagt til.');
+                } else {
+                    $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+                    MetaWrite::delete($meta);
+                    UKMvideo::getFlash()->success('Direktesending er deaktivert, og menyvalget er skjult.');
+                }
+            } else {
+                UKMvideo::getFlash()->error('Kun superadmins kan aktivere direktesending');
+            }
+        }
     }
 
     /**

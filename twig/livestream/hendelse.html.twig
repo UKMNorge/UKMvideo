@@ -1,0 +1,49 @@
+    {% if not hendelse.erSynligRammeprogram() %}
+        <p class="small text-danger" style="margin-top:0em;">
+            Så lenge hendelsen er skjult vil ikke direktesendingen vises noe sted.
+        </p>
+    {% elseif not hendelse.erSynligDetaljprogram() %}
+        <p class="small text-danger" style="margin-top:0em;">
+            Så lenge hendelsen ikke har synlig detaljprogram vil ikke direktesendingen vises noe sted.
+        </p>
+    {% endif %}
+
+<div class="livestream_detaljer">
+    <div class="row">
+        <div class="col-12 col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label>Når starter sendingen?</label>
+                <select class="form-control" name="{{hendelse.getId()}}_start_for" style="margin-bottom:0;">
+                    <option value="0">Samtidig som hendelsen</option>
+                    {% for min in 1..60/5 %}
+                        <option value="{{min*5}}">
+                            {{min*5}} minutter før hendelsen
+                        </option>
+                    {% endfor %}
+                </select>
+                <p class="mt-0 text-muted small">
+                    Hendelsen starter {{ hendelse.getStart()|dato('H:m') }}. 
+                    Dette kan du endre fra <a href="index.php?page=UKMprogram&action=hendelse&id={{ hendelse.getId() }}">program</a>.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="col-12 col-xs-12 col-sm-6">
+            <div class="form-group">
+                <label>Hvor lenge varer sendingen?</label>
+                <select class="form-control" name="{{hendelse.getId()}}_start_for" style="margin-bottom:0;">
+                    <option value="0">Samtidig som hendelsen</option>
+                    {% for min in 1..180/5 %}
+                        <option value="{{min*5}}">
+                            {{min*5|tid}} minutter
+                        </option>
+                    {% endfor %}
+                </select>
+                <p class="mt-0 text-muted small">
+                    Hendelsen er beregnet til å vare ???? min. 
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
