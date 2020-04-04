@@ -1,10 +1,20 @@
 <?php
 
 use UKMNorge\Filmer\UKMTV\Direkte\Write as WriteDirekte;
+use UKMNorge\Meta\Collection;
+use UKMNorge\Meta\ParentObject;
 use UKMNorge\Meta\Write as WriteMeta;
 
 $arrangement = UKMvideo::getArrangement();
-UKMvideo::addViewData('arrangement', $arrangement);
+$livestream = new Collection(
+    new ParentObject('livestream', 0)
+);
+UKMvideo::addViewData(
+    [
+        'arrangement' => $arrangement,
+        'livestream' => $livestream
+    ]
+);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $meta_live_link = $arrangement->getMeta('live_link')->set($_POST['live_link']);
@@ -42,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         );
                     } else {
                         UKMvideo::getFlashbag()->error(
-                            'Sending for '. $hendelse->getNavn() .' ble ikke opprettet! '.
-                            'Systemet sa: '. $e->getMessage()
+                            'Sending for ' . $hendelse->getNavn() . ' ble ikke opprettet! ' .
+                                'Systemet sa: ' . $e->getMessage()
                         );
                     }
                 }
@@ -58,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // evt andre errorer kastes
                     if ($e->getCode() != 144001) {
                         UKMvideo::getFlashbag()->error(
-                            'Kunne ikke slette sending for '. $hendelse->getNavn() .'! '.
-                            'Systemet sa: '. $e->getMessage()
+                            'Kunne ikke slette sending for ' . $hendelse->getNavn() . '! ' .
+                                'Systemet sa: ' . $e->getMessage()
                         );
                     }
                 }
