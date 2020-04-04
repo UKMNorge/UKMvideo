@@ -125,33 +125,29 @@
 					</p>
 				</div>
 
-				<div class="card">
-					<h3 class="mt-2">Direktesending</h3>
-					{% if livestream.aktiv %}
-						<p>
-							Hvis du skal sende direkte fra arrangementet ditt, finner du innstillinger og bruksanvisning her.
-						</p>
-						<a href="?page={{GET('page')}}&action=livestream" class="btn btn-ukm btn-xs">Les mer og endre sendeplan</a>
-					{% else %}
-						<p>
-							Du har ikke tilgang på direktesending (livestream).
-							<br/>
-							Kontakt
-							<a href="mailto:support@ukm.no?subject=Livestream">support@ukm.no</a>
-							hvis du skal sende direkte fra ditt arrangement.
-						</p>
-					{% endif %}
-					{% if is_superadmin and arrangement.getEierType() in ['kommune','arrangement'] %}
-						<a href="?page={{GET('page')}}&subaction=livestream-{{ livestream.aktiv ? 'dea' : 'a' }}ktiver" class="btn btn-ukm btn-xs superadmin">{{ livestream.aktiv ? 'Dea' : 'A' }}ktivér</a>
-					{% endif %}
-				</div>
+				{% if not arrangement.getMetaValue('har_livestream') %}
+                    <div class="card">
+                        <h3 class="mt-2">Direktesending</h3>
+                        <p>
+                            Du har ikke tilgang på direktesending (livestream).
+                            <br/>
+                            Kontakt
+                            <a href="mailto:support@ukm.no?subject=Livestream">support@ukm.no</a>
+                            hvis du skal sende direkte fra ditt arrangement.
+                        </p>
+                        {% if is_super_admin and arrangement.getEierType() in ['kommune','arrangement'] %}
+                            <a href="?page={{GET('page')}}&subaction=livestream-aktiver" class="btn btn-ukm btn-xs superadmin">Aktivér</a>
+                        {% endif %}
+    				</div>
+				{% endif %}
 
+				{% if convertQueue.getAntall() > 0 %}
 				<div class="card">
 					<h3 class="mt-2">Konverteringskø</h3>
 					<p>
-						{% if convertQueue.getAntall() == 0 %}
+						{#% if convertQueue.getAntall() == 0 %}
 							Alle dine filmer er konvertert og publisert i UKM-TV.
-						{% else %}
+						{% else %#}
 							{{ convertQueue.getAntall() }}
 							av dine filmer står i konverteringskø:
 
@@ -167,9 +163,10 @@
 									</li>
 								{% endfor %}
 							</ol>
-						{% endif %}
+						{#% endif %#}
 					</p>
 				</div>
+                {% endif %}
 
 				<div class="card">
 					<h3 class="mt-2">Tips til film-opplasting</h3>

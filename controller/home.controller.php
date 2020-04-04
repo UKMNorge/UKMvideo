@@ -33,11 +33,7 @@ if( isset($_GET['slett'] ) ) {
             UKMvideo::getFlashbag()->error('Kunne ikke slette film. Systemet sa: '. $e->getMessage() );
         }
     }
-
 }
 
-
-UKMvideo::include('save/livestream.save.php');
 UKMvideo::addViewData('arrangement', $arrangement);
-UKMvideo::addViewData('is_superadmin', is_super_admin());
 UKMvideo::addViewData('convertQueue', Queue::getByArrangement($arrangement) );
