@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
     jQuery('#fileupload_band').fileupload({
         // Uncomment the following to send cross-domain cookies:
         xhrFields: { withCredentials: true },
-        url: 'https://videoconverter.' + UKM_HOSTNAME + '/jQupload_recieve.php',
+        url: 'https://videoconverter.' + UKM_HOSTNAME + '/last_opp.php',
         fileTypes: '^video\/(.)+',
         autoUpload: true,
         maxChunkSize: 10000000, // 10 MB
@@ -59,7 +59,7 @@ jQuery(document).ready(function() {
     if (jQuery('#fileupload_band').html() !== 'undefined' && jQuery('#fileupload_band').html() !== undefined) {
         if (jQuery.support.cors) {
             jQuery.ajax({
-                url: 'https://videoconverter.' + UKM_HOSTNAME + '/jQupload_cors.php',
+                url: 'https://videoconverter.' + UKM_HOSTNAME + '/cors.php',
                 type: 'HEAD'
             }).fail(function() {
                 var result = {
