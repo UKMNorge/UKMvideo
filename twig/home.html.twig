@@ -19,9 +19,16 @@
 				<div>
 					<div class="row">
 						<div class="col-xs-12 col-sm-6">
-							<div class="pull-right" style="margin-top: .8em;">
-								<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
-							</div>
+							{% if is_super_admin %}
+								<div class="pull-right" style="margin-top: .8em;">
+									<a href="?page={{GET('page')}}&action=upload&id=new" class="btn btn-ukm btn-sm btn-success">Last opp film</a>
+								</div>
+							{% else %}
+								<div class="pull-right" style="margin-top: .8em;">
+									<p>Opplasting av filmer er for øyeblikket ikke mulig.</p>
+								</div>
+							{% endif %}
+
 							<h3>Filmer</h3>
 							<div class="clearfix"></div>
 							<ol class="list-group">
@@ -63,9 +70,15 @@
 							</ol>
 						</div>
 						<div class="col-xs-12 col-sm-6">
+						{% if is_super_admin %}
 							<div class="pull-right" style="margin-top: .8em;">
 								<a href="?page={{GET('page')}}&action=flerkamera" class="btn btn-ukm btn-sm btn-primary">Last opp film fra forestilling (flerkamera)</a>
 							</div>
+						{% else %}
+							<div class="pull-right" style="margin-top: .8em;">
+								<p>Opplasting av filmer er for øyeblikket ikke mulig.</p>
+							</div>
+						{% endif %}
 							<h3>Filmer av innslag</h3>
 							<div class="clearfix"></div>
 							<ol class="list-group">
