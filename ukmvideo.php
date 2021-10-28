@@ -10,6 +10,9 @@ Author URI: http://www.ukm-norge.no
 
 use UKMNorge\Wordpress\Modul;
 use UKMNorge\Meta\Write as MetaWrite;
+use UKMNorge\Arrangement\Arrangement;
+
+
 
 require_once('UKM/Autoloader.php');
 
@@ -37,14 +40,18 @@ class UKMvideo extends Modul
      */
     public static function meny()
     {
-        $film = add_submenu_page(
-            'edit.php',
-            'Filmer',
-            'Filmer',
-            'edit_posts',
-            'UKMvideo',
-            ['UKMvideo','renderAdmin']
-        );
+        $arrangement = new Arrangement( get_option( 'pl_id ') );
+
+        if(!$arrangement->erKunstgalleri()) {
+            $film = add_submenu_page(
+                'edit.php',
+                'Filmer',
+                'Filmer',
+                'edit_posts',
+                'UKMvideo',
+                ['UKMvideo','renderAdmin']
+            );
+        }
 
         static::_checkForLivestreamActivation();
 
