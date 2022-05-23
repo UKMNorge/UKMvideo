@@ -8,7 +8,7 @@
 		{{innslag.getNavn()}}</h2>
 
 	<p class="lead">
-		Når opplastingen er ferdig, trykk på lagre-knappen
+		Når opplastingen er ferdig, vil opplasteren selv trykke på lagre-knappen og gå tilbake til
 		{{ hendelse.getNavn() }}
 	</p>
 
@@ -36,7 +36,7 @@
 	<input type="hidden" name="converter_b_id" id="converter_b_id" value="{{innslag.getId()}}"/>
 	<input type="hidden" name="converter_blog_id" id="converter_blog_id" value="{{blog_id}}"/>
 
-	<form action="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{GET('hendelse')}}&last_upload={{innslag.getId()}}#innslag_{{innslag.getId()}}" method="post">
+	<form id="submitVideoAuto" action="?page={{GET('page')}}&action={{GET('action')}}&hendelse={{GET('hendelse')}}&last_upload={{innslag.getId()}}#innslag_{{innslag.getId()}}" method="post">
 		<div class="container-fluid" id="fileupload_container">
 			<div class="row" style="margin-top: 2em;">
 				<div class="col-xs-6">

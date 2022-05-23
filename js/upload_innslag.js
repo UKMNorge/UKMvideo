@@ -35,6 +35,7 @@ jQuery(document).ready(function() {
                     jQuery('#registering').slideUp();
                     jQuery('#cron_id').val(response.cron_id);
                     jQuery('#submitbutton').attr('disabled', '').removeAttr('disabled');
+                    jQuery('#submitVideoAuto').submit();
                 } else {
                     fileUploadError({
                         'success': false,
