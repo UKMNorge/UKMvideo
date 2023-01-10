@@ -17,7 +17,7 @@ curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, "{\"url\":\"https://storage.googleapis.com/stream-example-bucket/video.mp4\",\"meta\":{\"name\":\"My First Stream Video\"}}");
 
 $headers = array();
-$headers[] = 'Authorization: Bearer NTduEqjl2Jg1Lyijr1qhi4btDnXBWSOrq10XD7nO';
+$headers[] = 'Authorization: Bearer xxx';
 $headers[] = 'Content-Type: application/x-www-form-urlencoded';
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
