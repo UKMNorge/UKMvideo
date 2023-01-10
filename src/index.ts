@@ -1,35 +1,83 @@
 import Vue from "vue";
-import TilbakemeldingerKomponent from "./components/Tilbakemeldinger.vue";
+import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+import {uploadVideoTabs} from './uploadVideoTabs';
+import { Director } from 'ukm-spa/Director';
 
-let v = new Vue({
-    el: "#app",
-    data: { 
-        name: "World",
-        activeTab : 'deltabruk'
-    },
+
+var director = new Director();
+(<any>window).director = director;
+
+var page = director.getParam('pageSPA');
+
+console.log(page);
+
+if(!page) {
+    page = 'upload';
+}
+
+
+
+director.addEventListener('openPage', function(obj : any) {
+    if(obj.id == 'upload') {
+        uploadVideoTabs();
+    }
+    else {
+        alert('Unavailable id');
+    }
     
-    components: {
-        TilbakemeldingerKomponent,
-    },
+    // console.log('aaa');
+    // jQuery(".menu-items button.menu-item").removeClass('active');
+    // jQuery(".menu-item."+ obj.id).addClass('active');
+    // console.log(".menu-item."+ obj.id);
+})
 
-    mounted : function() {
+director.openPage(page);
+
+
+// declare var ajaxurl: string; // Kommer fra global
+// let v = new Vue({
+//     el: "#videoVueApp",
+//     data: { 
+//         name: "World",
+//         activeTab : 'deltabruk',
+//         spaInteraction: new SPAInteraction(null, 'https://ukm.dev/wp-admin/admin-ajax.php')
+//     },
     
-    },
+//     components: {
 
-    methods : {
-        // Open tab
-        velgKomponent: function() {
-            var tilbakemeldinger = (<TilbakemeldingerKomponent>this.$refs['tilbakemeldinger']);
-        }
-    },
+//     },
 
-    template: /*html*/`
-    <div>    
-        <div>
-            <tilbakemeldinger-komponent ref="tilbakemeldinger" :name="name" :initialEnthusiasm="5" />
-        </div>
+//     mounted : function() {
+//         this.testAjax();
+//     },
 
-    </div>
+//     methods : {
+//         testAjax : function() {
+//             var data = {
+//                 action: 'UKMvideo_ajax',
+//                 subaction: 'text',
+//             };
+            
+//             console.log(ajaxurl);
+    
+//             var response = this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-    `
-});
+//             console.log(response);
+            
+//         },
+//         // Open tab
+//         velgKomponent: function() {
+
+//         }
+//     },
+
+//     template: /*html*/`
+//     <div>    
+//         <div>
+//             <h1>Here is the value {{name}}</h1>
+//         </div>
+
+//     </div>
+
+//     `
+// });
