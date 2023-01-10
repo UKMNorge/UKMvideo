@@ -21,7 +21,7 @@
     "@types/jquery": "^3.5.14",
     "chart.js": "^2.7.3",
     "jquery": "^3.6.1",
-    "ukm-spa": "^1.0.9",
+    "ukm-spa": "^1.0.6",
     "vue": "^2.5.2",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^6.0.0",
