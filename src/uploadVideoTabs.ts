@@ -1,7 +1,6 @@
 import Vue from "vue";
 import UploadVideo from "./components/UploadVideo.vue";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
-import { Director } from 'ukm-spa/Director';
 
 export function uploadVideoTabs() {
     new Vue({
@@ -18,7 +17,6 @@ export function uploadVideoTabs() {
         mounted : function() {
             this.openTab(this.activeTab);
             console.log(SPAInteraction);
-            console.log(Director);
         },
     
         methods : {
