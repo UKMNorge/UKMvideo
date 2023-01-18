@@ -47,6 +47,10 @@ class UKMvideo extends Modul
         $reques_method = $_SERVER['REQUEST_METHOD'];
         $subAction = $_REQUEST['subaction'];
 
+        if(!$subAction) {
+            $subAction = 'getCloudflareUrl';
+        }
+
         try {
             require_once('ajax/' . $subAction . '.ajax.php');
 
