@@ -7,6 +7,14 @@
                 <div v-else>Drop files here or <u>click here</u> to upload.</div>
             </label>
         </div>
+
+        <div>
+            <progress-bar ref="progressBar" />
+        </div>
+
+        <div class="chart-full-div">
+            <canvas class="box-statistikk" id="chartUploadProgress" style="width:100%; max-width: 1200px;"></canvas>
+        </div>
     </div>
 </template>
 
@@ -16,7 +24,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import * as tus from "tus-js-client";
-
+import ProgressBar from './ProgressBar.vue';
 
 
 declare var ajaxurl: string; // Kommer fra global
@@ -30,6 +38,9 @@ export default class UploadVideo extends Vue {
     public uploadProgress = '0';
     public isDragging = false
     public file : any = null;
+
+    public components = [ProgressBar];
+
 
     
     public dragover(e : any) {
@@ -89,7 +100,8 @@ export default class UploadVideo extends Vue {
                 var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
                 _this.uploadProgress = percentage;
 
-                console.log(bytesUploaded, bytesTotal, percentage + "%")
+                // Kaller ProgressBar fra html elementet med referanse
+                (<ProgressBar>_this.$refs['progressBar']).update(parseInt(percentage));
             },
             onSuccess: function() {
                 console.log("Download %s from %s", (<any>upload.file).name, upload.url)
