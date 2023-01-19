@@ -31,12 +31,6 @@
 				ProgressBar,
 			} from 'https://releases.transloadit.com/uppy/v3.0.1/uppy.min.mjs';
 
-			// On response
-			var onARes = function(req, response) {
-				console.warn('response');
-				console.log(response);
-			}
-
 			const uppy = new Uppy({ debug: true, autoProceed: true });
 
 			const onUploadSuccess = el => (file, response) => {
@@ -50,12 +44,7 @@
 				document.querySelector(el).appendChild(li);
 			};
 
-			uppy
-				.use(DragDrop, { target: '#drag-drop-area' })
-				.use(Tus, { endpoint: 'https://ukm.dev/2023-deatnu-tana-deatnu-tananvcfghfhfj/wp-admin/admin-ajax.php?action=UKMvideo_ajax&subaction=getCloudflareUrl', chunkSize: 150 * 1024 * 1024 })
-				.use(ProgressBar, { target: '.for-ProgressBar', hideAfterFinish: false })
-				.on('upload-success', onUploadSuccess('.uploaded-files ol'));
-
+			uppy.use(DragDrop, { target: '#drag-drop-area' })
 			const uploadBtn = document.querySelector('button.upload-button');
 			uploadBtn.addEventListener('click', () => uppy.upload());
 		</script>
