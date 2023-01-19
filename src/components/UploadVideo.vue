@@ -1,10 +1,12 @@
 <template>
-    <div>
-      <input @change="uploadVideoTUS" id="videoFile" type="file">
-      <p>Progress: {{ uploadProgress }}%</p>
-
-      <button @click="uploadVideo()">Upload video with fetch</button>
-      <button @click="testGetURL()">Test get url</button>
+    <div class="main">
+        <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
+            <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
+            <label for="fileInput" class="file-label">
+                <div v-if="isDragging">Release to drop files here.</div>
+                <div v-else>Drop files here or <u>click here</u> to upload.</div>
+            </label>
+        </div>
     </div>
 </template>
 
@@ -15,6 +17,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import * as tus from "tus-js-client";
 
+
+
 declare var ajaxurl: string; // Kommer fra global
 
 
@@ -24,15 +28,51 @@ export default class UploadVideo extends Vue {
     @Prop() keys!: {navn : string, method : string}[];
     @Prop() values!: any[];
     public uploadProgress = '0';
+    public isDragging = false
+    public file : any = null;
 
-    public method() : void {
-
+    
+    public dragover(e : any) {
+        e.preventDefault();
+        this.isDragging = true;
+    }
+    
+    public dragleave() {
+        this.isDragging = false;
+    }
+    
+    public drop(e : any) {
+        console.log('drop');
+        e.preventDefault();
+        
+        this.file = e.dataTransfer.files[0]
+        this.isDragging = false;
+        
+        this.uploadVideoTUS();
     }
 
-    public uploadVideoTUS(event : any) {
-        var _this = this;
+    public onChange(e : any) {
+        console.log('onChange');
+        e.preventDefault();
 
-        var file = event.target.files[0];
+        this.file = e.target.files[0];
+
+        this.uploadVideoTUS();
+    }
+
+   
+    public uploadVideoTUS(event? : any) {
+        var _this = this;
+        
+        if(event) {
+            var file = event.target.files[0];
+        } else {
+            var file = this.file;
+        }
+
+        if(!file) {
+            alert('Filen finnes ikke!');
+        }
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
@@ -78,5 +118,32 @@ Vue.component('test-komponent', UploadVideo);
 </script>
 
 <style>
-  
+.main {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    text-align: center;
+}
+
+.dropzone-container {
+    padding: 4rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+}
+
+.hidden-input {
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+}
+
+.file-label {
+    font-size: 20px;
+    display: block;
+    cursor: pointer;
+}
 </style>
