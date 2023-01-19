@@ -1,19 +1,21 @@
 <template>
     <div class="main">
-        <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
-            <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
-            <label for="fileInput" class="file-label">
-                <div v-if="isDragging">Slipp her for å laste opp filen</div>
-                <div v-else>Slipp filen her eller <u>klikk her</u> for å laste opp.</div>
-            </label>
+        <div v-show="!uploadStarted">
+            <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
+                <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
+                <label for="fileInput" class="file-label">
+                    <div v-if="isDragging">Slipp her for å laste opp filmen</div>
+                    <div v-else>Slipp filmen her eller <u>klikk</u> for å laste opp.</div>
+                </label>
+            </div>
+    
+            <div class="chart-full-div">
+                <canvas class="box-statistikk" id="chartUploadProgress" style="width:100%; max-width: 1200px;"></canvas>
+            </div>
         </div>
 
         <div>
-            <progress-bar ref="progressBar" />
-        </div>
-
-        <div class="chart-full-div">
-            <canvas class="box-statistikk" id="chartUploadProgress" style="width:100%; max-width: 1200px;"></canvas>
+            <progress-bar ref="progressBar" :visible="uploadStarted" />
         </div>
     </div>
 </template>
@@ -36,6 +38,7 @@ export default class UploadVideo extends Vue {
     @Prop() values!: any[];
     public isDragging = false
     public file : any = null;
+    public uploadStarted = false;
 
     public components = [ProgressBar];
 
@@ -81,6 +84,8 @@ export default class UploadVideo extends Vue {
             alert('Filen finnes ikke!');
         }
 
+        this.uploadStarted = true;
+
         // Create a new tus upload
         var upload = new tus.Upload(file, {
             endpoint: "https://ukm.dev/2023-deatnu-tana-deatnu-tananvcfghfhfj/wp-admin/admin-ajax.php?action=UKMvideo_ajax&subaction=getCloudflareUrl",
@@ -100,6 +105,7 @@ export default class UploadVideo extends Vue {
             },
             onSuccess: function() {
                 console.log("Download %s from %s", (<any>upload.file).name, upload.url)
+                _this.uploadStarted = false;
             }
         })
 

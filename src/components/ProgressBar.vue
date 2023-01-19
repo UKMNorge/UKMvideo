@@ -1,5 +1,5 @@
 <template>
-    <div class="main">
+    <div v-show="visible == true" class="main">
         <div id="specificChart" class="donut-size">
             <div class="pie-wrapper">
                 <span class="label">
