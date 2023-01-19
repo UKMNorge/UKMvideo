@@ -3,8 +3,8 @@
         <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
             <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
             <label for="fileInput" class="file-label">
-                <div v-if="isDragging">Release to drop files here.</div>
-                <div v-else>Drop files here or <u>click here</u> to upload.</div>
+                <div v-if="isDragging">Slipp her for å laste opp filen</div>
+                <div v-else>Slipp filen her eller <u>klikk her</u> for å laste opp.</div>
             </label>
         </div>
 
