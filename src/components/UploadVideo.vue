@@ -22,7 +22,6 @@
 <script lang="ts">
 // Import av Vue
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import * as tus from "tus-js-client";
 import ProgressBar from './ProgressBar.vue';
 
@@ -35,7 +34,6 @@ export default class UploadVideo extends Vue {
     // data som kommer fra initialisering av komponenten. Eks. <test-komponent :keys="['a', 'b']" :values="['value1', 'value2']"></test-komponent>
     @Prop() keys!: {navn : string, method : string}[];
     @Prop() values!: any[];
-    public uploadProgress = '0';
     public isDragging = false
     public file : any = null;
 
@@ -53,7 +51,6 @@ export default class UploadVideo extends Vue {
     }
     
     public drop(e : any) {
-        console.log('drop');
         e.preventDefault();
         
         this.file = e.dataTransfer.files[0]
@@ -63,7 +60,6 @@ export default class UploadVideo extends Vue {
     }
 
     public onChange(e : any) {
-        console.log('onChange');
         e.preventDefault();
 
         this.file = e.target.files[0];
@@ -98,7 +94,6 @@ export default class UploadVideo extends Vue {
             },
             onProgress: function(bytesUploaded, bytesTotal) {
                 var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
-                _this.uploadProgress = percentage;
 
                 // Kaller ProgressBar fra html elementet med referanse
                 (<ProgressBar>_this.$refs['progressBar']).update(parseInt(percentage));
