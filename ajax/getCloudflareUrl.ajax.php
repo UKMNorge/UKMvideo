@@ -20,7 +20,7 @@ curl_setopt($ch, CURLOPT_HEADER, 1);
 $headers = array();
 $headers[] = 'Content-Type: application/json';
 $headers[] = 'Tus-Resumable: 1.0.0';
-$headers[] = 'Upload-Creator: creator-id_aaaabcde12345';
+$headers[] = 'Upload-Creator: ' . get_current_user_id();
 $headers[] = 'Upload-Length: ' . $uploadLength;
 $headers[] = 'Upload-Metadata: ' . $uploadMetadata;
 $headers[] = 'Authorization: Bearer '. UKM_CLOUDFLARE_VIDEO_KEY;
