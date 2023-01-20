@@ -2,11 +2,13 @@
     <div>
         <div class="all-videos">
             <div v-for="(video, index) in videos" :key="index" class="video-item">
-                <div class="thumbnail-div">
-                    <img :src="video.getThumbnail()"  width="100%" height="auto">
+                <div class="inner">
+                    <div class="thumbnail-div">
+                        <img :src="video.getThumbnail()"  width="100%" height="auto">
+                    </div>
+                    <h4 clas="title">Title her</h4>
+                    <p>Duration: {{ video.getDuration() }}</p>
                 </div>
-                <h4 clas="title">Title her</h4>
-                <p>Duration: {{ video.getDuration() }}</p>
             </div>
         </div>
     </div>
@@ -70,24 +72,38 @@ Vue.component('list-videos', ListVideos);
 </script>
 
 <style>
-.all-videos {
-    display: flex;
-}
-.all-videos .video-item {
+.all-videos .video-item .inner {
     background: #fff;
-    border-radius: 20px;;
-    width: 33%;
-    margin: 20px 50px;
+    border-radius: 20px;
+    margin: 10px;
     padding: 20px;
 }
 .all-videos .video-item .thumbnail-div {
     display: flex;
+    flex-wrap: wrap;
 }
 .all-videos .video-item .thumbnail-div img {
-    border-radius: 10px;
-    height: 150px;
-    width: auto;
-    margin: auto;
+    border-radius: 20px;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.all-videos .video-item {
+    float: left;
+    width: 25%;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.all-videos:after {
+    content: "";
+    display: table;
+    clear: both;
+}
 </style>
