@@ -1,16 +1,12 @@
 <template>
-    <div class="main">
-        <div v-show="!uploadStarted">
+    <div class="main-upload-video-div">
+        <div v-if="!uploadStarted">
             <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
                 <label for="fileInput" class="file-label">
                     <div v-if="isDragging">Slipp her for å laste opp filmen</div>
                     <div v-else>Slipp filmen her eller <u>klikk</u> for å laste opp.</div>
                 </label>
-            </div>
-    
-            <div class="chart-full-div">
-                <canvas class="box-statistikk" id="chartUploadProgress" style="width:100%; max-width: 1200px;"></canvas>
             </div>
         </div>
 
@@ -91,8 +87,10 @@ export default class UploadVideo extends Vue {
             endpoint: "https://ukm.dev/2023-deatnu-tana-deatnu-tananvcfghfhfj/wp-admin/admin-ajax.php?action=UKMvideo_ajax&subaction=getCloudflareUrl",
             retryDelays: [0, 3000, 5000, 10000, 20000],
             metadata: {
-                filename: file.name,
-                filetype: file.type
+                'filename': file.name,
+                'filetype': file.type,
+                'innslag': 'not-yet'
+
             },
             onError: function(error) {
                 console.log("Failed because: " + error)
@@ -120,30 +118,35 @@ export default class UploadVideo extends Vue {
             upload.start()
         })
     }
-
-    public init() : void {
-
-    }
 }
 
 // Registrering av komponenten
-Vue.component('test-komponent', UploadVideo);
+Vue.component('upload-video', UploadVideo);
 </script>
 
 <style>
-.main {
+.main-upload-video-div {
     display: flex;
     flex-grow: 1;
     align-items: center;
-    height: 100vh;
+    height: 200px;
     justify-content: center;
     text-align: center;
+    margin-top: 50px;
 }
 
 .dropzone-container {
     padding: 4rem;
     background: #f7fafc;
     border: 1px solid #e2e8f0;
+    position: relative;
+}
+.dropzone-container input {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
 }
 
 .hidden-input {

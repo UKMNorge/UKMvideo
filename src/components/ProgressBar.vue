@@ -1,6 +1,6 @@
 <template>
-    <div v-show="visible == true" class="main">
-        <div id="specificChart" class="donut-size">
+    <div :class="{ visible : visible }" class="main-progress-bar">
+        <div :id="chartId" class="donut-size">
             <div class="pie-wrapper">
                 <span class="label">
                     <span class="num">0</span><span class="smaller">%</span>
@@ -20,6 +20,7 @@
 // Import av Vue
 import { Vue, Component, Prop } from "vue-property-decorator";
 import $ from "jquery";
+import {v4 as uuidv4} from 'uuid';
 
 declare var ajaxurl: string; // Kommer fra global
 
@@ -27,11 +28,13 @@ declare var ajaxurl: string; // Kommer fra global
 export default class ProgressBar extends Vue {
     @Prop() visible!: boolean;
     public uploadProgress : number = 0;
+    public chartId = uuidv4();
+
     
     public update(uploadProgress : number) {
         this.uploadProgress = uploadProgress;
 
-        var el = '#specificChart';
+        var el = this.chartId;
         var percent = this.uploadProgress;
         var donut = true;
 
@@ -69,13 +72,18 @@ export default class ProgressBar extends Vue {
 Vue.component('progress-bar', ProgressBar);
 </script>
 
-<style>
-    *,
-    *:before,
-    *:after {
+<style>    
+    .main-progress-bar {
+        display: none;
+    }
+    .main-progress-bar.visible {
+        display: inline;
+    }
+    .main-progress-bar *,
+    .main-progress-bar *:before,
+    .main-progress-bar *:after {
       box-sizing: border-box; 
     }
-    
     #percent {
       display: block;
       width: 160px;
@@ -95,7 +103,7 @@ Vue.component('progress-bar', ProgressBar);
       font-size: 20px;
       text-align: center; }
     
-    p {
+    .main-progress-bar p {
       max-width: 600px;
       margin: 12px auto;
       font-weight: normal;
