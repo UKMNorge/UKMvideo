@@ -1,6 +1,6 @@
 import Vue from "vue";
 import UploadVideo from "./components/UploadVideo.vue";
-import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+import ListVideos from "./components/ListVideos.vue";
 
 export function uploadVideoTabs() {
     new Vue({
@@ -8,6 +8,7 @@ export function uploadVideoTabs() {
         
         components: {
             UploadVideo,
+            ListVideos
         },
     
         mounted : function() {
@@ -22,11 +23,12 @@ export function uploadVideoTabs() {
         <div>    
             <div>                
                 <div class="tab-content tabs">
-                    <div v-show="activeTab == 'upload'">
+                    <div>
                         <upload-video ref="upload" :name="name" :initialEnthusiasm="5" />
                     </div>
                     <div>
                         <p>Alle filmer:</p>
+                        <list-videos ref="alle-videoer" />
                     </div>
                 </div>
             </div>
