@@ -86,6 +86,7 @@ export default class UploadVideo extends Vue {
         var upload = new tus.Upload(file, {
             endpoint: "https://ukm.dev/2023-deatnu-tana-deatnu-tananvcfghfhfj/wp-admin/admin-ajax.php?action=UKMvideo_ajax&subaction=getCloudflareUrl",
             retryDelays: [0, 3000, 5000, 10000, 20000],
+            chunkSize: 150 * 1024 * 1024,
             metadata: {
                 'filename': file.name,
                 'filetype': file.type,
