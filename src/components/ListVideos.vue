@@ -2,13 +2,14 @@
     <div>
         <div class="all-videos">
             <div v-for="(video, index) in videos" :key="index" class="video-item">
-                <div class="inner">
+                <a :href="video.getPreview()" class="inner">
                     <div class="thumbnail-div">
                         <img :src="video.getThumbnail()"  width="100%" height="auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
                         <span class="duration">{{ video.getDurationStr() }}</span>
                     </div>
                     <h4 class="title">Title her</h4>
-                </div>
+                </a>
             </div>
         </div>
     </div>
@@ -49,7 +50,8 @@ export default class ListVideos extends Vue {
                     video.meta.filename,
                     '',
                     video.duration,
-                    video.status.state
+                    video.status.state,
+                    video.preview
                 )
                 this.videos.push(videoObj);
 
@@ -75,6 +77,7 @@ Vue.component('list-videos', ListVideos);
 .all-videos .video-item .inner {
     border-radius: 20px;
     margin: 10px;
+    text-decoration: none;
 }
 .all-videos .video-item .thumbnail-div {
     display: flex;
@@ -93,15 +96,37 @@ Vue.component('list-videos', ListVideos);
 .all-videos .video-item .inner .title {
     margin-top: 20px !important;
     font-size: 15px;
+    color: #444;
 }
 .all-videos .video-item .thumbnail-div img {
     border-radius: 20px;
     width: 100%;
     height: 10vw;
     object-fit: cover;
-    box-shadow: 0px 0px 16px -1px #00000021;
+    box-shadow: 0px 0px 9px -1px #0000004f;
+    transition: box-shadow .2s;
 }
-
+.all-videos .video-item .inner:hover .thumbnail-div img {
+    box-shadow: 0px 0px 9px -1px #00000094;
+    transition: box-shadow .2s;
+}
+.all-videos .video-item .thumbnail-div svg {
+    fill: #0006 !important;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    opacity: 0;
+    transition: opacity .2s;
+}
+.all-videos .video-item .inner:hover .thumbnail-div svg {
+    opacity: 1;
+    transition: opacity .2s;
+}
 * {
   box-sizing: border-box;
 }

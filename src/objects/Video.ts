@@ -4,15 +4,17 @@ export default class Video {
     private thumbnail : string;
     private duration : number;
     private status : string;
+    private preview : string;
 
     public ready = false;
     
-    constructor(id : string, filename : string, thumbnail : string, duration : number, status : string) {
+    constructor(id : string, filename : string, thumbnail : string, duration : number, status : string, preview : string) {
         this.id = id;
         this.filename = filename;
         this.thumbnail = thumbnail;
         this.duration = duration;
         this.status = status;
+        this.preview = preview;
     }
 
     public getId() : string {
@@ -29,6 +31,10 @@ export default class Video {
 
     public getDuration() : number {
         return this.duration;
+    }
+
+    public getPreview() : string {
+        return this.preview;
     }
 
     public getDurationStr() : string {
