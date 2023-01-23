@@ -5,9 +5,9 @@
                 <div class="inner">
                     <div class="thumbnail-div">
                         <img :src="video.getThumbnail()"  width="100%" height="auto">
+                        <span class="duration">{{ video.getDurationStr() }}</span>
                     </div>
-                    <h4 clas="title">Title her</h4>
-                    <p>Duration: {{ video.getDuration() }}</p>
+                    <h4 class="title">Title her</h4>
                 </div>
             </div>
         </div>
@@ -48,7 +48,7 @@ export default class ListVideos extends Vue {
                     video.uid,
                     video.meta.filename,
                     '',
-                    video.maxDurationSeconds,
+                    video.duration,
                     video.status.state
                 )
                 this.videos.push(videoObj);
@@ -73,20 +73,33 @@ Vue.component('list-videos', ListVideos);
 
 <style>
 .all-videos .video-item .inner {
-    background: #fff;
     border-radius: 20px;
     margin: 10px;
-    padding: 20px;
 }
 .all-videos .video-item .thumbnail-div {
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+}
+.all-videos .video-item .thumbnail-div .duration {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    color: #fff;
+    background: #000;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+.all-videos .video-item .inner .title {
+    margin-top: 20px !important;
+    font-size: 15px;
 }
 .all-videos .video-item .thumbnail-div img {
     border-radius: 20px;
     width: 100%;
-    height: 300px;
+    height: 10vw;
     object-fit: cover;
+    box-shadow: 0px 0px 16px -1px #00000021;
 }
 
 * {

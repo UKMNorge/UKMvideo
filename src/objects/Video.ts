@@ -31,6 +31,36 @@ export default class Video {
         return this.duration;
     }
 
+    public getDurationStr() : string {
+        var hms = this.toHoursAndMinutes(Math.floor(this.duration));
+        var h = hms.h;
+        var m = hms.m;
+        var s = hms.s;
+
+
+        // Time er større en null
+        if(h > 0) {
+            return h + ':'+ m + ":" + s;
+        }
+        else if(m > 0) {
+            return m + ':' + s;
+        }
+        else {
+            return m + ':' + s;
+        }
+        
+    }
+
+    private toHoursAndMinutes(totalSeconds : number) : { h: number, m: number, s: number } {
+        const totalMinutes = Math.floor(totalSeconds / 60);
+      
+        const seconds = totalSeconds % 60;
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+      
+        return { h: hours, m: minutes, s: seconds };
+      }
+
     public getStatus() : string {
         return this.status;
     }
