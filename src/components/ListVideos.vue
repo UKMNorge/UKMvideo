@@ -7,6 +7,7 @@
                         <img :src="video.getThumbnail()"  width="100%" height="auto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
                         <span class="duration">{{ video.getDurationStr() }}</span>
+                        <div v-if="!video.isReady()" class="processing" :style="{ 'width': video.getProcessingProgress() + '%' }"><span>{{ video.getProcessingProgress() }}%</span></div>
                     </div>
                     <h4 class="title">Title her</h4>
                 </a>
@@ -83,6 +84,24 @@ Vue.component('list-videos', ListVideos);
     display: flex;
     flex-wrap: wrap;
     position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+.all-videos .video-item .thumbnail-div .processing {
+    position: absolute;
+    background: #ffffff8c;
+    height: 100%;
+    width: 20%;
+    display: flex;
+    min-width: 20% !important;
+}
+.all-videos .video-item .thumbnail-div .processing span {
+    margin: auto;
+    font-size: 15px;
+    color: #fff;
+    background: #000;
+    padding: 4px;
+    border-radius: 5px;
 }
 .all-videos .video-item .thumbnail-div .duration {
     position: absolute;

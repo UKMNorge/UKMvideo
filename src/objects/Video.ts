@@ -10,6 +10,7 @@ export default class Video {
     private status : string;
     private preview : string;
     private spaInteraction = new SPAInteraction(null, ajaxurl);
+    private processingProgress : number = 100;
 
 
     public ready = false;
@@ -23,22 +24,41 @@ export default class Video {
         this.preview = preview;
         
         // The video is being processed, update it
-        if(this.isReady()) {
+        if(!this.isReady()) {
             this.updateVideo();
         }
     }
 
-    private async updateVideo() {
-        var data = {
-            action: 'UKMvideo_ajax',
-            subaction: 'getSingleVideo',
-        };
-        
-        var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+    private updateVideo() {
+        var interval = setInterval(async () => {
+            console.log('trying...');
 
-        console.log(response);
-
-        return response;
+            var data = {
+                action: 'UKMvideo_ajax',
+                subaction: 'getSingleVideo',
+                videoId : this.id
+            };
+            
+            var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+            
+            if(response.result && response.result.success == true) {
+                var video = response.result.result;
+    
+                this.thumbnail = video.thumbnail
+                this.duration = video.duration;
+                this.status = video.status.state;
+                this.preview = video.preview;
+                this.processingProgress = video.status.pctComplete ? parseInt(video.status.pctComplete) : 0;
+            }
+            else {
+                clearInterval(interval);
+            }
+            
+            if(this.isReady()) {
+                clearInterval(interval);
+            }
+            return video;
+        }, 1000);
     }
 
     public getId() : string {
@@ -59,6 +79,10 @@ export default class Video {
 
     public getPreview() : string {
         return this.preview;
+    }
+
+    public getProcessingProgress() : number {
+        return this.processingProgress;
     }
 
     public getDurationStr() : string {
