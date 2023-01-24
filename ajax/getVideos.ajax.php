@@ -1,6 +1,8 @@
 <?php
 use UKMNorge\OAuth2\HandleAPICall;
 
+require_once('UKMconfig.inc.php');
+
 // Hent videos fra CloudFlare Stream
 // Basert på WP bruker id
 
@@ -11,13 +13,13 @@ $ch = curl_init();
 
 $wp_user_id = get_current_user_id();
 
-curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/3fec674cb83e55d312b093cfd0f53482/stream?after=2014-01-02T02:20:00Z&before=2025-01-02T02:20:00Z&include_counts=false&creator=' . $wp_user_id);
+curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?after=2014-01-02T02:20:00Z&before=2025-01-02T02:20:00Z&include_counts=false&creator=' . $wp_user_id);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
 
 $headers = array();
-$headers[] = 'Authorization: Bearer Cvpr2t5jG6ky-Uy0kJUmZo7atstMBJKo-TCHIcAS';
+$headers[] = 'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY;
 $headers[] = 'Content-Type: application/json';
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
