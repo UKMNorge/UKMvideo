@@ -11,7 +11,8 @@
         </div>
 
         <div>
-            <progress-bar ref="progressBar" :visible="uploadStarted" />
+            <progress-bar v-show="!showLoadingText" ref="progressBar" :visible="uploadStarted" />
+            <div class="vent-text" v-show="showLoadingText"><h3>Vi gjør filmen klar, vennligst vent!</h3></div>
         </div>
     </div>
 </template>
@@ -35,6 +36,7 @@ export default class UploadVideo extends Vue {
     public isDragging = false
     public file : any = null;
     public uploadStarted = false;
+    public showLoadingText = false;
 
     public components = [ProgressBar];
 
@@ -101,10 +103,17 @@ export default class UploadVideo extends Vue {
 
                 // Kaller ProgressBar fra html elementet med referanse
                 (<ProgressBar>_this.$refs['progressBar']).update(parseInt(percentage));
+                
+                if(parseInt(percentage) == 100) {
+                    _this.showLoadingText = true;
+                }
+
             },
             onSuccess: function() {
                 console.log("Download %s from %s", (<any>upload.file).name, upload.url)
                 _this.uploadStarted = false;
+                _this.showLoadingText = false;
+                location.reload();
             }
         })
 
