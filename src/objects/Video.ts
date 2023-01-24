@@ -1,3 +1,7 @@
+import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+declare var ajaxurl: string; // Kommer fra global
+
+
 export default class Video {
     private id : string;
     private filename : string;
@@ -5,6 +9,8 @@ export default class Video {
     private duration : number;
     private status : string;
     private preview : string;
+    private spaInteraction = new SPAInteraction(null, ajaxurl);
+
 
     public ready = false;
     
@@ -15,6 +21,24 @@ export default class Video {
         this.duration = duration;
         this.status = status;
         this.preview = preview;
+        
+        // The video is being processed, update it
+        if(this.isReady()) {
+            this.updateVideo();
+        }
+    }
+
+    private async updateVideo() {
+        var data = {
+            action: 'UKMvideo_ajax',
+            subaction: 'getSingleVideo',
+        };
+        
+        var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+        console.log(response);
+
+        return response;
     }
 
     public getId() : string {
@@ -69,6 +93,10 @@ export default class Video {
 
     public getStatus() : string {
         return this.status;
+    }
+
+    public isReady() : boolean {
+        return this.status == 'ready';
     }
 
 
