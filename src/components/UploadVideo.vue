@@ -44,7 +44,7 @@ export default class UploadVideo extends Vue {
 
     public components = [ProgressBar];
 
-    public mounted() {
+    public init() {
         var arrangementId = $('#vueArguments').attr('arrangementId');
         if(arrangementId) {
             this.arrangementId = arrangementId;
@@ -160,6 +160,9 @@ Vue.component('upload-video', UploadVideo);
     background: #f7fafc;
     border: 1px solid #e2e8f0;
     position: relative;
+    border-radius: 15px;
+    border: solid 1px #4f46e5;
+    box-shadow: 0px 0px 13px -4px #0000003d;
 }
 .dropzone-container input {
     left: 0;

@@ -41,7 +41,7 @@ export default class ListVideos extends Vue {
     private arrangementId : string = '';
     private innslagId : string = '';
     
-    public mounted() {
+    public init() {
         var arrangementId = $('#vueArguments').attr('arrangementId');
         if(arrangementId) {
             this.arrangementId = arrangementId;
@@ -63,6 +63,7 @@ export default class ListVideos extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
         if(response.result && response.result.success == true) {
+            this.videos = [];
             for(var video of response.result.result) {
                 
                 var videoObj = new Video(
