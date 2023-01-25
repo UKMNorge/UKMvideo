@@ -9,7 +9,17 @@ $uploadLength = getallheaders()['Upload-Length'];
 $uploadMetadata = getallheaders()['Upload-Metadata'];
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall([], ['innslag_id', 'arrangement_id'], ['GET', 'POST'], false);
+
+$innslag_id = isset($_GET['innslag_id']) ? $_GET['innslag_id'] : null;  // brukes mot kobling til et innslag
+$arrangement_id = isset($_GET['arrangement_id']) ? $_GET['arrangement_id'] : null;  // brukes for reportasje
+
+if($innslag_id == null && $arrangement_id == null) {
+    $handleCall->sendErrorToClient('innslag_id eller arrangement_id må sendes som argument', 400);
+    die;
+}
+
+$creatorId = $innslag_id ? '-b-' . $innslag_id : '-p-' . $arrangement_id;
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?direct_user=true');
@@ -17,10 +27,12 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
 curl_setopt($ch, CURLOPT_HEADER, 1);
 
+
 $headers = array();
 $headers[] = 'Content-Type: application/json';
 $headers[] = 'Tus-Resumable: 1.0.0';
-$headers[] = 'Upload-Creator: ' . get_current_user_id();
+// Sender upload creator for å identifisere brukeren og hva det gjelder for -> b = innslag; p = arrangement
+$headers[] = 'Upload-Creator: ' . get_current_user_id() . $creatorId;
 $headers[] = 'Upload-Length: ' . $uploadLength;
 $headers[] = 'Upload-Metadata: ' . $uploadMetadata;
 $headers[] = 'Authorization: Bearer '. UKM_CLOUDFLARE_VIDEO_KEY;
@@ -43,12 +55,14 @@ curl_close($ch);
 
 $headersArr = headersToArray($headers);
 
+// Stor og liten bokstav!
+$location = $headersArr['Location'] ? $headersArr['Location'] : $headersArr['location'];
 
 header("HTTP/1.1 200 OK");
 header("Access-Control-Expose-Headers:Location");
 header("Access-Control-Allow-Headers:*");
 header("Access-Control-Allow-Origin:*");
-header("Location:" . $headersArr['location'], true, 200);
+header("Location:" . $location, true, 200);
 
 
 die;

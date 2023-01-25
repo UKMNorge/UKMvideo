@@ -23,6 +23,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import * as tus from "tus-js-client";
 import ProgressBar from './ProgressBar.vue';
+import $ from "jquery";
+
 
 
 declare var ajaxurl: string; // Kommer fra global
@@ -33,14 +35,24 @@ export default class UploadVideo extends Vue {
     // data som kommer fra initialisering av komponenten. Eks. <test-komponent :keys="['a', 'b']" :values="['value1', 'value2']"></test-komponent>
     @Prop() keys!: {navn : string, method : string}[];
     @Prop() values!: any[];
+    @Prop() erReportasje! : boolean;
     public isDragging = false
     public file : any = null;
     public uploadStarted = false;
     public showLoadingText = false;
+    public arrangementId : string = '';
 
     public components = [ProgressBar];
 
-
+    public mounted() {
+        var arrangementId = $('#vueArguments').attr('arrangementId');
+        if(arrangementId) {
+            this.arrangementId = arrangementId;
+        }
+        else {
+            console.error('arrangementId må være definert');
+        }
+    }
     
     public dragover(e : any) {
         e.preventDefault();
@@ -69,14 +81,13 @@ export default class UploadVideo extends Vue {
     }
 
    
-    public uploadVideoTUS(event? : any) {
+    public uploadVideoTUS() {
         var _this = this;
+        var id = this.arrangementId;
         
-        if(event) {
-            var file = event.target.files[0];
-        } else {
-            var file = this.file;
-        }
+        console.log(this.erReportasje);
+
+        var file = this.file;
 
         if(!file) {
             alert('Filen finnes ikke!');
@@ -86,7 +97,7 @@ export default class UploadVideo extends Vue {
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
-            endpoint: "https://ukm.dev/2023-deatnu-tana-deatnu-tananvcfghfhfj/wp-admin/admin-ajax.php?action=UKMvideo_ajax&subaction=getCloudflareUrl",
+            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'innslag_id') + '=' + id,
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 150 * 1024 * 1024,
             metadata: {
@@ -110,7 +121,6 @@ export default class UploadVideo extends Vue {
 
             },
             onSuccess: function() {
-                console.log("Download %s from %s", (<any>upload.file).name, upload.url)
                 _this.uploadStarted = false;
                 _this.showLoadingText = false;
                 location.reload();

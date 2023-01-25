@@ -24,7 +24,7 @@ export function uploadVideoTabs() {
             <div>                
                 <div class="tab-content tabs">
                     <div>
-                        <upload-video ref="upload" :name="name" :initialEnthusiasm="5" />
+                        <upload-video ref="upload" :name="name" :initialEnthusiasm="5" :erReportasje="true" />
                     </div>
                     <div>
                         <p>Alle filmer:</p>
