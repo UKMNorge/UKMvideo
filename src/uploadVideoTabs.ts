@@ -28,7 +28,7 @@ export function uploadVideoTabs() {
                     </div>
                     <div>
                         <p>Alle filmer:</p>
-                        <list-videos ref="alle-videoer" />
+                        <list-videos ref="alle-videoer" :erReportasje="true" />
                     </div>
                 </div>
             </div>

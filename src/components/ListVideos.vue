@@ -27,6 +27,8 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Video from '../objects/Video';
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+import $ from "jquery";
+
 
 declare var ajaxurl: string; // Kommer fra global
 
@@ -35,15 +37,27 @@ export default class ListVideos extends Vue {
     // data som kommer fra initialisering av komponenten. Eks. <test-komponent :keys="['a', 'b']" :values="['value1', 'value2']"></test-komponent>
     public videos : Video[] = [];
     private spaInteraction = new SPAInteraction(null, ajaxurl);
+    @Prop() erReportasje! : boolean;
+    private arrangementId : string = '';
+    private innslagId : string = '';
     
     public mounted() {
-        this.fetchAllVideos();
+        var arrangementId = $('#vueArguments').attr('arrangementId');
+        if(arrangementId) {
+            this.arrangementId = arrangementId;
+            this.fetchAllVideos();
+        }
+        else {
+            console.error('arrangementId må være definert');
+        }
     }
 
     public async fetchAllVideos() {
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getVideos',
+            erReportasje: this.erReportasje,
+            id: this.erReportasje ? this.arrangementId : this.innslagId
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
