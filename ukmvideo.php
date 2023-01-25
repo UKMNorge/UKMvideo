@@ -145,6 +145,9 @@ class UKMvideo extends Modul
         // require_once('UKM/inc/twig-js.inc.php');
         wp_enqueue_script('TwigJS');
 
+    	wp_enqueue_style('UKMvideoStyle', plugin_dir_url(__FILE__) . '/style/styles.css');
+
+
         // wp_enqueue_script('WPbootstrap3_js');
         // wp_enqueue_style('WPbootstrap3_css');
         // wp_enqueue_style( 'UKMvideo_css', static::getPluginUrl() . 'UKMvideo.css');

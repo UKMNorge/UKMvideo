@@ -1,0 +1,21 @@
+.tab-items.video-buttons {
+    display: flex;
+    margin-top: 40px;
+}
+.tab-items.video-buttons .tab-item {
+    width: 50%;
+    padding: 12px;
+}
+.tab-items.video-buttons .tab-item button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    font-size: 17px;
+    border: solid 2px #4f46e5;
+    color: #4f46e5;
+}
+.tab-items.video-buttons .tab-item button.active {
+    color: #fff;
+    background: #4f46e5;
+}
