@@ -31,7 +31,6 @@ export default class Video {
 
     private updateVideo() {
         var interval = setInterval(async () => {
-            console.log('trying...');
 
             var data = {
                 action: 'UKMvideo_ajax',
@@ -120,7 +119,11 @@ export default class Video {
     }
 
     public isReady() : boolean {
-        return this.status == 'ready';
+        return this.status == 'ready' || this.status == 'pendingupload';
+    }
+
+    public isPendingUpload() : boolean {
+        return this.status == 'pendingupload';
     }
 
 

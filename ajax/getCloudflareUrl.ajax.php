@@ -48,7 +48,7 @@ header("HTTP/1.1 200 OK");
 header("Access-Control-Expose-Headers:Location");
 header("Access-Control-Allow-Headers:*");
 header("Access-Control-Allow-Origin:*");
-header("Location:" . $headersArr['Location'], true, 200);
+header("Location:" . $headersArr['location'], true, 200);
 
 
 die;

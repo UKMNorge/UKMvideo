@@ -2,7 +2,7 @@
     <div>
         <div class="all-videos">
             <div v-for="(video, index) in videos" :key="index" class="video-item">
-                <a :href="video.getPreview()" class="inner">
+                <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="inner">
                     <div class="thumbnail-div">
                         <img :src="video.getThumbnail()"  width="100%" height="auto">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
@@ -10,6 +10,11 @@
                         <div v-if="!video.isReady()" class="processing" :style="{ 'width': video.getProcessingProgress() + '%' }"><span>{{ video.getProcessingProgress() }}%</span></div>
                     </div>
                     <h4 class="title">Title her</h4>
+                </a>
+                <a v-else class="inner">
+                    <div class="thumbnail-div not-available">
+                        <p>Videoen er ikke lastet opp</p>
+                    </div>
                 </a>
             </div>
         </div>
@@ -86,6 +91,21 @@ Vue.component('list-videos', ListVideos);
     position: relative;
     overflow: hidden;
     border-radius: 20px;
+}
+.all-videos .video-item .thumbnail-div.not-available {
+    border-radius: 20px;
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+    box-shadow: 0px 0px 9px -1px #0000004f;
+    transition: box-shadow .2s;
+    background: #000;
+    display: flex;
+}
+.all-videos .video-item .thumbnail-div.not-available p {
+    margin: auto;
+    font-size: 15px;
+    color: #fff;
 }
 .all-videos .video-item .thumbnail-div .processing {
     position: absolute;
