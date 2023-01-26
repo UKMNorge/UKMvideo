@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="vue-video-item">
-            <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="inner video-vue">
+            <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="video-vue">
                 <div class="thumbnail-div">
                     <img :src="video.getThumbnail()"  width="100%" height="auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
@@ -10,7 +10,7 @@
                 </div>
                 <h4 class="title">Title her</h4>
             </a>
-            <a v-else class="inner">
+            <a v-else class="video-vue">
                 <div class="thumbnail-div not-available">
                     <p>Videoen er ikke lastet opp</p>
                 </div>
@@ -40,9 +40,8 @@ Vue.component('video-vue', VideoVue);
 </script>
 
 <style>
-.vue-video-item .inner {
+.vue-video-item {
     border-radius: 20px;
-    margin: 10px;
     text-decoration: none;
 }
 .vue-video-item .thumbnail-div {
@@ -92,7 +91,7 @@ Vue.component('video-vue', VideoVue);
     padding: 2px 5px;
     border-radius: 5px;
 }
-.vue-video-item .inner .title {
+.vue-video-item .title {
     margin-top: 20px !important;
     font-size: 15px;
     color: #444;
@@ -105,7 +104,7 @@ Vue.component('video-vue', VideoVue);
     box-shadow: 0px 0px 9px -1px #0000004f;
     transition: box-shadow .2s;
 }
-.vue-video-item .inner:hover .thumbnail-div img {
+.vue-video-item:hover .thumbnail-div img {
     box-shadow: 0px 0px 9px -1px #00000094;
     transition: box-shadow .2s;
 }
@@ -122,7 +121,7 @@ Vue.component('video-vue', VideoVue);
     opacity: 0;
     transition: opacity .2s;
 }
-.vue-video-item .inner:hover .thumbnail-div svg {
+.vue-video-item:hover .thumbnail-div svg {
     opacity: 1;
     transition: opacity .2s;
 }
