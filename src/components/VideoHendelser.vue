@@ -2,13 +2,22 @@
     <div>
         <div class="hendelser">
             <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse">
-                <p>{{ hendelse.getId() }}</p>
-                <div class="videos">
-                    <span>Filmer her:</span>
-                    <list-videos ref="allVideos-reportasje" :erReportasje="false" />
-                </div>
-                <div class="upload-video-for-hendelse">
-                    <upload-video ref="uploadVideo-reportasje" :erReportasje="false" />
+                <div class="inner">
+                    <div class="info">
+                        <h4>{{ hendelse.getNavn() }}</h4>
+                        <p>{{ hendelse.getBeskrivelse() }}</p>
+                        <span>{{ hendelse.getSted() }}</span>
+                    </div>
+                    <div class="type">
+                        <span>{{ hendelse.getType() }}</span>
+                    </div>
+                    <div class="videos">
+                        <span>Filmer her:</span>
+                        <list-videos ref="allVideos-reportasje" :erReportasje="false" />
+                    </div>
+                    <div class="upload-video-for-hendelse">
+                        <upload-video ref="uploadVideo-reportasje" :erReportasje="false" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,7 +74,13 @@ export default class VideoHendelser extends Vue {
         if(response) {
             // this.hendelser = [];
             for(var hendelse of response) {
-                var hendelseVideo = new HendelseVideo(hendelse.id);
+                var hendelseVideo = new HendelseVideo(
+                    hendelse.id,
+                    hendelse.navn,
+                    hendelse.beskrivelse,
+                    hendelse.sted,
+                    hendelse.context.type
+                );
                 this.hendelser.push(hendelseVideo);
             }
         }
@@ -82,7 +97,5 @@ Vue.component('video-hendelser', VideoHendelser);
 </script>
 
 <style>
-.hendelser .hendelse {
-    border: solid 1px red;
-}
+
 </style>

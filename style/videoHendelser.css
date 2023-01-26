@@ -1,0 +1,17 @@
+.hendelser .hendelse {
+    float: left;
+    width: 25%;
+    padding: 10px;
+    padding: 20px;
+}
+.hendelser .hendelse .inner {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 2px 7px #00000014;
+    margin-bottom: 30px;
+    min-height: 212px;
+    overflow: hidden;
+    padding: 15px;
+    position: relative;
+    width: 100%;
+}

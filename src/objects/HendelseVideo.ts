@@ -5,13 +5,37 @@ declare var ajaxurl: string; // Kommer fra global
 export default class HendelseVideo {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
 
-    private id : string;
-    
-    
-    constructor(id : string) {
+    private id: string;
+    private navn: string;
+    private beskrivelse: string;
+    private sted: string;
+    private type: string;
+
+    constructor(id: string, navn: string, beskrivelse: string, sted: string, type: string) {
         this.id = id;
+        this.navn = navn;
+        this.beskrivelse = beskrivelse;
+        this.sted = sted;
+        this.type = type;
     }
     
+    public getId() : string {
+        return this.id;
+    }
+    public getNavn() : string {
+        return this.navn;
+    }
+    public getBeskrivelse() : string {
+        return this.beskrivelse;
+    }
+    public getSted() : string {
+        return this.sted;
+    }
+    public getType() : string {
+        return this.type;
+    }
+    
+
     public uploadVideo() {
         
     }
@@ -33,7 +57,5 @@ export default class HendelseVideo {
         return response;
     }
     
-    public getId() : string {
-        return this.id;
-    }
+   
 }
