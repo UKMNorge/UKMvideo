@@ -13,7 +13,9 @@
                     </div>
                     <div class="videos">
                         <span>Filmer her:</span>
-                        <list-videos ref="allVideos-reportasje" :erReportasje="false" />
+                        <div v-for="(video, videoIndex) in hendelse.getVideos()" :key="videoIndex">
+                            <video-vue :video="video" />
+                        </div>
                     </div>
                     <div class="upload-video-for-hendelse">
                         <upload-video ref="uploadVideo-reportasje" :erReportasje="false" />
@@ -32,9 +34,9 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import $ from "jquery";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import HendelseVideo from "../objects/HendelseVideo";
+import VideoVue from './VideoVue.vue';
 
 import UploadVideo from "./UploadVideo.vue";
-import ListVideos from "./ListVideos.vue";
 
 declare var ajaxurl: string; // Kommer fra global
 
@@ -47,7 +49,7 @@ export default class VideoHendelser extends Vue {
 
     components = {
         UploadVideo,
-        ListVideos
+        VideoVue
     }
 
 

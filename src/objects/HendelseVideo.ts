@@ -1,4 +1,6 @@
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+import Video from '../objects/Video';
+
 
 declare var ajaxurl: string; // Kommer fra global
 
@@ -10,6 +12,7 @@ export default class HendelseVideo {
     private beskrivelse: string;
     private sted: string;
     private type: string;
+    private videos : Video[] = [];
 
     constructor(id: string, navn: string, beskrivelse: string, sted: string, type: string) {
         this.id = id;
@@ -17,6 +20,8 @@ export default class HendelseVideo {
         this.beskrivelse = beskrivelse;
         this.sted = sted;
         this.type = type;
+
+        this.fetchVideos();
     }
     
     public getId() : string {
@@ -35,6 +40,10 @@ export default class HendelseVideo {
         return this.type;
     }
     
+    public getVideos() : any[] {
+        return this.videos;
+    }
+
 
     public uploadVideo() {
         
@@ -44,14 +53,38 @@ export default class HendelseVideo {
         
     }
     
-    private async getVideos() {
+    private async fetchVideos() {
         var data = {
             action: 'UKMvideo_ajax',
-            subaction: 'getSingleVideo',
-            videoId : this.id
+            subaction: 'getVideos',
+            erReportasje: false,
+            id: this.id
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+        if(response.result && response.result.success == true) {
+            for(var video of response.result.result) {
+                
+                var videoObj = new Video(
+                    video.uid,
+                    video.meta.filename,
+                    '',
+                    video.duration,
+                    video.status.state,
+                    video.preview
+                )
+                this.videos.push(videoObj);
+
+                videoObj.setThumbnail(video.thumbnail);
+
+                // Dette skal fikses senere. Fungerer med en delay fordi browseren hente ikke bildet fra urlen
+                setTimeout(() => {
+                    const myImage = new Image(100, 200);
+                    myImage.src = video.thumbnail;
+                }, 100)
+            }
+        }
         
         
         return response;
