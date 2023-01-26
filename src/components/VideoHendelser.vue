@@ -14,11 +14,13 @@
                     <div class="videos">
                         <span>Filmer her:</span>
                         <div v-for="(video, videoIndex) in hendelse.getVideos()" :key="videoIndex">
+                            <!--- Show single video -->
                             <video-vue :video="video" />
                         </div>
                     </div>
                     <div class="upload-video-for-hendelse">
-                        <upload-video ref="uploadVideo-reportasje" :erReportasje="false" />
+                        <!--- Upload video -->
+                        <upload-video ref="uploadVideo-reportasje" :erReportasje="false" :miniVersion="true" />
                     </div>
                 </div>
             </div>

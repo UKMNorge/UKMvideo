@@ -1,5 +1,5 @@
 <template>
-    <div class="main-upload-video-div">
+    <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
         <div v-if="!uploadStarted">
             <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
@@ -36,6 +36,7 @@ export default class UploadVideo extends Vue {
     @Prop() keys!: {navn : string, method : string}[];
     @Prop() values!: any[];
     @Prop() erReportasje! : boolean;
+    @Prop() miniVersion! : boolean;
     public isDragging = false
     public file : any = null;
     public uploadStarted = false;
@@ -153,6 +154,16 @@ Vue.component('upload-video', UploadVideo);
     justify-content: center;
     text-align: center;
     margin-top: 50px;
+}
+.main-upload-video-div.mini-version {
+    margin: 10px 0;
+    height: auto;
+}
+.main-upload-video-div.mini-version .dropzone-container {
+    padding: 15px;
+}    
+.main-upload-video-div.mini-version .dropzone-container .file-label {
+    font-size: 17px;
 }
 
 .dropzone-container {
