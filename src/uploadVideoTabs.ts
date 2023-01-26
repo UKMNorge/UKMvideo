@@ -1,6 +1,7 @@
 import Vue from "vue";
-import UploadVideo from "./components/UploadVideo.vue";
-import ListVideos from "./components/ListVideos.vue";
+import VideoReportasjer from "./components/VideoReportasjer.vue";
+import VideoHendelser from "./components/VideoHendelser.vue";
+
 
 export function uploadVideoTabs() {
     new Vue({
@@ -11,8 +12,8 @@ export function uploadVideoTabs() {
         },
         
         components: {
-            UploadVideo,
-            ListVideos
+            VideoReportasjer,
+            VideoHendelser
         },
     
         mounted : function() {
@@ -24,11 +25,11 @@ export function uploadVideoTabs() {
         methods : {
             // Open tab
             openTab: function(tabRef : string) : void {
+                console.log(tabRef);
+
                 this.activeTab = tabRef;
-                var vueObjectUV = (<UploadVideo>this.$refs['uploadVideo-' + tabRef]);
-                var vueObjLV = (<ListVideos>this.$refs['allVideos-' + tabRef]);
-                vueObjectUV.init();
-                vueObjLV.init();
+                var objVue = (<VideoReportasjer>this.$refs[tabRef]);
+                objVue.init();
             }
         },
     
@@ -40,29 +41,19 @@ export function uploadVideoTabs() {
                         <button :class="{'active' : activeTab == 'reportasje'}" @click="openTab('reportasje');">Filmer</button>
                     </div>
                     <div class="tab-item">
-                        <button :class="{'active' : activeTab == 'innslag'}" @click="openTab('innslag');">Filmer av innslag</button>
+                        <button :class="{'active' : activeTab == 'hendelser'}" @click="openTab('hendelser');">Filmer av innslag</button>
                     </div>
                 </div>
 
                 <div class="tab-content tabs">
                     <div v-show="activeTab == 'reportasje'">
-                        <div>
-                            <upload-video ref="uploadVideo-reportasje" :name="name" :initialEnthusiasm="5" :erReportasje="true" />
-                        </div>
-                        <div>
-                            <list-videos ref="allVideos-reportasje" :erReportasje="true" />
-                        </div>
+                        <video-reportasjer ref="reportasje" />
                     </div>
                 </div>
 
                 <div class="tab-content tabs">
-                    <div v-show="activeTab == 'innslag'">
-                        <div>
-                            <upload-video ref="uploadVideo-innslag" :name="name" :initialEnthusiasm="5" :erReportasje="true" />
-                        </div>
-                        <div>
-                            <list-videos ref="allVideos-innslag" :erReportasje="true" />
-                        </div>
+                    <div v-show="activeTab == 'hendelser'">
+                        <video-hendelser ref="hendelser" />
                     </div>
                 </div>
 

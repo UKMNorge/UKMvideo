@@ -63,7 +63,6 @@ export default class ListVideos extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
         if(response.result && response.result.success == true) {
-            this.videos = [];
             for(var video of response.result.result) {
                 
                 var videoObj = new Video(
