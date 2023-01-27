@@ -9,17 +9,17 @@ $uploadLength = getallheaders()['Upload-Length'];
 $uploadMetadata = getallheaders()['Upload-Metadata'];
 
 // Det brukes POST fordi WP tillater POST bare
-$handleCall = new HandleAPICall([], ['innslag_id', 'arrangement_id'], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall([], ['hendelse_id', 'arrangement_id'], ['GET', 'POST'], false);
 
-$innslag_id = isset($_GET['innslag_id']) ? $_GET['innslag_id'] : null;  // brukes mot kobling til et innslag
+$hendelse_id = isset($_GET['hendelse_id']) ? $_GET['hendelse_id'] : null;  // brukes mot kobling til et innslag
 $arrangement_id = isset($_GET['arrangement_id']) ? $_GET['arrangement_id'] : null;  // brukes for reportasje
 
-if($innslag_id == null && $arrangement_id == null) {
-    $handleCall->sendErrorToClient('innslag_id eller arrangement_id må sendes som argument', 400);
+if($hendelse_id == null && $arrangement_id == null) {
+    $handleCall->sendErrorToClient('hendelse_id eller arrangement_id må sendes som argument', 400);
     die;
 }
 
-$creatorId = $innslag_id ? '-b-' . $innslag_id : '-p-' . $arrangement_id;
+$creatorId = $hendelse_id ? '-b-' . $hendelse_id : '-p-' . $arrangement_id;
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?direct_user=true');

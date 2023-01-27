@@ -15,11 +15,11 @@ $id = $handleCall->getArgument('id');
 $erReportasje = $handleCall->getArgument('erReportasje');
 
 // Hvis det er reportasje, så er det ikke koblet til et innslag ellers bruk innslag id
-$creatorId = $erReportasje ? '-p-' : '-b-';
-
+$creatorId = $erReportasje == 'true' ? '-p-' : '-b-';
 $wp_user_id = get_current_user_id();
 
 $url = ('https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?after=2014-01-02T02:20:00Z&before=2025-01-02T02:20:00Z&include_counts=false&creator=' . $wp_user_id . $creatorId . $id);
+
 
 // Sender Cloudflare account id and creator. Creator contains current wp user og innslag som er identifisert med '-p-XXXX' eller arrangement id '-b-XXXX'
 curl_setopt($ch, CURLOPT_URL, $url);

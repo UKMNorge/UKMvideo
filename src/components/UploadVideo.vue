@@ -37,6 +37,8 @@ export default class UploadVideo extends Vue {
     @Prop() values!: any[];
     @Prop() erReportasje! : boolean;
     @Prop() miniVersion! : boolean;
+    @Prop() hendelseId! : string;
+
     public isDragging = false
     public file : any = null;
     public uploadStarted = false;
@@ -84,7 +86,7 @@ export default class UploadVideo extends Vue {
    
     public uploadVideoTUS() {
         var _this = this;
-        var id = this.arrangementId;
+        var id = this.erReportasje ? this.arrangementId : this.hendelseId;
         
         console.log(this.erReportasje);
 
@@ -98,7 +100,7 @@ export default class UploadVideo extends Vue {
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
-            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'innslag_id') + '=' + id,
+            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'hendelse_id') + '=' + id,
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 150 * 1024 * 1024,
             metadata: {

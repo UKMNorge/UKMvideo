@@ -44,6 +44,7 @@ Vue.component('video-vue', VideoVue);
 .vue-video-item {
     border-radius: 20px;
     text-decoration: none;
+    margin: 10px 0;
 }
 .vue-video-item .thumbnail-div.not-available {
     border-radius: 20px;
@@ -130,7 +131,7 @@ Vue.component('video-vue', VideoVue);
     border-radius: 20px;
 }
 .vue-video-item.mini .thumbnail-div {
-    width: 50%;
+    width: 10vw;
     height: 5vw;
 }
 .vue-video-item.mini .thumbnail-div img,
