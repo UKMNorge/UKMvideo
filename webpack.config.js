@@ -3,6 +3,12 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
+  watchOptions: {
+    watchOptions: {
+      poll: true,
+      ignored: '/node_modules/'
+    },
+  },
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, './dist'),

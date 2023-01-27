@@ -13,6 +13,7 @@ export default class HendelseVideo {
     private sted: string;
     private type: string;
     private videos : Video[] = [];
+    public isUploadOpen = false;
 
     constructor(id: string, navn: string, beskrivelse: string, sted: string, type: string) {
         this.id = id;

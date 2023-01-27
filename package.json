@@ -9,7 +9,8 @@
     "test": "jest",
     "start": "npm-run-all --parallel watch:server watch:build",
     "watch:server": "nodemon \"./build/bundle.js\" --watch \"./build\" ",
-    "watch:build": "webpack --watch"
+    "watch:build": "webpack --watch",
+    "watch:progress": "webpack --watch --progress"
   },
   "keywords": [],
   "author": {

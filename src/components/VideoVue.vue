@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="vue-video-item">
+        <div class="vue-video-item" :class="{'mini' : mini}">
             <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="video-vue">
                 <div class="thumbnail-div">
                     <img :src="video.getThumbnail()"  width="100%" height="auto">
@@ -33,6 +33,7 @@ declare var ajaxurl: string; // Kommer fra global
 @Component
 export default class VideoVue extends Vue {
     @Prop() video! : Video;
+    @Prop() mini! : boolean;
 }
 
 // Registrering av komponenten
@@ -43,13 +44,6 @@ Vue.component('video-vue', VideoVue);
 .vue-video-item {
     border-radius: 20px;
     text-decoration: none;
-}
-.vue-video-item .thumbnail-div {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px;
 }
 .vue-video-item .thumbnail-div.not-available {
     border-radius: 20px;
@@ -124,5 +118,27 @@ Vue.component('video-vue', VideoVue);
 .vue-video-item:hover .thumbnail-div svg {
     opacity: 1;
     transition: opacity .2s;
+}
+.vue-video-item.mini a {
+    display: flex;
+}
+.vue-video-item .thumbnail-div {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+.vue-video-item.mini .thumbnail-div {
+    width: 50%;
+    height: 5vw;
+}
+.vue-video-item.mini .thumbnail-div img,
+.vue-video-item.mini .thumbnail-div.not-available {
+    height: 5vw;
+}
+.vue-video-item.mini .title {
+    margin-top: 5px !important;
+    margin-left: 10px;
 }
 </style>

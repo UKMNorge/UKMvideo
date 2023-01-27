@@ -149,8 +149,8 @@ class UKMvideo extends Modul
     	wp_enqueue_style('UKMvideoStyleHendelser', plugin_dir_url(__FILE__) . '/style/videoHendelser.css');
 
 
-        // wp_enqueue_script('WPbootstrap3_js');
-        // wp_enqueue_style('WPbootstrap3_css');
+        wp_enqueue_script('WPbootstrap3_js');
+        wp_enqueue_style('WPbootstrap3_css');
         // wp_enqueue_style( 'UKMvideo_css', static::getPluginUrl() . 'UKMvideo.css');
         // wp_enqueue_script( 'UKMvideo_js', static::getPluginUrl() . 'js/video.js');
         // if( isset($_GET['action'] ) && $_GET['action'] == 'flerkamera' ) {

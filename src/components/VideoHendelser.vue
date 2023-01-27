@@ -1,26 +1,26 @@
 <template>
     <div>
-        <div class="hendelser">
-            <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse">
+        <div class="hendelser col-xs-12">
+            <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse col-xs-4">
                 <div class="inner">
                     <div class="info">
                         <h4>{{ hendelse.getNavn() }}</h4>
                         <p>{{ hendelse.getBeskrivelse() }}</p>
                         <span>{{ hendelse.getSted() }}</span>
                     </div>
-                    <div class="type">
+                    <div class="type mini-label-style">
                         <span>{{ hendelse.getType() }}</span>
                     </div>
                     <div class="videos">
-                        <span>Filmer her:</span>
                         <div v-for="(video, videoIndex) in hendelse.getVideos()" :key="videoIndex">
                             <!--- Show single video -->
-                            <video-vue :video="video" />
+                            <video-vue :video="video" :mini="true" />
                         </div>
                     </div>
                     <div class="upload-video-for-hendelse">
                         <!--- Upload video -->
-                        <upload-video ref="uploadVideo-reportasje" :erReportasje="false" :miniVersion="true" />
+                        <button v-show="!hendelse.isUploadOpen" @click="showUpload(hendelse)" class="round-style-button mini open-upload">+</button>
+                        <upload-video v-show="hendelse.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :miniVersion="true" />
                     </div>
                 </div>
             </div>
@@ -91,6 +91,10 @@ export default class VideoHendelser extends Vue {
         console.log(this.hendelser);
 
         return response;
+    }
+
+    public showUpload(hendelse : HendelseVideo) {
+        hendelse.isUploadOpen = true;
     }
 
 }
