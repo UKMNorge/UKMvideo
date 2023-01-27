@@ -24,6 +24,9 @@
                     </div>
                 </div>
             </div>
+            <div v-if="hendelser.length < 1">
+                <p>Du mu ha minst en hendelse i programmet!</p>
+            </div>
         </div>
         
     </div>
