@@ -1,10 +1,10 @@
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
-import Video from '../objects/Video';
+import Video from './Video';
 
 
 declare var ajaxurl: string; // Kommer fra global
 
-export default class HendelseVideo {
+export default class InnslagVideo {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
 
     private id: string;

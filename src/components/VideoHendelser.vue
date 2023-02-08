@@ -1,30 +1,30 @@
 <template>
     <div>
         <div class="hendelser col-xs-12">
-            <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse col-xs-4">
-                <div class="inner">
+            <div v-for="(innslagFilm, index) in innslagFilmer" :key="index" class="hendelse col-xs-12">
+                <div class="inner as-box-style">
                     <div class="info">
-                        <h4>{{ hendelse.getNavn() }}</h4>
-                        <p>{{ hendelse.getBeskrivelse() }}</p>
-                        <span>{{ hendelse.getSted() }}</span>
+                        <h4>{{ innslagFilm.getNavn() }}</h4>
+                        <p>{{ innslagFilm.getBeskrivelse() }}</p>
+                        <span>{{ innslagFilm.getSted() }}</span>
                     </div>
                     <div class="type mini-label-style">
-                        <span>{{ hendelse.getType() }}</span>
+                        <span>{{ innslagFilm.getType() }}</span>
                     </div>
                     <div class="videos">
-                        <div v-for="(video, videoIndex) in hendelse.getVideos()" :key="videoIndex">
+                        <div v-for="(video, videoIndex) in innslagFilm.getVideos()" :key="videoIndex">
                             <!--- Show single video -->
                             <video-vue :video="video" :mini="true" />
                         </div>
                     </div>
                     <div class="upload-video-for-hendelse">
                         <!--- Upload video -->
-                        <button v-show="!hendelse.isUploadOpen" @click="showUpload(hendelse)" class="round-style-button mini open-upload">+</button>
-                        <upload-video v-show="hendelse.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :hendelseId="hendelse.getId()" :miniVersion="true" />
+                        <button v-show="!innslagFilm.isUploadOpen" @click="showUpload(innslagFilm)" class="round-style-button mini open-upload">+</button>
+                        <upload-video v-show="innslagFilm.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :hendelseId="innslagFilm.getId()" :miniVersion="true" />
                     </div>
                 </div>
             </div>
-            <div v-if="hendelser.length < 1">
+            <div v-if="innslagFilmer.length < 1">
                 <p>Du mu ha minst en hendelse i programmet!</p>
             </div>
         </div>
@@ -38,7 +38,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import $ from "jquery";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
-import HendelseVideo from "../objects/HendelseVideo";
+import InnslagVideo from "../objects/InnslagVideo";
 import VideoVue from './VideoVue.vue';
 
 import UploadVideo from "./UploadVideo.vue";
@@ -50,7 +50,7 @@ export default class VideoHendelser extends Vue {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
     public chartId = '#progressBar';
     public arrangementId : string = '';
-    public hendelser : HendelseVideo[] = [];
+    public innslagFilmer : InnslagVideo[] = [];
 
     components = {
         UploadVideo,
@@ -80,23 +80,23 @@ export default class VideoHendelser extends Vue {
 
         if(response) {
             // this.hendelser = [];
-            for(var hendelse of response) {
-                var hendelseVideo = new HendelseVideo(
-                    hendelse.id,
-                    hendelse.navn,
-                    hendelse.beskrivelse,
-                    hendelse.sted,
-                    hendelse.context.type
+            for(var innslag of response) {
+                var innslagVideo = new InnslagVideo(
+                    innslag.id,
+                    innslag.navn,
+                    innslag.beskrivelse,
+                    innslag.sted,
+                    innslag.context.type
                 );
-                this.hendelser.push(hendelseVideo);
+                this.innslagFilmer.push(innslagVideo);
             }
         }
-        console.log(this.hendelser);
+        console.log(this.innslagFilmer);
 
         return response;
     }
 
-    public showUpload(hendelse : HendelseVideo) {
+    public showUpload(hendelse : InnslagVideo) {
         hendelse.isUploadOpen = true;
     }
 
