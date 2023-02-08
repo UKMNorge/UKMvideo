@@ -1,6 +1,9 @@
 .hendelser .hendelse {
     padding: 10px;
 }
+.hendelser .hendelse .inner {
+    margin-bottom: 0;
+}
 .hendelser .hendelse .inner .videos .inner-videos {
     margin-top: 60px;
 }
@@ -21,9 +24,6 @@
 }
 .hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels .label-mini {
     margin-left: 5px;
-}
-.hendelser .hendelse .inner .innslags {
-
 }
 .hendelser .hendelse .inner .innslags .innslag {
     padding: 20px;
@@ -53,4 +53,22 @@
 }
 .show-more svg {
     transition: .4s;
+}
+.hendelse-buttons {
+    position: absolute;
+    display: flex;
+    top: 26px;
+    right: 30px;
+}
+.hendelse-buttons button {
+    margin: auto;
+    border-color: #4f46e56e;
+    width: 100px;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+    padding: 5px;
+}
+.hendelse-buttons button.show-more {
+
 }

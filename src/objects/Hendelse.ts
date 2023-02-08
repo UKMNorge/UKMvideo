@@ -8,6 +8,7 @@ export default class Hendelse {
     private type: string; // Readonly
     private innslags : InnslagVideo[] = [];
     public isUploadOpen = false;
+    public hendelseOpen = false;
 
 
     constructor(id: string, navn: string, beskrivelse: string, sted: string, type: string) {

@@ -2,49 +2,59 @@
     <div>
         <div class="hendelser col-xs-12 nop">
             <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse col-xs-12">
-                <div class="inner as-box-style">
+                <div class="inner as-box-style" >
                     <div class="info">
                         <h4>{{ hendelse.getNavn() }}</h4>
                         <p>{{ hendelse.getBeskrivelse() }}</p>
                         <span>{{ hendelse.getSted() }}</span>
+                        <div class="shadow-hide-content"></div>
                     </div>
-                    <!-- alle innslag -->
-                    <div class="innslags">
-                        <div v-for="(innslag, innslagIndex) in hendelse.getInnslags()" :key="innslagIndex" class="innslag col-sm-4 col-xs-6">
-                            <div class="innslag-inner as-box-style">
-
-                                <!-- Labels -->
-                                <div class="labels">
-                                    <div class="label-mini mini-label-style">
-                                        <span>{{ innslag.getType() }}</span>
-                                    </div>
-                                </div>
-                                <p>{{ innslag.getNavn()  }}</p>
-                                
-                                <div class="buttons">
-                                    <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + innslag.getId() ]">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
-                                        <p>{{ innslag.getVideos().length }} film{{ innslag.getVideos().length > 1 ? 'er' : '' }}</p>
-                                    </button>
-                                </div>
-                                <!-- Filmer i innslag -->
-                                <div class="videos collapse" :id="[ 'allVideos' + innslag.getId() ]">
-                                    <div class="inner-videos">
-                                        <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
-                                            <video-vue :video="video" :mini="true" />
+                    <div class="videos collapse" :id="[ 'hendelse' + hendelse.getId() ]">
+                        <!-- alle innslag -->
+                        <div class="innslags row nop">
+                            <div v-for="(innslag, innslagIndex) in hendelse.getInnslags()" :key="innslagIndex" class="innslag col-sm-4 col-xs-6">
+                                <div class="innslag-inner as-box-style">
+    
+                                    <!-- Labels -->
+                                    <div class="labels">
+                                        <div class="label-mini mini-label-style">
+                                            <span>{{ innslag.getType() }}</span>
                                         </div>
-                                        
-                                        <!-- Last opp film -->
-                                        <div class="upload-video-for-hendelse innslag">
-                                            <!--- Upload video -->
-                                            <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
-                                            <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :hendelseId="innslag.getId()" :miniVersion="true" />
+                                    </div>
+                                    <p>{{ innslag.getNavn()  }}</p>
+                                    
+                                    <div class="buttons">
+                                        <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + innslag.getId() ]">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                                            <p>{{ innslag.getVideos().length }} film{{ innslag.getVideos().length > 1 ? 'er' : '' }}</p>
+                                        </button>
+                                    </div>
+                                    <!-- Filmer i innslag -->
+                                    <div class="videos collapse" :id="[ 'allVideos' + innslag.getId() ]">
+                                        <div class="inner-videos">
+                                            <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
+                                                <video-vue :video="video" :mini="true" />
+                                            </div>
+                                            
+                                            <!-- Last opp film -->
+                                            <div class="upload-video-for-hendelse innslag">
+                                                <!--- Upload video -->
+                                                <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
+                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :hendelseId="innslag.getId()" :miniVersion="true" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                </div>
+                <!-- Vis mer i hendelsen -->
+                <div class="hendelse-buttons">
+                    <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#hendelse' + hendelse.getId() ]" aria-expanded="false" :aria-controls="[ 'hendelse' + hendelse.getId() ]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                    </button>
                 </div>
             </div>
             <div v-if="hendelser.length < 1">
@@ -134,6 +144,10 @@ export default class VideoHendelser extends Vue {
 
     public showUpload(hendelse : Hendelse) {
         hendelse.isUploadOpen = true;
+    }
+
+    public toggleHendelse(hendelse : Hendelse) {
+        hendelse.hendelseOpen = !hendelse.hendelseOpen;
     }
 
 }
