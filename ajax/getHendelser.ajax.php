@@ -11,6 +11,7 @@ $arrangement = new Arrangement($arrangementId);
 
 $retArr = [];
 foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {
+    $hendelse->getInnslag()->getAll();
     $retArr[] = $hendelse;
 }
 

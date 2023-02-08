@@ -9,17 +9,13 @@ export default class InnslagVideo {
 
     private id: string;
     private navn: string;
-    private beskrivelse: string;
-    private sted: string;
     private type: string;
     private videos : Video[] = [];
     public isUploadOpen = false;
 
-    constructor(id: string, navn: string, beskrivelse: string, sted: string, type: string) {
+    constructor(id: string, navn: string, type: string) {
         this.id = id;
         this.navn = navn;
-        this.beskrivelse = beskrivelse;
-        this.sted = sted;
         this.type = type;
 
         this.fetchVideos();
@@ -31,12 +27,6 @@ export default class InnslagVideo {
     public getNavn() : string {
         return this.navn;
     }
-    public getBeskrivelse() : string {
-        return this.beskrivelse;
-    }
-    public getSted() : string {
-        return this.sted;
-    }
     public getType() : string {
         return this.type;
     }
@@ -44,7 +34,6 @@ export default class InnslagVideo {
     public getVideos() : any[] {
         return this.videos;
     }
-
 
     public uploadVideo() {
         
@@ -85,6 +74,10 @@ export default class InnslagVideo {
                     myImage.src = video.thumbnail;
                 }, 100)
             }
+        }
+
+        if(this.videos.length < 1) {
+            this.isUploadOpen = true;
         }
         
         

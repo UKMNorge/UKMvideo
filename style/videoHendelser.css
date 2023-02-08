@@ -1,17 +1,56 @@
 .hendelser .hendelse {
     padding: 10px;
 }
-.hendelser .hendelse .inner .videos {
-    margin: 25px 0;
+.hendelser .hendelse .inner .videos .inner-videos {
+    margin-top: 60px;
 }
 .upload-video-for-hendelse {
     display: flex;
 }
+.upload-video-for-hendelse.innslag {
+    margin-top: 30px;
+}
 .hendelser .hendelse .inner .info h4 {
     margin-top: 0;
 }
-.hendelser .hendelse .inner .type {
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels {
     position: absolute;
     right: 15px;
     top: 15px;
+    display: flex;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels .label-mini {
+    margin-left: 5px;
+}
+.hendelser .hendelse .inner .innslags {
+
+}
+.hendelser .hendelse .inner .innslags .innslag {
+    padding: 20px;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner {
+    border: solid 1px #00000024;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons {
+    display: flex;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons button {
+    display: flex;
+    height: 40px;
+    border-color: #4f46e56e;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons button p {
+    margin-top: 3px;
+}
+.show-more {
+    margin: auto;
+}
+.show-more svg {
+    transform: rotate(180deg);
+}
+.show-more.collapsed svg {
+    transform: rotate(0);
+}
+.show-more svg {
+    transition: .4s;
 }
