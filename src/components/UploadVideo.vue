@@ -24,6 +24,8 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import * as tus from "tus-js-client";
 import ProgressBar from './ProgressBar.vue';
 import $ from "jquery";
+import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+
 
 
 
@@ -38,6 +40,8 @@ export default class UploadVideo extends Vue {
     @Prop() erReportasje! : boolean;
     @Prop() miniVersion! : boolean;
     @Prop() hendelseId! : string;
+
+    private spaInteraction = new SPAInteraction(null, ajaxurl);
 
     public isDragging = false
     public file : any = null;
@@ -126,7 +130,18 @@ export default class UploadVideo extends Vue {
             onSuccess: function() {
                 _this.uploadStarted = false;
                 _this.showLoadingText = false;
-                location.reload();
+            },
+            onAfterResponse: function (req, res) {
+                var cloudFlareId = res.getHeader('stream-media-id');
+                if(cloudFlareId) {
+                    var innslagRes = _this.saveInnslagVideo(cloudFlareId);
+                    // Reload
+                    innslagRes.then(() => {
+                        alert('reload');
+                        // location.reload();
+                    });
+                }
+                
             }
         })
 
@@ -138,8 +153,25 @@ export default class UploadVideo extends Vue {
             }
 
             // Start the upload
-            upload.start()
+            upload.start();
         })
+    }
+
+    private async saveInnslagVideo(cloudFlareId : string) {
+        var data = {
+            action: 'UKMvideo_ajax',
+            subaction: 'saveUploadedVideo',
+            tittel: 'Yern',
+            description: 'Description Yern',
+            cloudFlareId: cloudFlareId,
+            innslagId: 'innslagId-YERN'
+            
+        };
+        
+        var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+        return response;
+        
     }
 }
 
