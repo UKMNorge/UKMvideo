@@ -13,14 +13,14 @@
 .upload-video-for-hendelse.innslag {
     margin-top: 30px;
 }
-.hendelser .hendelse .inner .info h4 {
-    margin-top: 0;
-}
 .hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels {
     position: absolute;
     right: 15px;
     top: 15px;
     display: flex;
+}
+.videos .innslags {
+    margin-top: 40px;
 }
 .hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels .label-mini {
     margin-left: 5px;
@@ -55,19 +55,30 @@
     transition: .4s;
 }
 .hendelse-buttons {
-    position: absolute;
     display: flex;
-    top: 26px;
-    right: 30px;
 }
 .hendelse-buttons button {
     margin: auto;
-    border-color: #4f46e56e;
     width: 100px;
-    border-radius: 50%;
-    height: 35px;
-    width: 35px;
-    padding: 5px;
+    height: 100%;
+    width: 100%;
+    margin: -20px;
+    padding: 20px;
+    background: transparent !important;
+    border: none;
+}
+.hendelse-buttons button .info {
+    display: flex;
+}
+.hendelse-buttons button .info > * {
+    margin: auto;
+    margin-left: 0;
+    margin-right: 10px;
+}
+.hendelse-buttons button svg {
+    position: absolute;
+    right: 17px;
+    top: 17px
 }
 .hendelse-buttons button.show-more {
 

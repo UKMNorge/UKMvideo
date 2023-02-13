@@ -3,12 +3,17 @@
         <div class="hendelser col-xs-12 nop">
             <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse col-xs-12">
                 <div class="inner as-box-style" >
-                    <div class="info">
-                        <h4>{{ hendelse.getNavn() }}</h4>
-                        <p>{{ hendelse.getBeskrivelse() }}</p>
-                        <span>{{ hendelse.getSted() }}</span>
-                        <div class="shadow-hide-content"></div>
-                    </div>
+                    <!-- Vis mer i hendelsen -->
+                <div class="hendelse-buttons">
+                    <button class="show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#hendelse' + hendelse.getId() ]" aria-expanded="false" :aria-controls="[ 'hendelse' + hendelse.getId() ]">
+                        <div class="info">
+                            <h4>{{ hendelse.getNavn() }}</h4>
+                            <span>{{ hendelse.getSted() }}</span>
+                            <div class="shadow-hide-content"></div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
+                    </button>
+                </div>
                     <div class="videos collapse" :id="[ 'hendelse' + hendelse.getId() ]">
                         <!-- alle innslag -->
                         <div class="innslags row nop">
@@ -24,13 +29,13 @@
                                     <p>{{ innslag.getNavn()  }}</p>
                                     
                                     <div class="buttons">
-                                        <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + innslag.getId() ]">
+                                        <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + hendelse.getId() + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
                                             <p>{{ innslag.getVideos().length }} film{{ innslag.getVideos().length > 1 ? 'er' : '' }}</p>
                                         </button>
                                     </div>
                                     <!-- Filmer i innslag -->
-                                    <div class="videos collapse" :id="[ 'allVideos' + innslag.getId() ]">
+                                    <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                         <div class="inner-videos">
                                             <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
                                                 <video-vue :video="video" :mini="true" />
@@ -49,12 +54,6 @@
                         </div>
                     </div>
                     
-                </div>
-                <!-- Vis mer i hendelsen -->
-                <div class="hendelse-buttons">
-                    <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#hendelse' + hendelse.getId() ]" aria-expanded="false" :aria-controls="[ 'hendelse' + hendelse.getId() ]">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
-                    </button>
                 </div>
             </div>
             <div v-if="hendelser.length < 1">
