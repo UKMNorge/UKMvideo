@@ -1,6 +1,6 @@
 <template>
     <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
-        <div v-if="!uploadStarted">
+        <div v-if="!uploadStarted && !showSavingInfo">
             <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
                 <label for="fileInput" class="file-label">
@@ -11,8 +11,14 @@
         </div>
 
         <div>
-            <progress-bar v-show="!showLoadingText" ref="progressBar" :visible="uploadStarted" />
+            <progress-bar v-show="!showLoadingText" ref="progressBar" :uploadProgress="uploadProgress" :visible="uploadStarted" />
             <div class="vent-text" v-show="showLoadingText"><h3>Vi gjør filmen klar, vennligst vent!</h3></div>
+
+            <div class="info-upload" v-show="showSavingInfo && !lagringCompleted">
+                <input v-model="navn" class="as-input-style input" placeholder="navn"/>
+                <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
+                <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
+            </div>
         </div>
     </div>
 </template>
@@ -40,13 +46,25 @@ export default class UploadVideo extends Vue {
     @Prop() erReportasje! : boolean;
     @Prop() miniVersion! : boolean;
     @Prop() hendelseId! : string;
+    @Prop() callbackLagre! : ()=>{};
+
 
     private spaInteraction = new SPAInteraction(null, ajaxurl);
+
+    public cloudFlareId : string = '';
+
+    public navn = '';
+    public beskrivelse = '';
 
     public isDragging = false
     public file : any = null;
     public uploadStarted = false;
     public showLoadingText = false;
+    public showSavingInfo = false;
+    public lagringCompleted = false;
+    
+    public uploadProgress : number = 0;
+
     public arrangementId : string = '';
 
     public components = [ProgressBar];
@@ -92,7 +110,8 @@ export default class UploadVideo extends Vue {
         var _this = this;
         var id = this.erReportasje ? this.arrangementId : this.hendelseId;
         
-        console.log(this.erReportasje);
+        this.uploadProgress = 0;
+        this.cloudFlareId = '';
 
         var file = this.file;
 
@@ -101,6 +120,7 @@ export default class UploadVideo extends Vue {
         }
 
         this.uploadStarted = true;
+        this.showSavingInfo = true;
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
@@ -120,7 +140,8 @@ export default class UploadVideo extends Vue {
                 var percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
 
                 // Kaller ProgressBar fra html elementet med referanse
-                (<ProgressBar>_this.$refs['progressBar']).update(parseInt(percentage));
+                _this.uploadProgress = parseInt(percentage);
+                (<ProgressBar>_this.$refs['progressBar']).update();
                 
                 if(parseInt(percentage) == 100) {
                     _this.showLoadingText = true;
@@ -134,14 +155,13 @@ export default class UploadVideo extends Vue {
             onAfterResponse: function (req, res) {
                 var cloudFlareId = res.getHeader('stream-media-id');
                 if(cloudFlareId) {
-                    var innslagRes = _this.saveInnslagVideo(cloudFlareId);
-                    // Reload
-                    innslagRes.then(() => {
-                        alert('reload');
-                        // location.reload();
-                    });
+                    _this.cloudFlareId = cloudFlareId;
                 }
-                
+
+                // Hvis brukeren velger å lagre videoen uten at videoen er lastet opp, da kalles lagre her
+                if(_this.lagringCompleted) {
+                    _this.saveInnslagVideo();
+                }
             }
         })
 
@@ -157,22 +177,50 @@ export default class UploadVideo extends Vue {
         })
     }
 
-    private async saveInnslagVideo(cloudFlareId : string) {
+    private async saveInnslagVideo() {
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'saveUploadedVideo',
-            tittel: 'Yern',
-            description: 'Description Yern',
-            cloudFlareId: cloudFlareId,
-            innslagId: 'innslagId-YERN'
+            tittel: this.navn,
+            description: this.beskrivelse,
+            cloudFlareId: this.cloudFlareId,
+            innslagId: 1324
             
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-        return response;
-        
+        if(response && this.callbackLagre) {
+            this.callbackLagre();
+        }
+        this.reset();
+
+        return response;    
     }
+
+    private reset() {
+        this.cloudFlareId = '';
+        this.navn = '';
+        this.beskrivelse = '';
+        this.isDragging = false
+        this.file = null;
+        this.uploadStarted = false;
+        this.showLoadingText = false;
+        this.showSavingInfo = false;
+        this.lagringCompleted = false;
+        this.uploadProgress = 0;
+    }
+
+    public async lagre() {
+        this.lagringCompleted = true;
+        // Hvis cloudflareId er ikke generert ennå, returner
+        if(!this.cloudFlareId) {
+            return;
+        }
+        var res = await this.saveInnslagVideo();
+        return res;
+    }
+
 }
 
 // Registrering av komponenten
@@ -184,7 +232,7 @@ Vue.component('upload-video', UploadVideo);
     display: flex;
     flex-grow: 1;
     align-items: center;
-    height: 200px;
+    min-height: 200px;
     justify-content: center;
     text-align: center;
     margin-top: 50px;
@@ -229,5 +277,22 @@ Vue.component('upload-video', UploadVideo);
     font-size: 20px;
     display: block;
     cursor: pointer;
+}
+.info-upload {
+    display: grid;
+}
+.info-upload > * {
+    margin: 10px;
+    border: solid 1px #4f46e5;
+    border-radius: 10px !important;
+    font-size: 15px;
+    width: 100%;
+    height: auto;
+}
+.info-upload .input {
+    padding: 5px;
+}
+.info-upload button {
+    margin-bottom: 50px;
 }
 </style>
