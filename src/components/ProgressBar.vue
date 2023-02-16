@@ -27,13 +27,11 @@ declare var ajaxurl: string; // Kommer fra global
 @Component
 export default class ProgressBar extends Vue {
     @Prop() visible!: boolean;
-    public uploadProgress : number = 0;
+    @Prop() uploadProgress!: number;
     public chartId = '#progressBar';
 
     
-    public update(uploadProgress : number) {
-        this.uploadProgress = uploadProgress;
-
+    public update() {
         var el = this.chartId;
         var percent = this.uploadProgress;
         var donut = true;
