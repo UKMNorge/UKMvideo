@@ -1,7 +1,7 @@
 <?php
 use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Filmer\UKMTV\WriteFilmCloudflare;
-use UKMNorge\Filmer\UKMTV\CloudflareFilm as Film;
+use UKMNorge\Filmer\UKMTV\CloudflareFilm;
 use UKMNorge\Arrangement\Arrangement;
 
 require_once('UKMconfig.inc.php');
@@ -33,11 +33,30 @@ $cloudFlareVideo = getFromCloudFlare($cloudFlareId);
 $cloudFlareLink = $cloudFlareVideo->result->preview;
 $cloudFlareThumbnail = $cloudFlareVideo->result->thumbnail;
 
-$film = new Film(-1, $tittel, $description, $cloudFlareId, $cloudFlareLink, $cloudFlareThumbnail, $arrangement_id, $innslagId, $arrangement->getSesong());
+const ARRANGEMENT_TYPER = ['kommune' => 1, 'fylke' => 2, 'land' => 3];
+
+$data = [
+    'id' => -1,
+    'title' => $tittel,
+    'description' => $description,
+    'cloudflare_id' => $cloudFlareId,
+    'cloudflare_lenke' => $cloudFlareLink,
+    'cloudflare_thumbnail' => $cloudFlareThumbnail,
+    'arrangement' => $arrangement_id,
+    'innslag' => $innslagId,
+    'sesong' => $arrangement->getSesong(),
+    'arrangement_type' => ARRANGEMENT_TYPER[$arrangement->getType()],
+    'fylke' => $arrangement->getFylke()->getId(),
+    'kommune' => $arrangement->getKommuner()->getAntall() > 0 ? $arrangement->getKommuner()->first()->getId() : '', // FIX det: kan være flere kommuner
+    'person' => 0,
+    'deleted' => 0,
+];
+
+$film = new CloudflareFilm($data);
+
 $res = WriteFilmCloudflare::createOrUpdate($film);
 
-
-$handleCall->sendToClient(json_decode('true'));
+$handleCall->sendToClient(json_decode($res));
 
 
 // Det trengs å hente video data fra CloudFlare etter at id ble hentet
