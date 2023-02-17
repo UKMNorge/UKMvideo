@@ -2,6 +2,7 @@
 use UKMNorge\OAuth2\HandleAPICall;
 use UKMNorge\Filmer\UKMTV\WriteFilmCloudflare;
 use UKMNorge\Filmer\UKMTV\CloudflareFilm;
+use UKMNorge\Filmer\UKMTV\Write as FilmWrite;
 use UKMNorge\Arrangement\Arrangement;
 
 require_once('UKMconfig.inc.php');
@@ -47,16 +48,23 @@ $data = [
     'sesong' => $arrangement->getSesong(),
     'arrangement_type' => ARRANGEMENT_TYPER[$arrangement->getType()],
     'fylke' => $arrangement->getFylke()->getId(),
-    'kommune' => $arrangement->getKommuner()->getAntall() > 0 ? $arrangement->getKommuner()->first()->getId() : '', // FIX det: kan være flere kommuner
-    'person' => 0,
     'deleted' => 0,
 ];
 
 $film = new CloudflareFilm($data);
-
 $res = WriteFilmCloudflare::createOrUpdate($film);
 
-$handleCall->sendToClient(json_decode($res));
+
+// ["arrangement", "arrangement_type", "fylke", "innslag", "kommune", "person", "sesong"]s
+
+// Legg til kommuner som Tag er
+foreach($arrangement->getKommuner()->getAll() as $kommune) {
+    WriteFilmCloudflare::saveKommune($film, $kommune);
+}
+
+// TODO legg til personer
+
+$handleCall->sendToClient(json_decode(true));
 
 
 // Det trengs å hente video data fra CloudFlare etter at id ble hentet
