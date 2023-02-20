@@ -1,0 +1,64 @@
+<?php
+use UKMNorge\OAuth2\HandleAPICall;
+use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Meta\Write as WriteMeta;
+
+
+require_once('UKMconfig.inc.php');
+
+// Hent videos fra CloudFlare Stream
+// Basert på WP bruker id
+
+$handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
+
+$arrangement = new Arrangement(get_option('pl_id'));
+
+// Det finnes live link fra før, ikke opprett det på nytt
+if($arrangement->getMeta('cloudflare_live_id')->getValue()) {
+    $handleCall->sendToClient([
+        'cfLiveId' => $arrangement->getMeta('cloudflare_live_id')->getValue(),
+        'liveLink' => $arrangement->getMeta('live_link')->getValue()
+    ]);
+}
+
+// Set live stream til true på arrangement
+$meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+WriteMeta::set($meta);
+
+
+$headers = array();
+$headers[] = 'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY;
+$headers[] = 'Content-Type: application/json';
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_POSTFIELDS, '{"defaultCreator":"string","meta":{"name":"'. $arrangement->getNavn() .'"},"recording":{"mode":"automatic","requireSignedURLs":false,"timeoutSeconds":0}}');
+curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream/live_inputs/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+
+$result = curl_exec($ch);
+
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
+
+$res = json_decode($result);
+
+// Generer lenker
+$liveLink = 'https://'. UKM_CLOUDFLARE_CUSTOMER . '/' . $res->result->uid;
+$liveEmbed = '<iframe src="'. $liveLink .'/iframe" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">';
+
+$cloudflare_live_id = $arrangement->getMeta('cloudflare_live_id')->set($res->result->uid);
+$meta_live_link = $arrangement->getMeta('live_link')->set($liveLink);
+$meta_live_embed = $arrangement->getMeta('live_embed')->set(stripslashes($liveEmbed));
+
+// Lagre meta med lenk og iframe på db
+WriteMeta::set($cloudflare_live_id);
+WriteMeta::set($meta_live_link);
+WriteMeta::set($meta_live_embed);
+
+// returner liveLink til klient
+$handleCall->sendToClient(['liveLink' => $liveLink]);

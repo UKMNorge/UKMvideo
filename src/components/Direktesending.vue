@@ -1,35 +1,29 @@
 <template>
     <div>
         <div class="row">
-                <div class="col-xs-12">
-                    <h2>
-                        Direktesending
-                    </h2>
-                </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-7">
-                <h3 class="bold" style="margin-bottom:0;">SENDEPLAN</h3>
-                {% include "livestream/sendeplan.html.twig" %}
-            </div>
             <div class="col-xs-12 col-md-5">
                 <h3 class="bold" style="margin-bottom:0;">OPPSETT</h3>
-                <button>Opprett livestream</button>
+                <button @click="newLivestream()">Opprett livestream</button>
             </div>
-        </div>        
+        </div>    
         <div class="row">
-                <div class="col-xs-12">
-                    <h2>
-                        Tidligere direktesendinger
-                    </h2>
-                </div>
+            <div v-if="currentLink">
+                <iframe :src="currentLink + '/iframe'" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
+                </iframe>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h2>
+                    Tidligere direktesendinger
+                </h2>
+            </div>
 
-                <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-12">
-                    <div class="col-xs-4">
-                        <video-vue :video="video" />
-                    </div>
+            <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-12">
+                <div class="col-xs-4">
+                    <video-vue :video="video" />
                 </div>
-
+            </div>
         </div>
     </div>
 </template>
@@ -54,12 +48,12 @@ declare var ajaxurl: string; // Kommer fra global
 export default class Direktesending extends Vue {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
     public videos : Video[] = [];
+    public currentLink = null;
 
     components = {
         UploadVideo,
         VideoVue
     }
-
 
     public async init() {
         var data = {
@@ -69,8 +63,10 @@ export default class Direktesending extends Vue {
 
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-        console.log(response);
-        console.log('watching');
+        if(response.current_link) {
+            this.currentLink = response.current_link;
+        }
+
         // det er ikke en liste
         var videos = response.videos.result;
         for(var video of videos) {
@@ -90,9 +86,20 @@ export default class Direktesending extends Vue {
         
     }
 
+    public async newLivestream() {
+        console.log('new livestream');
+        var data = {
+            action: 'UKMvideo_ajax',
+            subaction: 'createLivestreamInput',
+        };
+
+        var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+        return response;
+    }
+
 }
     
-
 // Registrering av komponenten
 Vue.component('direktesending', Direktesending);
 </script>
