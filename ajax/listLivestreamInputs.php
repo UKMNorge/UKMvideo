@@ -3,12 +3,13 @@ use UKMNorge\OAuth2\HandleAPICall;
 
 require_once('UKMconfig.inc.php');
 
-// Hent alle inputs
-// Navn er place id
-
 $handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
 
-$livestreamId = 'c7876c8eaf798cc89a42c542e0719d3a';
+$arrangement = new Arrangement(get_option('pl_id'));
+
+if($arrangement->getMeta('cloudflare_live_id')) {
+  $livestreamId = $arrangement->getMeta('cloudflare_live_id')->getValue();
+}
 
 $headers = array();
 $headers[] = 'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY;
@@ -16,8 +17,6 @@ $headers[] = 'Content-Type: application/json';
 
 $ch = curl_init();
 
-// Get fra database
-// Genererer det naar man oppretter streamen
 
 curl_setopt_array($ch, [
   CURLOPT_URL => "https://api.cloudflare.com/client/v4/accounts/account_identifier/stream/live_inputs",
@@ -39,6 +38,4 @@ if (curl_errno($ch)) {
 }
 curl_close($ch);
 
-$arrRes = ['info' => json_decode($result), 'videos' => json_decode($result2)];
-
-$handleCall->sendToClient($arrRes);
+$handleCall->sendToClient(['videos' => json_decode($result2)]);
