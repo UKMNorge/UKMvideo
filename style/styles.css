@@ -22,7 +22,7 @@
 .round-style-button {
     box-shadow: 2px 4px 6px #00000027;
     color: hsl(var(--color-primary-blue-50,var(--color-primary-orange-50)))!important;
-    font: normal normal 500 21px/21px Poppins;
+    font: normal normal 500 21px/21px;
     min-height: 49px;
     padding: 14px 16px;
     background: #edf2f7;
