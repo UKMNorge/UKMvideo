@@ -82,11 +82,12 @@ class UKMvideo extends Modul
                 'UKMvideo',
                 ['UKMvideo','renderAdmin']
             );
-        }
+        // }
 
-        static::_checkForLivestreamActivation();
+        // // static::_checkForLivestreamActivation();
 
-        if( static::getArrangement()->getMetaValue('har_livestream') || in_array(static::getArrangement()->getEierType(), ['fylke','land']) ) {
+        // // if( static::getArrangement()->getMetaValue('har_livestream') || in_array(static::getArrangement()->getEierType(), ['fylke','land']) )
+        // {
             $live = add_submenu_page(
                 'edit.php',
                 'Direktesending',
@@ -131,6 +132,24 @@ class UKMvideo extends Modul
                 }
             } else {
                 UKMvideo::getFlash()->error('Kun superadmins kan aktivere direktesending');
+            }
+        }
+    }
+    public static function _checkForStreamInput() {
+        // Aktiver direktesending
+        if( ! in_array($_GET['page'], ['UKMvideo','UKMlive'])) {
+            return false;
+        }
+
+        if( isset($_GET['cmd']) && in_array($_GET['cmd'], ['act', 'deact']) ) {
+            if( $_GET['cmd'] == 'act') {
+                $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+                MetaWrite::set($meta);
+                UKMvideo::getFlash()->success('Direktesending er aktivert, og menyvalget er lagt til.');
+            } else {
+                $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+                MetaWrite::delete($meta);
+                UKMvideo::getFlash()->success('Direktesending er deaktivert, og menyvalget er skjult.');
             }
         }
     }

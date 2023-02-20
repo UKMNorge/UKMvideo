@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VideoReportasjer from "./components/VideoReportasjer.vue";
 import VideoHendelser from "./components/VideoHendelser.vue";
+import Direktesending from "./components/Direktesending.vue";
 
 
 export function uploadVideoTabs() {
@@ -13,7 +14,8 @@ export function uploadVideoTabs() {
         
         components: {
             VideoReportasjer,
-            VideoHendelser
+            VideoHendelser,
+            Direktesending
         },
     
         mounted : function() {
@@ -43,6 +45,9 @@ export function uploadVideoTabs() {
                     <div class="tab-item">
                         <button :class="{'active' : activeTab == 'hendelser'}" @click="openTab('hendelser');">Filmer av innslag</button>
                     </div>
+                    <div class="tab-item">
+                        <button :class="{'active' : activeTab == 'direktesending'}" @click="openTab('direktesending');">Direktesending</button>
+                    </div>
                 </div>
 
                 <div class="tab-content tabs">
@@ -54,6 +59,12 @@ export function uploadVideoTabs() {
                 <div class="tab-content tabs">
                     <div v-show="activeTab == 'hendelser'">
                         <video-hendelser ref="hendelser" />
+                    </div>
+                </div>
+
+                <div class="tab-content tabs">
+                    <div v-show="activeTab == 'direktesending'">
+                        <direktesending ref="direktesending" />
                     </div>
                 </div>
 

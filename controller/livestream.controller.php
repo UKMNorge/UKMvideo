@@ -5,16 +5,32 @@ use UKMNorge\Meta\Collection;
 use UKMNorge\Meta\ParentObject;
 use UKMNorge\Meta\Write as WriteMeta;
 
+
 $arrangement = UKMvideo::getArrangement();
 $livestream = new Collection(
     new ParentObject('livestream', 0)
 );
+//Check if livestream input exists for this arrangement
+if( static::getArrangement()->getMetaValue('har_livestream') )
+    $input = true;
 UKMvideo::addViewData(
     [
         'arrangement' => $arrangement,
-        'livestream' => $livestream
+        'livestream' => $livestream,
+        'input' => $input
     ]
 );
+
+// if( $_GET['cmd'] == 'act') {
+//     $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+//     WriteMeta::set($meta);
+//     UKMvideo::getFlash()->success('Direktesending er aktivert');
+// }
+// if( $_GET['cmd'] == 'deact') {
+//     $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+//     WriteMeta::set($meta);
+//     UKMvideo::getFlash()->success('Direktesending er deaktivert');
+// }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $meta_live_link = $arrangement->getMeta('live_link')->set($_POST['live_link']);

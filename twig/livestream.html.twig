@@ -7,11 +7,6 @@
 				<div class="col-xs-12">
 					<h2>
 						Direktesending
-						<small>
-							{% if is_super_admin and arrangement.getEierType() in ['kommune','arrangement'] %}
-								<a href="?page=UKMvideo&subaction=livestream-deaktiver" class="small btn btn-ukm btn-xs superadmin">Deaktivér</a>
-							{% endif %}
-						</small>
 					</h2>
 				</div>
 			</div>
@@ -21,26 +16,22 @@
 					{% include "livestream/sendeplan.html.twig" %}
 				</div>
 				<div class="col-xs-12 col-md-5">
-					<p class="text-muted bold" style="margin-bottom:0;">INNLOGGING</p>
-					<ol class="list-group">
-						<li class="list-group-item">
-							<a href="https://livestream.com/" class="pull-right btn btn-xs btn-ukm" target="_blank">Logg inn på livestream.com</a>
-							<b>Brukernavn:</b>
-							<code>{{ livestream.getValue('brukernavn') }}</code>
-							<br/>
-							<b>Passord:</b>
-							<code>{{livestream.getValue('passord') }}</code>
-						</li>
-						<li class="list-group-item">
-							{% include "livestream/regler.html.twig" %}
-						</li>
-					</ol>
-					<p class="text-muted bold" style="margin-bottom:0;">KOBLE SAMMEN UKM.NO OG LIVESTREAM</p>
-					<ol class="list-group">
-						<li class="list-group-item">
-							{% include "livestream/oppsett.html.twig" %}
-						</li>
-					</ol>
+						<p class="text-muted bold" style="margin-bottom:0;">OPPSETT</p>
+						<ol class="list-group">
+							<li class="list-group-item">
+						{% if input == false %}
+								<a href="?page=UKMvideo&cmd=act" class="pull-center btn btn-xs btn-ukm">Opprett livestream</a>
+						{% else %}
+								<a href="?page=UKMvideo&cmd=deact" class="pull-center btn btn-xs btn-ukm">Deaktiver livestream</a>
+						{% endif %}
+							</li>
+						</ol>
+						<p class="text-muted bold" style="margin-bottom:0;">KOBLE SAMMEN UKM.NO OG STREAMSOFTWARE</p>
+						<ol class="list-group">
+							<li class="list-group-item">
+								{% include "livestream/oppsett.html.twig" %}
+							</li>
+						</ol>
 
 					<p class="text-muted bold" style="margin-bottom:0;">NÅR DU SKAL SENDE DIREKTE</p>
 					<ol class="list-group">
