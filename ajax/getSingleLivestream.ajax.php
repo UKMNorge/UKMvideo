@@ -12,11 +12,11 @@ $handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
 
 $arrangement = new Arrangement(get_option('pl_id'));
 
-if($arrangement->getMeta('cloudflare_live_id')->getValue()) {
+if($arrangement->getMeta('har_livestream')->getValue() == true && $arrangement->getMeta('cloudflare_live_id')->getValue()) {
   $livestreamId = $arrangement->getMeta('cloudflare_live_id')->getValue();
 }
 else {
-    $arrRes = ['current_iframe' => null, 'videos' => []];
+    $arrRes = ['status' => false, 'current_iframe' => null, 'videos' => []];
     $handleCall->sendToClient($arrRes);
     die;
 }
@@ -36,6 +36,7 @@ $result2 = curl_exec($ch2);
 curl_close($ch2);
 
 $arrRes = [
+    'status' => true,
     'current_link' => $arrangement->getMeta('live_link')->getValue(), 
     'current_iframe' => $arrangement->getMeta('live_embed')->getValue(), 
     'videos' => json_decode($result2)
