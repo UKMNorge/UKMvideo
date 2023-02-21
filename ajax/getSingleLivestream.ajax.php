@@ -16,7 +16,13 @@ if($arrangement->getMeta('har_livestream')->getValue() == true && $arrangement->
   $livestreamId = $arrangement->getMeta('cloudflare_live_id')->getValue();
 }
 else {
-    $arrRes = ['status' => false, 'current_iframe' => null, 'videos' => []];
+  $arrRes = [
+      'status' => false,
+      'current_iframe' => null,
+      'rtmps_url' => null,
+      'rtmps_key' => null,
+      'videos' => []
+  ];
     $handleCall->sendToClient($arrRes);
     die;
 }
@@ -38,7 +44,9 @@ curl_close($ch2);
 $arrRes = [
     'status' => true,
     'current_link' => $arrangement->getMeta('live_link')->getValue(), 
-    'current_iframe' => $arrangement->getMeta('live_embed')->getValue(), 
+    'current_iframe' => $arrangement->getMeta('live_embed')->getValue(),
+    'rtmps_url' => $arrangement->getMeta('rtmps_url')->getValue(),
+    'rtmps_key' => $arrangement->getMeta('rtmps_key')->getValue(),
     'videos' => json_decode($result2)
 ];
 

@@ -14,6 +14,16 @@
             <div v-if="currentLink" class="col-xs-12 live-iframe-div as-box-style">
                 <iframe :src="currentLink + '/iframe'" style="height: 600px; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
                 </iframe>
+
+                <!-- rtmps keys -->
+                <div class="rtmps-div">
+                    <h4 class="title">RTMPS URL: </h4>
+                    <h4 class="as-box-style">{{ rtmpsUrl }}</h4>
+                </div>
+                <div class="rtmps-div">
+                    <h4 class="title">RTMPS Key: </h4>
+                    <h4 class="as-box-style">{{ rtmpsKey }}</h4>
+                </div>
             </div>
             
             <div v-if="videos.length > 0" class="col-xs-12">
@@ -55,6 +65,8 @@ export default class Direktesending extends Vue {
     public currentLink = null;
     public aktivert = false;
     public loaded = false;
+    public rtmpsUrl = null;
+    public rtmpsKey = null;
 
     components = {
         UploadVideo,
@@ -76,6 +88,8 @@ export default class Direktesending extends Vue {
         }
 
         this.aktivert = response.status == true;
+        this.rtmpsUrl = response.rtmps_url;
+        this.rtmpsKey = response.rtmps_key;
 
         // det er ikke en liste
         var videos = response.videos.result ? response.videos.result : [];
@@ -118,6 +132,8 @@ export default class Direktesending extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
         this.aktivert = response.status;
         this.currentLink = response.current_link;
+        this.rtmpsUrl = response.rtmps_url;
+        this.rtmpsKey = response.rtmps_key;
         this.hendelserShowHide();
         
         return response;
@@ -161,5 +177,18 @@ Vue.component('direktesending', Direktesending);
     margin: auto;
     margin-right: 40px;
     margin-top: 50px;
+}
+.rtmps-div {
+    margin-top: 20px;
+    display: flex;
+}
+.rtmps-div * {
+    width: 100%;
+    margin: 0;
+}
+.rtmps-div .title {
+    width: 200px;
+    font-weight: bold;
+    margin: auto;
 }
 </style>

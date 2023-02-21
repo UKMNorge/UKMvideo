@@ -64,15 +64,21 @@ $liveEmbed = '<iframe src="'. $liveLink .'/iframe" style="border: none; position
 $cloudflare_live_id = $arrangement->getMeta('cloudflare_live_id')->set($res->result->uid);
 $meta_live_link = $arrangement->getMeta('live_link')->set($liveLink);
 $meta_live_embed = $arrangement->getMeta('live_embed')->set(stripslashes($liveEmbed));
+$rtmps_url = $arrangement->getMeta('rtmps_url')->set($res->result->rtmps->url);
+$rtmps_key = $arrangement->getMeta('rtmps_key')->set($res->result->rtmps->streamKey);
 
 // Lagre meta med lenk og iframe på db
 WriteMeta::set($cloudflare_live_id);
 WriteMeta::set($meta_live_link);
 WriteMeta::set($meta_live_embed);
+WriteMeta::set($rtmps_url);
+WriteMeta::set($rtmps_key);
 
 // returner liveLink til klient
 $handleCall->sendToClient([
     'status' => true,
     'cfLiveId' => $arrangement->getMeta('cloudflare_live_id')->getValue(),
-    'current_link' => $arrangement->getMeta('live_link')->getValue()
+    'current_link' => $arrangement->getMeta('live_link')->getValue(),
+    'rtmps_url' => $arrangement->getMeta('rtmps_url')->getValue(),
+    'rtmps_key' => $arrangement->getMeta('rtmps_key')->getValue()
 ]);
