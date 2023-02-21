@@ -88,14 +88,14 @@ class UKMvideo extends Modul
 
         // // if( static::getArrangement()->getMetaValue('har_livestream') || in_array(static::getArrangement()->getEierType(), ['fylke','land']) )
         // {
-            $live = add_submenu_page(
-                'edit.php',
-                'Direktesending',
-                'Direktesending',
-                'edit_posts',
-                'UKMlive',
-                ['UKMvideo','renderAdminDirekte']
-            );
+            // $live = add_submenu_page(
+            //     'edit.php',
+            //     'Direktesending',
+            //     'Direktesending',
+            //     'edit_posts',
+            //     'UKMlive',
+            //     ['UKMvideo','renderAdminDirekte']
+            // );
         }
 
         add_action(
