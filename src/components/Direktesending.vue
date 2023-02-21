@@ -1,19 +1,22 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-xs-12 col-md-5">
-                <h3 class="bold" style="margin-bottom:0;">OPPSETT</h3>
-                <button @click="newLivestream()">Opprett livestream</button>
-            </div>
-        </div>    
-        <div class="row">
-            <div v-if="currentLink">
-                <iframe :src="currentLink + '/iframe'" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
-                </iframe>
+        <div v-if="loaded" class="aktivator-div">
+            <div class="toggle-div">
+                <toggle-button v-model="aktivert" @change="onChangeEventHandler($event)" 
+                :width="70"
+                :height="40"/>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
+        <div v-else>
+            <p>Vennligst vent...</p>
+        </div>
+        <div v-if="aktivert">
+            <div v-if="currentLink" class="col-xs-12 live-iframe-div as-box-style">
+                <iframe :src="currentLink + '/iframe'" style="height: 600px; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
+                </iframe>
+            </div>
+            
+            <div v-if="videos.length > 0" class="col-xs-12">
                 <h2>
                     Tidligere direktesendinger
                 </h2>
@@ -38,6 +41,9 @@ import Hendelse from "../objects/Hendelse";
 import InnslagVideo from "../objects/InnslagVideo";
 import VideoVue from './VideoVue.vue';
 import Video from '../objects/Video';
+import { ToggleButton } from 'vue-js-toggle-button'
+ 
+Vue.component('ToggleButton', ToggleButton)
 
 
 import UploadVideo from "./UploadVideo.vue";
@@ -49,6 +55,8 @@ export default class Direktesending extends Vue {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
     public videos : Video[] = [];
     public currentLink = null;
+    public aktivert = false;
+    public loaded = false;
 
     components = {
         UploadVideo,
@@ -62,9 +70,10 @@ export default class Direktesending extends Vue {
         };
 
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
+        
         if(response.current_link) {
             this.currentLink = response.current_link;
+            this.aktivert = true;
         }
 
         // det er ikke en liste
@@ -82,12 +91,13 @@ export default class Direktesending extends Vue {
             
             this.videos.push(videoObj);
         }
-        
-        
+
+        if(response) {
+            this.loaded = true;
+        }
     }
 
     public async newLivestream() {
-        console.log('new livestream');
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'createLivestreamInput',
@@ -98,6 +108,9 @@ export default class Direktesending extends Vue {
         return response;
     }
 
+    public onChangeEventHandler(event : any) {
+        this.aktivert = event.value;
+    }
 }
     
 // Registrering av komponenten
@@ -105,5 +118,17 @@ Vue.component('direktesending', Direktesending);
 </script>
 
 <style>
-
+.live-iframe-div {
+    padding: 20px;
+    margin: 50px;
+    max-width: calc(100% - 100px);
+}
+.aktivator-div {
+    display: flex;
+}
+.aktivator-div .toggle-div {
+    margin: auto;
+    margin-right: 40px;
+    margin-top: 50px;
+}
 </style>
