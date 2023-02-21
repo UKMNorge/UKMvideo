@@ -38,7 +38,9 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import VideoVue from './VideoVue.vue';
 import Video from '../objects/Video';
-import { ToggleButton } from 'vue-js-toggle-button'
+import { ToggleButton } from 'vue-js-toggle-button';
+import $ from "jquery";
+
 Vue.component('ToggleButton', ToggleButton)
 
 
@@ -58,12 +60,14 @@ export default class Direktesending extends Vue {
         UploadVideo,
         VideoVue
     }
-
+    
     public async init() {
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getSingleLivestream',
         };
+
+        this.domEvents();
 
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
         
@@ -88,10 +92,19 @@ export default class Direktesending extends Vue {
             this.videos.push(videoObj);
         }
 
-        console.log(response);
         if(response) {
             this.loaded = true;
         }
+
+        this.hendelserShowHide();
+    }
+
+    private hendelserShowHide() {
+        if(this.aktivert) {
+            $('#livestreamStatic').removeClass('hide');
+            return;
+        }
+        $('#livestreamStatic').addClass('hide');
     }
 
     // Opprett eller hent eller set status til deaktivert via API
@@ -105,12 +118,29 @@ export default class Direktesending extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
         this.aktivert = response.status;
         this.currentLink = response.current_link;
-
+        this.hendelserShowHide();
+        
         return response;
     }
-
+    
     public onChangeEventHandler(event : any) {
         this.setLivestreamStatus();
+    }
+    
+    private domEvents() {
+        var _this = this;
+        $("#livestreamHendelserForm").on('submit', async function(e : any) {
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var form = $(this);
+            var data = form.serialize() + '&action=UKMvideo_ajax&subaction=livestreamHendleser';
+            var response = await _this.spaInteraction.runAjaxCall('/', 'POST', data);
+            
+            if(response) {
+                alert('Lagret!');
+            }
+            return response;
+        });
     }
 }
     
