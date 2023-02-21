@@ -35,14 +35,10 @@
 <script lang="ts">
 // Import av Vue
 import { Vue, Component, Prop } from "vue-property-decorator";
-import $ from "jquery";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
-import Hendelse from "../objects/Hendelse";
-import InnslagVideo from "../objects/InnslagVideo";
 import VideoVue from './VideoVue.vue';
 import Video from '../objects/Video';
 import { ToggleButton } from 'vue-js-toggle-button'
- 
 Vue.component('ToggleButton', ToggleButton)
 
 
@@ -73,13 +69,13 @@ export default class Direktesending extends Vue {
         
         if(response.current_link) {
             this.currentLink = response.current_link;
-            this.aktivert = true;
         }
 
+        this.aktivert = response.status == true;
+
         // det er ikke en liste
-        var videos = response.videos.result;
+        var videos = response.videos.result ? response.videos.result : [];
         for(var video of videos) {
-            console.log(video);
             var videoObj = new Video(
                 video.uid,
                 video.meta.filename,
@@ -92,24 +88,29 @@ export default class Direktesending extends Vue {
             this.videos.push(videoObj);
         }
 
+        console.log(response);
         if(response) {
             this.loaded = true;
         }
     }
 
-    public async newLivestream() {
+    // Opprett eller hent eller set status til deaktivert via API
+    private async setLivestreamStatus() {
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'createLivestreamInput',
+            status: this.aktivert
         };
 
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+        this.aktivert = response.status;
+        this.currentLink = response.current_link;
 
         return response;
     }
 
     public onChangeEventHandler(event : any) {
-        this.aktivert = event.value;
+        this.setLivestreamStatus();
     }
 }
     
