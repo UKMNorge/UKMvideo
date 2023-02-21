@@ -9,21 +9,31 @@ require_once('UKMconfig.inc.php');
 // Hent videos fra CloudFlare Stream
 // Basert på WP bruker id
 
-$handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall(['status'], [], ['GET', 'POST'], false);
 
 $arrangement = new Arrangement(get_option('pl_id'));
 
+$status = $handleCall->getArgument('status');
+
+// Deaktiver direktesending på arrangement og stopp prosessen
+if($status == 'false') {
+    $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+    WriteMeta::set($meta);
+    $handleCall->sendToClient(['status' => false]);
+    die;
+} 
+else {
+    $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+    WriteMeta::set($meta);
+}
 // Det finnes live link fra før, ikke opprett det på nytt
 if($arrangement->getMeta('cloudflare_live_id')->getValue()) {
     $handleCall->sendToClient([
+        'status' => true,
         'cfLiveId' => $arrangement->getMeta('cloudflare_live_id')->getValue(),
-        'liveLink' => $arrangement->getMeta('live_link')->getValue()
+        'current_link' => $arrangement->getMeta('live_link')->getValue()
     ]);
 }
-
-// Set live stream til true på arrangement
-$meta = static::getArrangement()->getMeta('har_livestream')->set(true);
-WriteMeta::set($meta);
 
 
 $headers = array();
@@ -61,4 +71,8 @@ WriteMeta::set($meta_live_link);
 WriteMeta::set($meta_live_embed);
 
 // returner liveLink til klient
-$handleCall->sendToClient(['liveLink' => $liveLink]);
+$handleCall->sendToClient([
+    'status' => true,
+    'cfLiveId' => $arrangement->getMeta('cloudflare_live_id')->getValue(),
+    'current_link' => $arrangement->getMeta('live_link')->getValue()
+]);
