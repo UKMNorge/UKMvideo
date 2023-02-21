@@ -2,7 +2,7 @@
 
 {% block content %}
 	<div class="container-fluid">
-		<form action="?page=UKMlive" method="post">
+		<form id="livestreamHendelserForm">
 			<div class="row">
 				<div class="col-xs-12">
 					<h2>
@@ -11,39 +11,10 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-12 col-md-7">
+				<div class="col-xs-12">
 					<p class="text-muted bold" style="margin-bottom:0;">SENDEPLAN</p>
 					{% include "livestream/sendeplan.html.twig" %}
 				</div>
-				<div class="col-xs-12 col-md-5">
-					<h3>Direktesending oppsett</h3>
-					<button href="#">Gå til direktesending oppsett</button>
-				</div>
-				{# <div class="col-xs-12 col-md-5">
-						<p class="text-muted bold" style="margin-bottom:0;">OPPSETT</p>
-						<ol class="list-group">
-							<li class="list-group-item">
-						{% if input == false %}
-								<a href="?page=UKMvideo&cmd=act" class="pull-center btn btn-xs btn-ukm">Opprett livestream</a>
-						{% else %}
-								<a href="?page=UKMvideo&cmd=deact" class="pull-center btn btn-xs btn-ukm">Deaktiver livestream</a>
-						{% endif %}
-							</li>
-						</ol>
-						<p class="text-muted bold" style="margin-bottom:0;">KOBLE SAMMEN UKM.NO OG STREAMSOFTWARE</p>
-						<ol class="list-group">
-							<li class="list-group-item">
-								{% include "livestream/oppsett.html.twig" %}
-							</li>
-						</ol>
-
-					<p class="text-muted bold" style="margin-bottom:0;">NÅR DU SKAL SENDE DIREKTE</p>
-					<ol class="list-group">
-						<li class="list-group-item">
-							{% include "livestream/sende.html.twig" %}
-						</li>
-					</ol>
-				</div> #}
 			</div>
 		</form>
 	</div>

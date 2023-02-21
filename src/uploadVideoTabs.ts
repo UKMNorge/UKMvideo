@@ -2,6 +2,7 @@ import Vue from "vue";
 import VideoReportasjer from "./components/VideoReportasjer.vue";
 import VideoHendelser from "./components/VideoHendelser.vue";
 import Direktesending from "./components/Direktesending.vue";
+import $ from "jquery";
 
 
 export function uploadVideoTabs() {
@@ -27,6 +28,8 @@ export function uploadVideoTabs() {
         methods : {
             // Open tab
             openTab: function(tabRef : string) : void {
+                $('#livestreamStatic').addClass('hide');
+
                 console.log(tabRef);
 
                 this.activeTab = tabRef;
