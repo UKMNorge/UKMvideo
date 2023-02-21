@@ -129,7 +129,7 @@ export default class Direktesending extends Vue {
     
     private domEvents() {
         var _this = this;
-        $("#livestreamHendelserForm").on('submit', async function(e : any) {
+        $("#livestreamHendelserForm").off('submit').on('submit', async function(e : any) {
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var form = $(this);
