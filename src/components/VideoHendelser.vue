@@ -45,7 +45,7 @@
                                             <div class="upload-video-for-hendelse innslag">
                                                 <!--- Upload video -->
                                                 <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
-                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :hendelseId="innslag.getId()" :miniVersion="true" />
+                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
                                             </div>
                                         </div>
                                     </div>

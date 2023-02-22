@@ -45,7 +45,7 @@ export default class UploadVideo extends Vue {
     @Prop() values!: any[];
     @Prop() erReportasje! : boolean;
     @Prop() miniVersion! : boolean;
-    @Prop() hendelseId! : string;
+    @Prop() innslagId! : string;
     @Prop() callbackLagre! : ()=>{};
 
 
@@ -108,7 +108,7 @@ export default class UploadVideo extends Vue {
    
     public uploadVideoTUS() {
         var _this = this;
-        var id = this.erReportasje ? this.arrangementId : this.hendelseId;
+        var id = this.erReportasje ? this.arrangementId : this.innslagId;
         
         this.uploadProgress = 0;
         this.cloudFlareId = '';
@@ -184,7 +184,7 @@ export default class UploadVideo extends Vue {
             tittel: this.navn,
             description: this.beskrivelse,
             cloudFlareId: this.cloudFlareId,
-            innslagId: 1324
+            innslagId: this.innslagId
             
         };
         
