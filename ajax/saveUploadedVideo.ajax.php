@@ -4,6 +4,8 @@ use UKMNorge\Filmer\UKMTV\WriteFilmCloudflare;
 use UKMNorge\Filmer\UKMTV\CloudflareFilm;
 use UKMNorge\Filmer\UKMTV\Write as FilmWrite;
 use UKMNorge\Arrangement\Arrangement;
+use UKMNorge\Innslag\Context\Context;
+use UKMNorge\Innslag\Innslag;
 
 require_once('UKMconfig.inc.php');
 
@@ -17,17 +19,26 @@ $handleCall = new HandleAPICall(
 
 $arrangement_id = get_option( 'pl_id' );
 
-
 if(!$arrangement_id) {
     $handleCall->sendErrorToClient('pl_id finnes ikke. Kalle ble kjørt utenfor et arrangement', 400);
     die;
 }
 
 $arrangement = new Arrangement($arrangement_id);
+
+$context = Context::createMonstring(
+    $arrangement->getId(),
+    $arrangement->getType(),
+    $arrangement->getSesong(),
+    $arrangement->getFylke()->getId(),
+    $arrangement->getKommuner()->getIdArray()
+);
+
 $tittel = $handleCall->getArgument('tittel'); 
 $description = $handleCall->getArgument('description'); 
 $cloudFlareId = $handleCall->getArgument('cloudFlareId'); 
-$innslagId = $handleCall->getArgument('innslagId');
+$innslag = new Innslag($handleCall->getArgument('innslagId'));
+$innslag->setContext($context);
 
 $cloudFlareVideo = getFromCloudFlare($cloudFlareId);
 
@@ -44,7 +55,7 @@ $data = [
     'cloudflare_lenke' => $cloudFlareLink,
     'cloudflare_thumbnail' => $cloudFlareThumbnail,
     'arrangement' => $arrangement_id,
-    'innslag' => $innslagId,
+    'innslag' => $innslag->getId(),
     'sesong' => $arrangement->getSesong(),
     'arrangement_type' => ARRANGEMENT_TYPER[$arrangement->getType()],
     'fylke' => $arrangement->getFylke()->getId(),
@@ -55,12 +66,37 @@ $film = new CloudflareFilm($data);
 $res = WriteFilmCloudflare::createOrUpdate($film);
 
 
-// ["arrangement", "arrangement_type", "fylke", "innslag", "kommune", "person", "sesong"]s
+// ["arrangement", "arrangement_type", "fylke", "innslag", "kommune", "person", "sesong"]
 
-// Legg til kommuner som Tag er
+// Arrangement
+$film->getTags()->opprett('arrangement', $arrangement->getId());
+
+// arrangement_type
+$film->getTags()->opprett('arrangement_type', ARRANGEMENT_TYPER[$arrangement->getType()]);
+
+// fylke
+$film->getTags()->opprett('fylke', $arrangement->getFylke()->getId());
+
+// innslag
+$film->getTags()->opprett('innslag', $innslag->getId());
+
+// sesong
+$film->getTags()->opprett('sesong', $arrangement->getSesong());
+
+// sesong
+$film->getTags()->opprett('sesong', $arrangement->getSesong());
+
+// Kommuner
 foreach($arrangement->getKommuner()->getAll() as $kommune) {
-    WriteFilmCloudflare::saveKommune($film, $kommune);
+    $film->getTags()->opprett('kommune', $kommune->getId());
 }
+
+// Personer
+foreach($innslag->getPersoner()->getAll() as $person) {
+    $film->getTags()->opprett('person', $person->getId());
+}
+
+FilmWrite::saveTags($film);
 
 // TODO legg til personer
 
