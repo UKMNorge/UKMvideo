@@ -59,7 +59,7 @@ $res = json_decode($result);
 
 // Generer lenker
 $liveLink = 'https://'. UKM_CLOUDFLARE_CUSTOMER . '/' . $res->result->uid;
-$liveEmbed = '<iframe src="'. $liveLink .'/iframe" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">';
+$liveEmbed = '<div style="position: relative; padding-top: 56.25%;"><iframe src="'. $liveLink .'/iframe" style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></div>';
 
 $cloudflare_live_id = $arrangement->getMeta('cloudflare_live_id')->set($res->result->uid);
 $meta_live_link = $arrangement->getMeta('live_link')->set($liveLink);
