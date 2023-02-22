@@ -130,8 +130,8 @@ export default class UploadVideo extends Vue {
             metadata: {
                 'filename': file.name,
                 'filetype': file.type,
-                'innslag': 'not-yet'
-
+                'innslag': _this.innslagId,
+                'arrangement': this.arrangementId
             },
             onError: function(error) {
                 console.log("Failed because: " + error)
@@ -184,8 +184,8 @@ export default class UploadVideo extends Vue {
             tittel: this.navn,
             description: this.beskrivelse,
             cloudFlareId: this.cloudFlareId,
-            innslagId: this.innslagId
-            
+            innslagId: this.innslagId,
+            erReportasje: this.erReportasje
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);

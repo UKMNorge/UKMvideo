@@ -14,8 +14,11 @@ $handleCall = new HandleAPICall(
         'tittel', 
         'description', 
         'cloudFlareId',
+        'erReportasje',
+    ], 
+    [
         'innslagId',
-    ], [], ['GET', 'POST'], false);
+    ], ['GET', 'POST'], false);
 
 $arrangement_id = get_option( 'pl_id' );
 
@@ -26,19 +29,27 @@ if(!$arrangement_id) {
 
 $arrangement = new Arrangement($arrangement_id);
 
-$context = Context::createMonstring(
-    $arrangement->getId(),
-    $arrangement->getType(),
-    $arrangement->getSesong(),
-    $arrangement->getFylke()->getId(),
-    $arrangement->getKommuner()->getIdArray()
-);
-
 $tittel = $handleCall->getArgument('tittel'); 
 $description = $handleCall->getArgument('description'); 
 $cloudFlareId = $handleCall->getArgument('cloudFlareId'); 
-$innslag = new Innslag($handleCall->getArgument('innslagId'));
-$innslag->setContext($context);
+$erReportasje = $handleCall->getArgument('erReportasje'); 
+
+$erReportasje = $erReportasje == 'false' ? false : true;
+
+// Hvis det ikke er reportasje, da kan innslag data hentes
+if(!$erReportasje) {
+    $context = Context::createMonstring(
+        $arrangement->getId(),
+        $arrangement->getType(),
+        $arrangement->getSesong(),
+        $arrangement->getFylke()->getId(),
+        $arrangement->getKommuner()->getIdArray()
+    );
+
+    $innslag = new Innslag($handleCall->getOptionalArgument('innslagId'));
+    $innslag->setContext($context);
+}
+$innslagId = $innslag ? $innslag->getId() : null;
 
 $cloudFlareVideo = getFromCloudFlare($cloudFlareId);
 
@@ -55,15 +66,17 @@ $data = [
     'cloudflare_lenke' => $cloudFlareLink,
     'cloudflare_thumbnail' => $cloudFlareThumbnail,
     'arrangement' => $arrangement_id,
-    'innslag' => $innslag->getId(),
+    'innslag' => $innslagId,
     'sesong' => $arrangement->getSesong(),
     'arrangement_type' => ARRANGEMENT_TYPER[$arrangement->getType()],
     'fylke' => $arrangement->getFylke()->getId(),
     'deleted' => 0,
+    'erReportasje' => $erReportasje,
 ];
 
 $film = new CloudflareFilm($data);
 $res = WriteFilmCloudflare::createOrUpdate($film);
+
 
 
 // ["arrangement", "arrangement_type", "fylke", "innslag", "kommune", "person", "sesong"]
@@ -77,9 +90,6 @@ $film->getTags()->opprett('arrangement_type', ARRANGEMENT_TYPER[$arrangement->ge
 // fylke
 $film->getTags()->opprett('fylke', $arrangement->getFylke()->getId());
 
-// innslag
-$film->getTags()->opprett('innslag', $innslag->getId());
-
 // sesong
 $film->getTags()->opprett('sesong', $arrangement->getSesong());
 
@@ -91,9 +101,15 @@ foreach($arrangement->getKommuner()->getAll() as $kommune) {
     $film->getTags()->opprett('kommune', $kommune->getId());
 }
 
-// Personer
-foreach($innslag->getPersoner()->getAll() as $person) {
-    $film->getTags()->opprett('person', $person->getId());
+// Hvis det ikke er reportasje, da kan innslag data legges til på tag
+if(!$erReportasje) {
+    // innslag
+    $film->getTags()->opprett('innslag', $innslag->getId());
+        
+    // Personer
+    foreach($innslag->getPersoner()->getAll() as $person) {
+        $film->getTags()->opprett('person', $person->getId());
+    }
 }
 
 FilmWrite::saveTags($film);
