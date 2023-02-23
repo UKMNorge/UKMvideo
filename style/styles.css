@@ -14,8 +14,11 @@
     font-size: 17px;
     border: solid 2px #4f46e5;
     color: #4f46e5;
+    transition: .2s;
 }
+.tab-items.video-buttons .tab-item button:hover,
 .tab-items.video-buttons .tab-item button.active {
+    transition: .2s;
     color: #fff;
     background: #4f46e5;
 }
