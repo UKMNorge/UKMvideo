@@ -68,11 +68,8 @@ export default class InnslagVideo {
 
                 videoObj.setThumbnail(video.thumbnail);
 
-                // Dette skal fikses senere. Fungerer med en delay fordi browseren hente ikke bildet fra urlen
-                setTimeout(() => {
-                    const myImage = new Image(100, 200);
-                    myImage.src = video.thumbnail;
-                }, 100)
+                const myImage = new Image(100, 200);
+                myImage.src = video.thumbnail;
             }
         }
 
