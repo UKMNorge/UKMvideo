@@ -112,7 +112,8 @@ export default class VideoHendelser extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
         if(response) {
-            // this.hendelser = [];
+            this.hendelser = [];
+
             for(var hendelse of response) {
                 var hendelseObj = new Hendelse(
                     hendelse.id,
@@ -136,7 +137,6 @@ export default class VideoHendelser extends Vue {
                 this.hendelser.push(hendelseObj);
             }
         }
-        console.log(this.hendelser);
 
         return response;
     }
