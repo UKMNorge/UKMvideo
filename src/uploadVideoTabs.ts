@@ -5,12 +5,12 @@ import Direktesending from "./components/Direktesending.vue";
 import $ from "jquery";
 
 
-export function uploadVideoTabs() {
+export function uploadVideoTabs(activeTab : string) {
     new Vue({
         el: "#uploadVueApp",
 
         data: { 
-            activeTab : 'reportasje'
+            activeTab : activeTab
         },
         
         components: {
@@ -28,6 +28,8 @@ export function uploadVideoTabs() {
         methods : {
             // Open tab
             openTab: function(tabRef : string) : void {
+                (<any>window).director.addParam('tabSPA', tabRef);
+                
                 $('#livestreamStatic').addClass('hide');
 
                 console.log(tabRef);
