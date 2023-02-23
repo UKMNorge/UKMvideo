@@ -120,7 +120,9 @@ export default class Direktesending extends Vue {
     }
 
     private hendelserShowHide() {
-        if(this.aktivert) {
+        // Sørg at livestreamStatic content kommer ikke på andre tabs
+        var tabSpa = (<any>window).director.getParam('tabSPA');
+        if(this.aktivert && tabSpa=='direktesending') {
             $('#livestreamStatic').removeClass('hide');
             return;
         }
