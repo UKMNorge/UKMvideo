@@ -1,6 +1,12 @@
 <template>
     <div>
         <div v-if="loaded" class="aktivator-div">
+            <div v-if="!aktivert" class="melding-aktivator">
+                <div class="text">
+                    <h4 class="">Direktesending er deaktivert</h4>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"></path></svg>
+                </div>
+            </div>
             <div class="toggle-div">
                 <toggle-button v-model="aktivert" @change="onChangeEventHandler($event)" 
                 :width="70"
@@ -190,5 +196,21 @@ Vue.component('direktesending', Direktesending);
     width: 200px;
     font-weight: bold;
     margin: auto;
+}
+.melding-aktivator {
+    width: 100%;
+    display: flex;
+}
+.melding-aktivator .text {
+    margin: auto;
+    margin-right: 50px;
+    margin-bottom: 5px;
+    display: flex;
+    color: #525252;
+}
+.melding-aktivator .text svg {
+    margin: auto;
+    margin-left: 10px;
+    fill: #525252 !important;
 }
 </style>
