@@ -127,12 +127,6 @@ export default class UploadVideo extends Vue {
             endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'hendelse_id') + '=' + id,
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 150 * 1024 * 1024,
-            metadata: {
-                'filename': file.name,
-                'filetype': file.type,
-                'innslag': _this.innslagId,
-                'arrangement': this.arrangementId
-            },
             onError: function(error) {
                 console.log("Failed because: " + error)
             },
