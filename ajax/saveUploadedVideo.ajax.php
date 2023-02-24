@@ -51,7 +51,7 @@ if(!$erReportasje) {
 }
 $innslagId = $innslag ? $innslag->getId() : null;
 
-$cloudFlareVideo = getFromCloudFlare($cloudFlareId);
+$cloudFlareVideo = saveInfoToCloudflare($cloudFlareId, $arrangement->getId(), $innslagId, $tittel, $description);
 
 $cloudFlareLink = $cloudFlareVideo->result->preview;
 $cloudFlareThumbnail = $cloudFlareVideo->result->thumbnail;
@@ -76,8 +76,6 @@ $data = [
 
 $film = new CloudflareFilm($data);
 $res = WriteFilmCloudflare::createOrUpdate($film);
-
-
 
 // ["arrangement", "arrangement_type", "fylke", "innslag", "kommune", "person", "sesong"]
 
@@ -114,25 +112,28 @@ if(!$erReportasje) {
 
 FilmWrite::saveTags($film);
 
-// TODO legg til personer
-
 $handleCall->sendToClient(json_decode(true));
 
-
-// Det trengs å hente video data fra CloudFlare etter at id ble hentet
-function getFromCloudFlare($videoId) {
+/**
+ * Lagrer info på Cloudflare og returnerer objektet
+ *
+ * @return {} - Cloudflare film objekt
+ */
+function saveInfoToCloudflare($videoId, $arrangement, $innslag, $title, $description) {
     $ch = curl_init();
 
     curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID . '/stream/' . $videoId);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-
-    $headers = array();
-    $headers[] = 'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY;
-    $headers[] = 'Content-Type: application/json';
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY
+    ]);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"meta\": {\"arrangement\": \"". $arrangement ."\", \"innslag\": \"". $innslag ."\", \"title\": \"". $title ."\", \"description\": \"". $description ."\"}\n}");
 
     $result = curl_exec($ch);
 
-    return json_decode($result);
+    curl_close($ch);
+
+    return json_decode($result);    
 }
