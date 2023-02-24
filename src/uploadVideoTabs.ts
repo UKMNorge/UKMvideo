@@ -45,7 +45,7 @@ export function uploadVideoTabs(activeTab : string) {
             <div>     
                 <div class="tab-items video-buttons">
                     <div class="tab-item">
-                        <button :class="{'active' : activeTab == 'reportasje'}" @click="openTab('reportasje');">Filmer</button>
+                        <button :class="{'active' : activeTab == 'reportasje'}" @click="openTab('reportasje');">Reportasjer</button>
                     </div>
                     <div class="tab-item">
                         <button :class="{'active' : activeTab == 'hendelser'}" @click="openTab('hendelser');">Filmer av innslag</button>
