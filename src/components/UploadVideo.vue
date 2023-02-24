@@ -184,6 +184,9 @@ export default class UploadVideo extends Vue {
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
+        // Midlertidig løsning er å refreshe netsiden
+        location.reload();
+        
         if(response && this.callbackLagre) {
             this.callbackLagre();
         }
