@@ -4,7 +4,8 @@ declare var ajaxurl: string; // Kommer fra global
 
 export default class Video {
     private id : string;
-    private filename : string;
+    private title : string;
+    private description : string;
     private thumbnail : string;
     private duration : number;
     private status : string;
@@ -15,9 +16,10 @@ export default class Video {
 
     public ready = false;
     
-    constructor(id : string, filename : string, thumbnail : string, duration : number, status : string, preview : string) {
+    constructor(id : string, title : string, description : string, thumbnail : string, duration : number, status : string, preview : string) {
         this.id = id;
-        this.filename = filename;
+        this.title = title;
+        this.description = description;
         this.thumbnail = thumbnail;
         this.duration = duration;
         this.status = status;
@@ -64,8 +66,12 @@ export default class Video {
         return this.id;
     }
 
-    public getFilename() : string {
-        return this.filename;
+    public getTitle() : string {
+        return this.title;
+    }
+
+    public getDescription() : string {
+        return this.description;
     }
 
     public getThumbnail() : string {

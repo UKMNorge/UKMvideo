@@ -8,7 +8,10 @@
                     <span class="duration">{{ video.getDurationStr() }}</span>
                     <div v-if="!video.isReady()" class="processing" :style="{ 'width': video.getProcessingProgress() + '%' }"><span>{{ video.getProcessingProgress() }}%</span></div>
                 </div>
-                <h4 class="title">Title her</h4>
+                <div class="text-info">
+                    <h4 class="title">{{ video.getTitle() }}</h4>
+                    <span class="description">{{ video.getDescription() }}</span>
+                </div>
             </a>
             <a v-else class="video-vue">
                 <div class="thumbnail-div not-available">
@@ -86,11 +89,31 @@ Vue.component('video-vue', VideoVue);
     padding: 2px 5px;
     border-radius: 5px;
 }
-.vue-video-item .title {
-    margin-top: 20px !important;
+.vue-video-item .text-info .title {
+    margin-top: 16px !important;
+    margin-bottom: 5px;
     font-size: 15px;
     color: #444;
 }
+.vue-video-item .text-info .description {
+    font-weight: 200;
+    font-style: normal;
+    color: #6a6a6a;
+}
+.vue-video-item .text-info .description,
+.vue-video-item .text-info .title {
+    word-break: break-all;
+}
+.vue-video-item.mini .text-info .title {
+    margin-top: 5px !important;
+}
+.vue-video-item.mini .text-info {
+    margin-left: 10px;
+}
+a.video-vue{
+    text-decoration: none !important;
+}
+
 .vue-video-item .thumbnail-div img {
     border-radius: 20px;
     width: 100%;
@@ -132,14 +155,11 @@ Vue.component('video-vue', VideoVue);
 }
 .vue-video-item.mini .thumbnail-div {
     width: 10vw;
+    min-width: 10vw;
     height: 5vw;
 }
 .vue-video-item.mini .thumbnail-div img,
 .vue-video-item.mini .thumbnail-div.not-available {
     height: 5vw;
-}
-.vue-video-item.mini .title {
-    margin-top: 5px !important;
-    margin-left: 10px;
 }
 </style>

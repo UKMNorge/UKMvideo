@@ -58,12 +58,13 @@ export default class InnslagVideo {
                 
                 var videoObj = new Video(
                     video.uid,
-                    video.meta.filename,
-                    '',
+                    video.meta.title ? video.meta.title : '',
+                    video.meta.description ? video.meta.description : '',
+                    video.thumbnail,
                     video.duration,
                     video.status.state,
                     video.preview
-                )
+                );
                 this.videos.push(videoObj);
 
                 videoObj.setThumbnail(video.thumbnail);

@@ -102,7 +102,8 @@ export default class Direktesending extends Vue {
         for(var video of videos) {
             var videoObj = new Video(
                 video.uid,
-                video.meta.filename,
+                video.meta.title ? video.meta.title : '',
+                video.meta.description ? video.meta.description : '',
                 video.thumbnail,
                 video.duration,
                 video.status.state,
