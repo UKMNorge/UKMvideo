@@ -236,6 +236,7 @@ Vue.component('upload-video', UploadVideo);
     justify-content: center;
     text-align: center;
     margin-top: 50px;
+    margin-bottom: 30px;
 }
 .main-upload-video-div.mini-version {
     margin: 10px 0;
