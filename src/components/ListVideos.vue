@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="all-videos row">
+        <div class="all-videos col-xs-12">
             <div v-for="(video, index) in videos" :key="index" class="vue-video-item col-md-3">
                 <video-vue :video="video" />
             </div>
