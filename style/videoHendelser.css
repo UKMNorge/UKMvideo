@@ -1,0 +1,85 @@
+.hendelser .hendelse {
+    padding: 10px;
+}
+.hendelser .hendelse .inner {
+    margin-bottom: 0;
+}
+.hendelser .hendelse .inner .videos .inner-videos {
+    margin-top: 60px;
+}
+.upload-video-for-hendelse {
+    display: flex;
+}
+.upload-video-for-hendelse.innslag {
+    margin-top: 30px;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    display: flex;
+}
+.videos .innslags {
+    margin-top: 40px;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels .label-mini {
+    margin-left: 5px;
+}
+.hendelser .hendelse .inner .innslags .innslag {
+    padding: 20px;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner {
+    border: solid 1px #00000024;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons {
+    display: flex;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons button {
+    display: flex;
+    height: 40px;
+    border-color: #4f46e56e;
+}
+.hendelser .hendelse .inner .innslags .innslag .innslag-inner .buttons button p {
+    margin-top: 3px;
+}
+.show-more {
+    margin: auto;
+}
+.show-more svg {
+    transform: rotate(180deg);
+}
+.show-more.collapsed svg {
+    transform: rotate(0);
+}
+.show-more svg {
+    transition: .4s;
+}
+.hendelse-buttons {
+    display: flex;
+}
+.hendelse-buttons button {
+    margin: auto;
+    width: 100px;
+    height: 100%;
+    width: 100%;
+    margin: -20px;
+    padding: 20px;
+    background: transparent !important;
+    border: none;
+}
+.hendelse-buttons button .info {
+    display: flex;
+}
+.hendelse-buttons button .info > * {
+    margin: auto;
+    margin-left: 0;
+    margin-right: 10px;
+}
+.hendelse-buttons button svg {
+    position: absolute;
+    right: 17px;
+    top: 17px
+}
+.hendelse-buttons button.show-more {
+
+}

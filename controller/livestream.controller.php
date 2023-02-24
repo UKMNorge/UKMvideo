@@ -5,27 +5,43 @@ use UKMNorge\Meta\Collection;
 use UKMNorge\Meta\ParentObject;
 use UKMNorge\Meta\Write as WriteMeta;
 
+
 $arrangement = UKMvideo::getArrangement();
 $livestream = new Collection(
     new ParentObject('livestream', 0)
 );
+//Check if livestream input exists for this arrangement
+if( static::getArrangement()->getMetaValue('har_livestream') )
+    $input = true;
 UKMvideo::addViewData(
     [
         'arrangement' => $arrangement,
-        'livestream' => $livestream
+        'livestream' => $livestream,
+        'input' => $input
     ]
 );
 
+// if( $_GET['cmd'] == 'act') {
+//     $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+//     WriteMeta::set($meta);
+//     UKMvideo::getFlash()->success('Direktesending er aktivert');
+// }
+// if( $_GET['cmd'] == 'deact') {
+//     $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+//     WriteMeta::set($meta);
+//     UKMvideo::getFlash()->success('Direktesending er deaktivert');
+// }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $meta_live_link = $arrangement->getMeta('live_link')->set($_POST['live_link']);
-    $meta_live_embed = $arrangement->getMeta('live_embed')->set(stripslashes($_POST['live_embed']));
+    // $meta_live_link = $arrangement->getMeta('live_link')->set($_POST['live_link']);
+    // $meta_live_embed = $arrangement->getMeta('live_embed')->set(stripslashes($_POST['live_embed']));
 
-    WriteMeta::set($meta_live_link);
-    WriteMeta::set($meta_live_embed);
+    // WriteMeta::set($meta_live_link);
+    // WriteMeta::set($meta_live_embed);
 
-    UKMvideo::getFlashbag()->success('Livestream-detaljer er lagret');
+    // UKMvideo::getFlashbag()->success('Livestream-detaljer er lagret');
 
-
+    
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'livestream_') === 0) {
             $hendelse = $arrangement->getProgram()->get(
