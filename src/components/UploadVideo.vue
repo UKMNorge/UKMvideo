@@ -256,6 +256,11 @@ Vue.component('upload-video', UploadVideo);
     border-radius: 15px;
     border: solid 1px #4f46e5;
     box-shadow: 0px 0px 13px -4px #0000003d;
+    transition: .2s;
+}
+.dropzone-container:hover {
+    background: #4f46e514;
+    transition: .2s;
 }
 .dropzone-container input {
     left: 0;

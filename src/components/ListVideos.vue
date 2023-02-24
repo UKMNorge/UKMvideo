@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="all-videos">
-            <div v-for="(video, index) in videos" :key="index">
+        <div class="all-videos row">
+            <div v-for="(video, index) in videos" :key="index" class="vue-video-item col-md-3">
                 <video-vue :video="video" />
             </div>
         </div>
@@ -55,12 +55,14 @@ export default class ListVideos extends Vue {
                 
                 var videoObj = new Video(
                     video.uid,
-                    video.meta.filename,
-                    '',
+                    video.meta.title ? video.meta.title : '',
+                    video.meta.description ? video.meta.description : '',
+                    video.thumbnail,
                     video.duration,
                     video.status.state,
                     video.preview
-                )
+                );
+
                 this.videos.push(videoObj);
 
                 videoObj.setThumbnail(video.thumbnail);
@@ -88,11 +90,8 @@ Vue.component('list-videos', ListVideos);
 
 /* Create three equal columns that floats next to each other */
 .all-videos .vue-video-item {
-    float: left;
-    width: 25%;
-    padding: 10px;
+    height: 300px;
 }
-
 /* Clear floats after the columns */
 .all-videos:after {
     content: "";
