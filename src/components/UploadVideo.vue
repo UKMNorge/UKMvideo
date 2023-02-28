@@ -124,7 +124,7 @@ export default class UploadVideo extends Vue {
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
-            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'hendelse_id') + '=' + id,
+            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'innslag_id') + '=' + id,
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 150 * 1024 * 1024,
             onError: function(error) {
@@ -186,7 +186,7 @@ export default class UploadVideo extends Vue {
 
         // Midlertidig løsning er å refreshe netsiden
         location.reload();
-        
+
         if(response && this.callbackLagre) {
             this.callbackLagre();
         }
