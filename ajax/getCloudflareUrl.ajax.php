@@ -6,6 +6,8 @@ use UKMNorge\Arrangement\Arrangement;
 
 require_once('UKMconfig.inc.php');
 
+die('Ikke tilgjengelig');
+
 // Hvis getallheaders() er ikke definert
 if (!function_exists('getallheaders')) {
     function getallheaders() {
