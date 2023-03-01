@@ -1,4 +1,5 @@
 <template>
+    <!-- Midlertidig -->
     <div class="main-upload-video-div" style="display: flex">
         <h3 style="margin: auto;">OBS: Opplasting fungere ikke. Vi jobber med saken!</h3>
     </div>
