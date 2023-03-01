@@ -1,5 +1,8 @@
 <template>
-    <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
+    <div class="main-upload-video-div" style="display: flex">
+        <h3 style="margin: auto;">OBS: Opplasting fungere ikke. Vi jobber med saken!</h3>
+    </div>
+    <!-- <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
         <div v-if="!uploadStarted && !showSavingInfo">
             <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
@@ -20,7 +23,7 @@
                 <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 
 
