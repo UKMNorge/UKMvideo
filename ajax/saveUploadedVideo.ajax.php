@@ -12,12 +12,11 @@ require_once('UKMconfig.inc.php');
 $handleCall = new HandleAPICall(
     [
         'tittel', 
-        'description', 
         'cloudFlareId',
         'erReportasje',
     ], 
     [
-        'innslagId',
+        'innslagId', 'description',
     ], ['GET', 'POST'], false);
 
 $arrangement_id = get_option( 'pl_id' );
@@ -30,7 +29,7 @@ if(!$arrangement_id) {
 $arrangement = new Arrangement($arrangement_id);
 
 $tittel = $handleCall->getArgument('tittel'); 
-$description = $handleCall->getArgument('description'); 
+$description = $handleCall->getOptionalArgument('description'); 
 $cloudFlareId = $handleCall->getArgument('cloudFlareId'); 
 $erReportasje = $handleCall->getArgument('erReportasje'); 
 
@@ -61,7 +60,7 @@ const ARRANGEMENT_TYPER = ['kommune' => 1, 'fylke' => 2, 'land' => 3];
 $data = [
     'id' => -1,
     'title' => $tittel,
-    'description' => $description,
+    'description' => $description ? $description : '',
     'cloudflare_id' => $cloudFlareId,
     'cloudflare_lenke' => $cloudFlareLink,
     'cloudflare_thumbnail' => $cloudFlareThumbnail,
