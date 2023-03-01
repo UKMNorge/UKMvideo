@@ -15,7 +15,7 @@
             <div class="vent-text" v-show="showLoadingText"><h3>Vi gjør filmen klar, vennligst vent!</h3></div>
 
             <div class="info-upload" v-show="showSavingInfo && !lagringCompleted">
-                <input v-model="navn" class="as-input-style input" placeholder="navn"/>
+                <input v-model="navn" class="as-input-style input" :class="ugyldigNavn && navn.length < 1 ? 'error' : ''" placeholder="navn"/>
                 <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
                 <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
             </div>
@@ -54,6 +54,7 @@ export default class UploadVideo extends Vue {
     public cloudFlareId : string = '';
 
     public navn = '';
+    public ugyldigNavn = false;
     public beskrivelse = '';
 
     public isDragging = false
@@ -172,6 +173,14 @@ export default class UploadVideo extends Vue {
     }
 
     private async saveInnslagVideo() {
+        if(this.navn.length < 1) {
+            this.lagringCompleted = false;
+            this.ugyldigNavn = true;
+            return;
+        }
+        this.lagringCompleted = true;
+
+
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'saveUploadedVideo',
@@ -206,10 +215,14 @@ export default class UploadVideo extends Vue {
         this.showSavingInfo = false;
         this.lagringCompleted = false;
         this.uploadProgress = 0;
+        this.ugyldigNavn = false;
     }
 
     public async lagre() {
-        this.lagringCompleted = true;
+        if(this.navn.length > 0) {
+            this.lagringCompleted = true;
+        }
+
         // Hvis cloudflareId er ikke generert ennå, returner
         if(!this.cloudFlareId) {
             return;
@@ -294,6 +307,10 @@ Vue.component('upload-video', UploadVideo);
 }
 .info-upload .input {
     padding: 5px;
+}
+.info-upload .input.error {
+    border-color: #f00;
+    box-shadow: 0px 0px 8px 4px #ff00002e;
 }
 .info-upload button {
     margin-bottom: 50px;
