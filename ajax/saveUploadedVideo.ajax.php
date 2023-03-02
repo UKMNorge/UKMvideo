@@ -128,7 +128,7 @@ function saveInfoToCloudflare($videoId, $arrangement, $innslag, $title, $descrip
         'Content-Type: application/json',
         'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY
     ]);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"meta\": {\"lagret\": \"true\", \"arrangement\": \"". $arrangement ."\", \"innslag\": \"". $innslag ."\", \"title\": \"". $title ."\", \"description\": \"". $description ."\"}\n}");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"meta\": {\"lagret\": \"true\", \"name\": \"". $title ." (pl_id=". $arrangement . '-b_id='. $innslag .")\", \"arrangement\": \"". $arrangement ."\", \"innslag\": \"". $innslag ."\", \"title\": \"". $title ."\", \"description\": \"". $description ."\"}\n}");
 
     $result = curl_exec($ch);
 
