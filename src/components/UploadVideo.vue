@@ -332,5 +332,6 @@ Vue.component('upload-video', UploadVideo);
 }
 .info-upload button {
     margin-bottom: 50px;
+    background: transparent;
 }
 </style>
