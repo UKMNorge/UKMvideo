@@ -3,6 +3,9 @@
         <div class="vue-video-item" :class="{'mini' : mini}">
             <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="video-vue">
                 <div class="thumbnail-div">
+                    <div v-if="!video.isLagret()" class="video-labels">
+                        <span class="label-item">Filmen er ikke publisert</span>
+                    </div>
                     <img :src="video.getThumbnail()"  width="100%" height="auto">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
                     <span class="duration">{{ video.getDurationStr() }}</span>
@@ -18,6 +21,13 @@
                     <p>Videoen er ikke lastet opp</p>
                 </div>
             </a>
+            <div v-if="!video.isLagret()" class="publish-info">
+                <div v-if="showPublishInfo">
+                    <input v-model="tittel" class="as-input-style input" placeholder="navn" :class="ugyldigTittel && tittel.length < 1 ? 'error' : ''"/>
+                    <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
+                </div>
+                <button @click="publishVideo()" class="as-botton-style-simple publiser">Publiser</button>
+            </div>
         </div>
     </div>
 </template>
@@ -37,6 +47,42 @@ declare var ajaxurl: string; // Kommer fra global
 export default class VideoVue extends Vue {
     @Prop() video! : Video;
     @Prop() mini! : boolean;
+
+    private spaInteraction = new SPAInteraction(null, ajaxurl);
+    public tittel : string = '';
+    public beskrivelse : string = '';
+    public showPublishInfo = false;
+    public ugyldigTittel = false;
+
+    public async publishVideo() {
+        if(!this.showPublishInfo) {
+            this.showPublishInfo = true;
+            return;
+        }
+        if(this.tittel.length < 1) {
+            this.ugyldigTittel = true;
+            return;
+        }
+        
+        var innslagId = this.video.getInnslagId();
+
+        var data = {
+            action: 'UKMvideo_ajax',
+            subaction: 'saveUploadedVideo',
+            tittel: this.tittel,
+            description: this.beskrivelse,
+            cloudFlareId: this.video.getId(),
+            innslagId: innslagId,
+            erReportasje: innslagId ? false : true
+        };
+        
+        var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+        // Midlertidig løsning er å refreshe netsiden
+        location.reload();
+
+        return response;
+    }
 }
 
 // Registrering av komponenten
@@ -122,7 +168,7 @@ a.video-vue{
     box-shadow: 0px 0px 9px -1px #0000004f;
     transition: box-shadow .2s;
 }
-.vue-video-item:hover .thumbnail-div img {
+.vue-video-item .video-vue:hover .thumbnail-div img {
     box-shadow: 0px 0px 9px -1px #00000094;
     transition: box-shadow .2s;
 }
@@ -139,7 +185,7 @@ a.video-vue{
     opacity: 0;
     transition: opacity .2s;
 }
-.vue-video-item:hover .thumbnail-div svg {
+.vue-video-item .video-vue:hover .thumbnail-div svg {
     opacity: 1;
     transition: opacity .2s;
 }
@@ -161,5 +207,33 @@ a.video-vue{
 .vue-video-item.mini .thumbnail-div img,
 .vue-video-item.mini .thumbnail-div.not-available {
     height: 5vw;
+}
+.video-labels {
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    display: flex;
+}
+.video-labels .label-item {
+    background: #000000b5;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin: auto;
+    margin-right: 0;
+}
+.publish-info {
+    margin-top: -10px;
+}
+.publish-info .input {
+    margin-top: 5px;
+}
+button.publiser {
+    width: 100%;
+    margin-top: 5px;
+}
+.publish-info .input.error {
+    border-color: #f00;
+    box-shadow: 0px 0px 8px 4px #ff00002e;
 }
 </style>

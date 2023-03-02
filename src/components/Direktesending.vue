@@ -107,7 +107,9 @@ export default class Direktesending extends Vue {
                 video.thumbnail,
                 video.duration,
                 video.status.state,
-                video.preview
+                video.preview,
+                video.meta.lagret ? video.meta.lagret : false,
+                video.creator
             );
             
             this.videos.push(videoObj);
