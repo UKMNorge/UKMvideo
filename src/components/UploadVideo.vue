@@ -1,9 +1,5 @@
 <template>
-    <!-- Midlertidig -->
-    <div class="main-upload-video-div" style="display: flex">
-        <h3 style="margin: auto;">OBS: Opplasting fungere ikke. Vi jobber med saken!</h3>
-    </div>
-    <!-- <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
+    <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
         <div v-if="!uploadStarted && !showSavingInfo">
             <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
@@ -24,7 +20,7 @@
                 <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
             </div>
         </div>
-    </div> -->
+    </div>
 </template>
 
 
@@ -36,6 +32,8 @@ import ProgressBar from './ProgressBar.vue';
 import $ from "jquery";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 
+// Promise finnes i Javascript
+declare var Promise: any;
 
 
 
@@ -110,8 +108,7 @@ export default class UploadVideo extends Vue {
         this.uploadVideoTUS();
     }
 
-   
-    public uploadVideoTUS() {
+    public async uploadVideoTUS() {
         var _this = this;
         var id = this.erReportasje ? this.arrangementId : this.innslagId;
         
@@ -125,11 +122,12 @@ export default class UploadVideo extends Vue {
         }
 
         this.uploadStarted = true;
+        var videoLength = await this.getVideoDuration(file);
         this.showSavingInfo = true;
 
         // Create a new tus upload
         var upload = new tus.Upload(file, {
-            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&' + (this.erReportasje ? 'arrangement_id' : 'innslag_id') + '=' + id,
+            endpoint: ajaxurl + '?action=UKMvideo_ajax&subaction=getCloudflareUrl&videoLength=' + videoLength + '&' + (this.erReportasje ? 'arrangement_id' : 'innslag_id') + '=' + id,
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 150 * 1024 * 1024,
             onError: function(error) {
@@ -174,6 +172,21 @@ export default class UploadVideo extends Vue {
             // Start the upload
             upload.start();
         })
+
+        return videoLength;
+    }
+
+    // Hent video lengde fra fil
+    private async getVideoDuration(file : File) {
+        return new Promise((resolve : any, reject : any) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const media = new Audio((<any>reader).result);
+                media.onloadedmetadata = () => resolve(media.duration);
+            };
+            reader.readAsDataURL(file);
+            reader.onerror = error => reject(error);
+        });
     }
 
     private async saveInnslagVideo() {
