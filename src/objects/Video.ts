@@ -12,11 +12,14 @@ export default class Video {
     private preview : string;
     private spaInteraction = new SPAInteraction(null, ajaxurl);
     private processingProgress : number = 100;
+    private lagret : boolean;
+    private innslag : number|null;
+    private arrangemet : number|null;
 
 
     public ready = false;
     
-    constructor(id : string, title : string, description : string, thumbnail : string, duration : number, status : string, preview : string) {
+    constructor(id : string, title : string, description : string, thumbnail : string, duration : number, status : string, preview : string, lagret : boolean, creator : string) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -24,6 +27,23 @@ export default class Video {
         this.duration = duration;
         this.status = status;
         this.preview = preview;
+        this.lagret = lagret;
+        this.innslag = null;
+        this.arrangemet = null;
+
+        if(creator.length > 0) {
+            // Det er innslag (b for band)
+            if((<any>creator).includes('-b-')) {
+                var creatorSplit = creator.split('-b-');
+                this.arrangemet = creatorSplit.length > 0 ? parseInt(creatorSplit[0]) : null;
+                this.innslag = creatorSplit.length == 2 ? parseInt(creatorSplit[1]) : null;
+            }
+            // Det er kun reportasje (p for place)
+            else if((<any>creator).includes('-p-')) {
+                var creatorSplit = creator.split('-p-');
+                this.arrangemet = creatorSplit.length > 0 ? parseInt(creatorSplit[0]) : null;
+            }
+        }
         
         // The video is being processed, update it
         if(!this.isReady()) {
@@ -148,5 +168,17 @@ export default class Video {
 
     public getEmbed() {
         
+    }
+
+    public isLagret() : boolean {
+        return this.lagret;
+    }
+
+    public getInnslagId() : number|null {
+        return this.innslag;
+    }
+
+    public getArrangementId() : number|null {
+        return this.arrangemet;
     }
 }
