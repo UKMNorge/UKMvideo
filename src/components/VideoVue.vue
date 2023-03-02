@@ -222,15 +222,25 @@ a.video-vue{
     margin: auto;
     margin-right: 0;
 }
+.vue-video-item .thumbnail-div .video-labels .label-item {
+    font-size: 12px;
+}
 .publish-info {
     margin-top: -10px;
 }
 .publish-info .input {
     margin-top: 5px;
 }
+.vue-video-item.mini .publish-info {
+    margin-top: 10px;
+}
 button.publiser {
     width: 100%;
     margin-top: 5px;
+}
+.vue-video-item.mini button.publiser {
+    margin-bottom: 20px;
+    width: 10vw;
 }
 .publish-info .input.error {
     border-color: #f00;
