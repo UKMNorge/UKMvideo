@@ -6,8 +6,6 @@ use UKMNorge\Arrangement\Arrangement;
 
 require_once('UKMconfig.inc.php');
 
-die('Ikke tilgjengelig');
-
 // Hvis getallheaders() er ikke definert
 if (!function_exists('getallheaders')) {
     function getallheaders() {
@@ -32,6 +30,12 @@ $handleCall = new HandleAPICall([], ['innslag_id', 'arrangement_id'], ['GET', 'P
 $innslag_id = isset($_GET['innslag_id']) ? $_GET['innslag_id'] : null;  // brukes mot kobling til et innslag
 $arrangement_id = isset($_GET['arrangement_id']) ? $_GET['arrangement_id'] : null;  // brukes for reportasje
 
+$videoLength = isset($_GET['videoLength']) ? $_GET['videoLength'] : null;
+
+if($videoLength == null) {
+    throw new Exception('videoLength argument er obligatorisk');
+}
+
 // Arrangementet som sender som argument må være det samme arrangementet hvor brukeren prøver å laste opp filmen
 if($arrangement_id && $arrangement_id != $arrangement->getId()) {
     throw new Exception('Arrangement du prøver å legge til reportasje er ikke samme arrangement du er i');
@@ -50,6 +54,9 @@ if($innslag_id == null && $arrangement_id == null) {
 
 $creatorId = $innslag_id ? '-b-' . $innslag_id : '-p-' . $arrangement_id;
 
+// Legger til 10 sekunder og konverterer til base64
+$maxDuration = base64_encode(ceil($videoLength + 10));
+
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?direct_user=true');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -62,7 +69,8 @@ $headers[] = 'Tus-Resumable: 1.0.0';
 // Sender upload creator for å identifisere brukeren og hva det gjelder for -> b = innslag; p = arrangement
 $headers[] = 'Upload-Creator: ' . $arrangement->getId() . $creatorId;
 $headers[] = 'Upload-Length: ' . $uploadLength;
-$headers[] = 'Upload-Metadata: ' . $uploadMetadata;
+// CF aksepterer base64 på metadata maxdurationseconds
+$headers[] = 'Upload-Metadata: maxdurationseconds '. $maxDuration;
 $headers[] = 'Authorization: Bearer '. UKM_CLOUDFLARE_VIDEO_KEY;
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
