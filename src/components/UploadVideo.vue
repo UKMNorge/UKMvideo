@@ -122,7 +122,8 @@ export default class UploadVideo extends Vue {
         }
 
         this.uploadStarted = true;
-        var videoLength = await this.getVideoDuration(file);
+        console.log(0);
+        var videoLength = await this.getVideoLength(file);
         this.showSavingInfo = true;
 
         // Create a new tus upload
@@ -176,16 +177,22 @@ export default class UploadVideo extends Vue {
         return videoLength;
     }
 
-    // Hent video lengde fra fil
-    private async getVideoDuration(file : File) {
+    private getVideoLength(file : File) {  
+        console.log('1');
+        window.URL = window.URL || window.webkitURL;
+        
+        console.log('2');
         return new Promise((resolve : any, reject : any) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const media = new Audio((<any>reader).result);
-                media.onloadedmetadata = () => resolve(media.duration);
-            };
-            reader.readAsDataURL(file);
-            reader.onerror = error => reject(error);
+            console.log('3');
+            var video = document.createElement('video');
+            video.preload = 'metadata';
+            video.src = URL.createObjectURL(file);
+            video.onloadedmetadata = function() {
+                console.log('4');
+                window.URL.revokeObjectURL(video.src);
+                console.log('5');
+                resolve(video.duration);
+            }
         });
     }
 
