@@ -12,6 +12,10 @@ $arrangement = new Arrangement($arrangementId);
 $retArr = [];
 foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {
     $hendelse->getInnslag()->getAll();
+    foreach($hendelse->getInnslag()->getAll() as $innslag) {
+        $innslag->antallFilmer = $innslag->getFilmer()->getAntall();
+
+    }
     $retArr[] = $hendelse;
 }
 
