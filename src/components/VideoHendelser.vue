@@ -29,9 +29,9 @@
                                     <p>{{ innslag.getNavn()  }}</p>
                                     
                                     <div class="buttons">
-                                        <button class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + hendelse.getId() + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
+                                        <button @click="innslag.fetchVideos()" class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + hendelse.getId() + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M16.293 9.293 12 13.586 7.707 9.293l-1.414 1.414L12 16.414l5.707-5.707z"></path></svg>
-                                            <p>{{ innslag.getVideos().length }} film{{ innslag.getVideos().length > 1 ? 'er' : '' }}</p>
+                                            <p>{{ innslag.getAntallFilmer() }} film{{ innslag.getAntallFilmer() > 1 ? 'er' : '' }}</p>
                                         </button>
                                     </div>
                                     <!-- Filmer i innslag -->
@@ -129,7 +129,8 @@ export default class VideoHendelser extends Vue {
                     var innslagVideoObj = new InnslagVideo(
                         innslag.id,
                         innslag.navn,
-                        innslag.type.name  
+                        innslag.type.name,
+                        innslag.antallFilmer
                     );
                     innslags.push(innslagVideoObj);
                 }
