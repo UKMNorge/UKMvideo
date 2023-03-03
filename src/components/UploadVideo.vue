@@ -64,7 +64,7 @@ export default class UploadVideo extends Vue {
     public uploadStarted = false;
     public showLoadingText = false;
     public showSavingInfo = false;
-    public lagringCompleted = false;
+    public lagringCompleted = false; // brukes for å lagre video info på DB og ikke lagring på CF
     
     public uploadProgress : number = 0;
 
@@ -148,16 +148,15 @@ export default class UploadVideo extends Vue {
             onSuccess: function() {
                 _this.uploadStarted = false;
                 _this.showLoadingText = false;
+                // Hvis brukeren velger å lagre videoen før videoen er lastet opp, da kalles lagre her
+                if(_this.lagringCompleted && _this.cloudFlareId) {
+                    _this.saveInnslagVideo();
+                }
             },
             onAfterResponse: function (req, res) {
                 var cloudFlareId = res.getHeader('stream-media-id');
                 if(cloudFlareId) {
                     _this.cloudFlareId = cloudFlareId;
-                }
-
-                // Hvis brukeren velger å lagre videoen uten at videoen er lastet opp, da kalles lagre her
-                if(_this.lagringCompleted) {
-                    _this.saveInnslagVideo();
                 }
             }
         })
