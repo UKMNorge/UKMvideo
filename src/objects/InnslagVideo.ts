@@ -10,15 +10,15 @@ export default class InnslagVideo {
     private id: string;
     private navn: string;
     private type: string;
-    private videos : Video[] = [];
+    private videos: Video[] = [];
+    private antallFilmer: number;
     public isUploadOpen = false;
 
-    constructor(id: string, navn: string, type: string) {
+    constructor(id: string, navn: string, type: string, antallFilmer?: number) {
         this.id = id;
         this.navn = navn;
         this.type = type;
-
-        this.fetchVideos();
+        this.antallFilmer = antallFilmer ? antallFilmer : 0;
     }
     
     public getId() : string {
@@ -42,8 +42,13 @@ export default class InnslagVideo {
     public getCloudFlareCreatorId() {
         
     }
+
+    public getAntallFilmer() : number {
+        return this.antallFilmer;
+    }
     
-    private async fetchVideos() {
+    public async fetchVideos() {
+        console.log('fetchVideos fra ' + this.id);
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getVideos',
