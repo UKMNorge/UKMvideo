@@ -69,7 +69,7 @@ export default class InnslagVideo {
                     video.duration,
                     video.status.state,
                     video.preview,
-                    video.meta.lagret ? video.meta.lagret : false,
+                    video.meta.lagret ? (video.meta.lagret == 'undefined') || video.meta.lagret == true : false,
                     video.creator
                 );
                 this.videos.push(videoObj);
