@@ -15,6 +15,13 @@
 	</style>
 	{# Argument to vue #}
 	<span id="vueArguments" arrangementId="{{ arrangement.id }}" hidden></span>
+
+	<div id="deltaHeader">
+		<modaldialog-component ref="modalDialog"></modaldialog-component>
+		<messagemodal-component ref="messageModal"></messagemodal-component>
+		<loading-component ref="mainLoading"></loading-component>
+	</div>
+	
 	<div class="container-fluid">
 		<div id="uploadVueApp"></div>
 
