@@ -8,9 +8,13 @@ use UKMNorge\OAuth2\HandleAPICall;
 
 $handleCall = new HandleAPICall(['cfId'], [], ['GET', 'POST'], false);
 
+$arrangement = new Arrangement(get_option('pl_id'));
 // hent cloudflare_id fra argumenter
 $cfId = $handleCall->getArgument('cfId');
 
+if(!checkPermissions($cfId, $arrangement)) {
+    throw new Exception('Du har ikke tilgang til filmen!');
+}
 
 // Hent film med cloudflare_id
 try{
@@ -69,3 +73,37 @@ function deleteVideoCloudflare(String $cfId) {
     }
 }
 
+/**
+ * Sjekk om brukeren har tilgang til filmen
+ * Det sjekkes arrangement på creator, hvis brukeren har tilgang til arrangement så har brukeren tilgang på filmen
+ *
+ * @return boolean
+ */
+function checkPermissions(String $cfId, $arrangement) {
+    $ch = curl_init();
+
+    curl_setopt($ch, CURLOPT_URL, 'https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream/' . $cfId);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+    $headers = array();
+    $headers[] = 'Authorization: Bearer ' . UKM_CLOUDFLARE_VIDEO_KEY;
+    $headers[] = 'Content-Type: application/json';
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'Error:' . curl_error($ch);
+    }
+    curl_close($ch);
+
+    if($result) {
+        $resObj = json_decode($result);
+        if($resObj && $resObj->result->creator) {
+            $creatorExploded = explode("-", $resObj->result->creator);
+            return $creatorExploded[0] == $arrangement->getId() ? true : false;
+        }
+    }
+
+    return false;
+}
