@@ -34,7 +34,7 @@ catch(Exception $e) {
     throw new Exception($e);
 }
 
-$handleCall->sendToClient($retArr);
+$handleCall->sendToClient(['result' => true]);
 
 /**
  * Slett filmen på Cloudflare
