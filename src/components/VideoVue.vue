@@ -294,6 +294,7 @@ button.publiser {
     visibility: hidden;
     opacity: 0;
     transition: visibility .2s, opacity .2s;
+    z-index: 5;
 }
 .vue-video-item .thumbnail-div:hover .right-buttons {
     visibility: visible;  
