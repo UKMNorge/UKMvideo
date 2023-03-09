@@ -98,16 +98,25 @@ export default class VideoVue extends Vue {
         var buttons = [{
             name : 'Slett filmen',
             class : "",
-            callback : ()=> {
+            callback : async ()=> {
                 try{
-                    alert('ok');
+                    var data = {
+                        action: 'UKMvideo_ajax',
+                        subaction: 'deleteVideo',
+                        cfId: video.getId()
+                    };
+
+                    var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+                    return response;
+                    
                 } catch(err) {
                     console.error(err);
                 }
             }}
         ];
 
-        this.spaInteraction.showDialog('Slette filmen', 'Vil du slette filmen permanent?', buttons);
+        this.spaInteraction.showDialog('Slette filmen', 'Vil du slette '+ video.getTitle() +' permanent?', buttons);
     }
 }
 
