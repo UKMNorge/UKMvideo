@@ -15,19 +15,18 @@ $cfId = $handleCall->getArgument('cfId');
 // Hent film med cloudflare_id
 try{
     $film = Filmer::getByCFId($cfId);
-
-    if($film == null || !$film instanceof CloudflareFilm) {
-        throw new Exception('Filmen finnes ikke som Cloudflare film');
-    }
 }
 catch(Exception $e) {
-    throw new Exception($e);
+    // Det finnes tilfeller når filmen er ikke publisert (ikke lagret på db) og kun finnes på Cloudflare og derfor er det ikke obligatorisk å hente CloudflareFilm
 }
 
-
-// Slett filmen
-try{
+// Slett filmen DB
+if($film) {
     FilmWrite::slett($film);
+}
+
+// Slett filmen på Cloudlfare Stream
+try{
     deleteVideoCloudflare($cfId);
 }
 catch(Exception $e) {
