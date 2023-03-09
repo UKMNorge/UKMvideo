@@ -33,7 +33,7 @@
             <div class="form-group">
                 <label>Hvor lenge varer sendingen?</label>
                 <select class="form-control" name="sending_{{hendelse.getId()}}_varighet" style="margin-bottom:0;">
-                    {% for min in 1..180/5 %}
+                    {% for min in 1..300/5 %}
                         <option value="{{min*5}}" {{ hendelse.harSending() and min*5 == hendelse.getSending().getVarighet() ? 'selected' }}>
                             {{(min*5*60)|tid}}
                         </option>
