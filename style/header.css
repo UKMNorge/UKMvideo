@@ -1,0 +1,11 @@
+#mainModalDialog {
+    margin-top: 20px;
+}
+.modal-header .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+#adminmenuwrap {
+    z-index: 1000;
+}

@@ -168,6 +168,7 @@ class UKMvideo extends Modul
         wp_enqueue_script('TwigJS');
 
     	wp_enqueue_style('UKMvideoStyle', plugin_dir_url(__FILE__) . '/style/styles.css');
+    	wp_enqueue_style('UKMvideoStyleHeader', plugin_dir_url(__FILE__) . '/style/header.css');
     	wp_enqueue_style('UKMvideoStyleHendelser', plugin_dir_url(__FILE__) . '/style/videoHendelser.css');
 
     	

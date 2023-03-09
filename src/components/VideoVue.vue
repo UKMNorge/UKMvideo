@@ -3,11 +3,16 @@
         <div class="vue-video-item" :class="{'mini' : mini}">
             <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="video-vue">
                 <div class="thumbnail-div">
+                    <div class="right-buttons">
+                        <button @click="deleteVideo($event, video)" class="remove-button btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
+                        </button>
+                    </div>
                     <div v-if="!video.isLagret()" class="video-labels">
                         <span class="label-item">Filmen er ikke publisert</span>
                     </div>
                     <img :src="video.getThumbnail()"  width="100%" height="auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
+                    <svg class="play-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M7 6v12l10-6z"></path></svg>
                     <span class="duration">{{ video.getDurationStr() }}</span>
                     <div v-if="!video.isReady()" class="processing" :style="{ 'width': video.getProcessingProgress() + '%' }"><span>{{ video.getProcessingProgress() }}%</span></div>
                 </div>
@@ -38,6 +43,7 @@
 import { Vue, Component, Prop } from "vue-property-decorator";
 import Video from '../objects/Video';
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
+import { interactionVue } from './interaction';
 import $ from "jquery";
 
 
@@ -48,7 +54,7 @@ export default class VideoVue extends Vue {
     @Prop() video! : Video;
     @Prop() mini! : boolean;
 
-    private spaInteraction = new SPAInteraction(null, ajaxurl);
+    private spaInteraction = new SPAInteraction(interactionVue, ajaxurl);
     public tittel : string = '';
     public beskrivelse : string = '';
     public showPublishInfo = false;
@@ -82,6 +88,39 @@ export default class VideoVue extends Vue {
         location.reload();
 
         return response;
+    }
+
+    public deleteVideo(e : Event, video : Video) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        console.log(video);
+
+        // It is waiting list
+        var buttons = [{
+            name : 'Slett filmen',
+            class : "",
+            callback : async ()=> {
+                try{
+                    var data = {
+                        action: 'UKMvideo_ajax',
+                        subaction: 'deleteVideo',
+                        cfId: video.getId()
+                    };
+
+                    var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
+
+                    if(response) {
+                        location.reload();
+                    }
+
+                    return response;
+                    
+                } catch(err) {
+                    console.error(err);
+                }
+            }}
+        ];
+
+        this.spaInteraction.showDialog('Slette filmen', 'Vil du slette '+ video.getTitle() +' permanent?', buttons);
     }
 }
 
@@ -172,7 +211,7 @@ a.video-vue{
     box-shadow: 0px 0px 9px -1px #00000094;
     transition: box-shadow .2s;
 }
-.vue-video-item .thumbnail-div svg {
+.vue-video-item .thumbnail-div svg.play-svg {
     fill: #0006 !important;
     position: absolute;
     height: 100px;
@@ -185,7 +224,7 @@ a.video-vue{
     opacity: 0;
     transition: opacity .2s;
 }
-.vue-video-item .video-vue:hover .thumbnail-div svg {
+.vue-video-item .video-vue:hover .thumbnail-div svg.play-svg {
     opacity: 1;
     transition: opacity .2s;
 }
@@ -245,5 +284,28 @@ button.publiser {
 .publish-info .input.error {
     border-color: #f00;
     box-shadow: 0px 0px 8px 4px #ff00002e;
+}
+
+.vue-video-item .thumbnail-div .right-buttons {
+    position: absolute;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .2s, opacity .2s;
+}
+.vue-video-item .thumbnail-div:hover .right-buttons {
+    visibility: visible;  
+    opacity: 1;
+    transition: visibility .2s, opacity .2s;
+}
+.vue-video-item .thumbnail-div .right-buttons .btn {
+    margin: auto;
+    margin-right: 0;
+    background: #0000;
+    border-radius: 50%;
+    display: flex;
+    padding: 0;
 }
 </style>
