@@ -79,7 +79,7 @@ export default class Video {
                 clearInterval(interval);
             }
             return video;
-        }, 1000);
+        }, 5000);
     }
 
     public getId() : string {
