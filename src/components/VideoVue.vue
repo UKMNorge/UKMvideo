@@ -108,6 +108,10 @@ export default class VideoVue extends Vue {
 
                     var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
+                    if(response) {
+                        location.reload();
+                    }
+
                     return response;
                     
                 } catch(err) {
