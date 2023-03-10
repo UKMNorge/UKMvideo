@@ -50,6 +50,7 @@ import Video from '../objects/Video';
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import { interactionVue } from './interaction';
 import $ from "jquery";
+import InnslagVideo from "../objects/InnslagVideo";
 
 
 declare var ajaxurl: string; // Kommer fra global
@@ -58,7 +59,10 @@ declare var ajaxurl: string; // Kommer fra global
 export default class VideoVue extends Vue {
     @Prop() video! : Video;
     @Prop() mini! : boolean;
-
+    @Prop() onDeleteCallback! : (response : any, video : Video, innslag : InnslagVideo)=>{};
+    @Prop() onPublishCallback! : (response : any, video : Video, innslag : InnslagVideo)=>{};
+    @Prop() innslag! : InnslagVideo;
+    
     private spaInteraction = new SPAInteraction(interactionVue, ajaxurl);
     public tittel : string = '';
     public beskrivelse : string = '';
@@ -89,8 +93,9 @@ export default class VideoVue extends Vue {
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-        // Midlertidig løsning er å refreshe netsiden
-        location.reload();
+        if(response && this.onPublishCallback) {
+            this.onPublishCallback(response, this.video, this.innslag);
+        }
 
         return response;
     }
@@ -113,8 +118,8 @@ export default class VideoVue extends Vue {
 
                     var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
-                    if(response) {
-                        location.reload();
+                    if(response && this.onDeleteCallback) {
+                        this.onDeleteCallback(response, video, this.innslag);
                     }
 
                     return response;
