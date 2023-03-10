@@ -48,7 +48,7 @@ export default class UploadVideo extends Vue {
     @Prop() erReportasje! : boolean;
     @Prop() miniVersion! : boolean;
     @Prop() innslagId! : string;
-    @Prop() callbackLagre! : ()=>{};
+    @Prop() onUploadCallback! : (response : any, innslagId : string)=>{};
 
 
     private spaInteraction = new SPAInteraction(null, ajaxurl);
@@ -211,10 +211,10 @@ export default class UploadVideo extends Vue {
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
         // Midlertidig løsning er å refreshe netsiden
-        location.reload();
+        // location.reload();
 
-        if(response && this.callbackLagre) {
-            this.callbackLagre();
+        if(response && this.onUploadCallback) {
+            this.onUploadCallback(response, this.innslagId);
         }
         this.reset();
 
