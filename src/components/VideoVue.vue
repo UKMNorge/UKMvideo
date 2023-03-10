@@ -23,10 +23,15 @@
             </a>
             <a v-else class="video-vue">
                 <div class="thumbnail-div not-available">
-                    <p>Videoen er ikke lastet opp</p>
+                    <div class="right-buttons">
+                        <button @click="deleteVideo($event, video)" class="remove-button btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
+                        </button>
+                    </div>
+                    <p>Filmen er ikke lastet opp</p>
                 </div>
             </a>
-            <div v-if="!video.isLagret()" class="publish-info">
+            <div v-if="!video.isLagret() && !video.isPendingUpload()" class="publish-info">
                 <div v-if="showPublishInfo">
                     <input v-model="tittel" class="as-input-style input" placeholder="navn" :class="ugyldigTittel && tittel.length < 1 ? 'error' : ''"/>
                     <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
