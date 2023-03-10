@@ -313,5 +313,6 @@ button.publiser {
     border-radius: 50%;
     display: flex;
     padding: 0;
+    background: #00000042;
 }
 </style>
