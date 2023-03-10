@@ -11,6 +11,7 @@ export default class InnslagVideo {
     private navn: string;
     private type: string;
     private videos: Video[] = [];
+    private antallFilmerDB : number;
     private antallFilmer: number;
     public isUploadOpen = false;
 
@@ -19,6 +20,10 @@ export default class InnslagVideo {
         this.navn = navn;
         this.type = type;
         this.antallFilmer = antallFilmer ? antallFilmer : 0;
+
+        // Lagrer filmer som kommer for første gang.
+        // Variablen antallFilmer kan endres basert på upload, slett og fetch
+        this.antallFilmerDB = this.antallFilmer;
     }
     
     public getId() : string {
@@ -83,10 +88,7 @@ export default class InnslagVideo {
             }
         }
 
-        if(this.videos.length < 1) {
-            this.isUploadOpen = true;
-        }
-        
+        this.antallFilmer = this.videos.length;
         
         return response;
     }
