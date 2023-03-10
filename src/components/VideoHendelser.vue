@@ -38,7 +38,7 @@
                                     <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                         <div class="inner-videos">
                                             <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
-                                                <video-vue :video="video" :mini="true" />
+                                                <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :innslag="innslag" :video="video" :mini="true" />
                                             </div>
                                             
                                             <!-- Last opp film -->
@@ -73,6 +73,8 @@ import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import Hendelse from "../objects/Hendelse";
 import InnslagVideo from "../objects/InnslagVideo";
 import VideoVue from './VideoVue.vue';
+import Video from '../objects/Video';
+
 
 import UploadVideo from "./UploadVideo.vue";
 
@@ -163,6 +165,14 @@ export default class VideoHendelser extends Vue {
                 }
             }
         }
+    }
+
+    public onVideoDelete(response : any, video : Video, innslag : InnslagVideo) {
+        innslag.fetchVideos();
+    }
+
+    public onVideoPublish(response : any, video : Video, innslag : InnslagVideo) {
+        innslag.fetchVideos()
     }
 
 }
