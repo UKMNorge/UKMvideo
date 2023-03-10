@@ -103,6 +103,11 @@ export default class VideoHendelser extends Vue {
     }
 
     public async fetchHendelser() {
+        // Hendelser ble fetcha og trenger ikke å gjøre det igjen
+        if(this.hendelser.length > 0) {
+            return;
+        }
+
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getHendelser',
