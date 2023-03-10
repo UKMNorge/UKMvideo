@@ -1,6 +1,6 @@
 <template>
     <div :class="{ visible : visible }" class="main-progress-bar">
-        <div id="progressBar" class="donut-size">
+        <div :id="chartId" class="donut-size">
             <div class="pie-wrapper">
                 <span class="label">
                     <span class="num">0</span><span class="smaller">%</span>
@@ -28,11 +28,15 @@ declare var ajaxurl: string; // Kommer fra global
 export default class ProgressBar extends Vue {
     @Prop() visible!: boolean;
     @Prop() uploadProgress!: number;
-    public chartId = '#progressBar';
+    public chartId = '';
 
+    public mounted() {
+        this.chartId += 'progressBarW' + uuidv4();
+    }
     
     public update() {
-        var el = this.chartId;
+        var el = '#' + this.chartId;
+        console.log(el);
         var percent = this.uploadProgress;
         var donut = true;
 
