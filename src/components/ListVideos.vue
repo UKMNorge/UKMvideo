@@ -2,7 +2,7 @@
     <div>
         <div class="all-videos col-xs-12">
             <div v-for="(video, index) in videos" :key="index" class="vue-video-item col-md-3">
-                <video-vue :video="video" />
+                <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
             </div>
         </div>
     </div>
@@ -77,6 +77,14 @@ export default class ListVideos extends Vue {
             }
         }
         return response;
+    }
+
+    public onVideoDelete(response : any, video : Video) {
+        this.fetchAllVideos();
+    }
+
+    public onVideoPublish(response : any, video : Video) {
+        this.fetchAllVideos();
     }
     
 }

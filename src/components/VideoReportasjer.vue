@@ -2,7 +2,7 @@
     <div>
         <div>
             <div>
-                <upload-video ref="uploadVideo-reportasje" :erReportasje="true" />
+                <upload-video ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="true" />
             </div>
             <div>
                 <list-videos ref="allVideos-reportasje" :erReportasje="true" />
@@ -22,6 +22,9 @@ declare var ajaxurl: string; // Kommer fra global
 
 @Component
 export default class VideoReportasjer extends Vue {
+    private listVideos : ListVideos = new ListVideos;
+
+
     components = {
         UploadVideo,
         ListVideos
@@ -33,6 +36,12 @@ export default class VideoReportasjer extends Vue {
 
         vueObjectUV.init();
         vueObjLV.init();
+
+        this.listVideos = vueObjLV;
+    }
+
+    public onUpload(response : any, innslagId : string) {
+        this.listVideos.fetchAllVideos()
     }
 }
     

@@ -38,14 +38,14 @@
                                     <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                         <div class="inner-videos">
                                             <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
-                                                <video-vue :video="video" :mini="true" />
+                                                <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :innslag="innslag" :video="video" :mini="true" />
                                             </div>
                                             
                                             <!-- Last opp film -->
                                             <div class="upload-video-for-hendelse innslag">
                                                 <!--- Upload video -->
                                                 <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
-                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
+                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -73,6 +73,8 @@ import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import Hendelse from "../objects/Hendelse";
 import InnslagVideo from "../objects/InnslagVideo";
 import VideoVue from './VideoVue.vue';
+import Video from '../objects/Video';
+
 
 import UploadVideo from "./UploadVideo.vue";
 
@@ -103,6 +105,11 @@ export default class VideoHendelser extends Vue {
     }
 
     public async fetchHendelser() {
+        // Hendelser ble fetcha og trenger ikke å gjøre det igjen
+        if(this.hendelser.length > 0) {
+            return;
+        }
+
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getHendelser',
@@ -148,6 +155,24 @@ export default class VideoHendelser extends Vue {
 
     public toggleHendelse(hendelse : Hendelse) {
         hendelse.hendelseOpen = !hendelse.hendelseOpen;
+    }
+
+    public onUpload(response : any, innslagId : string) {
+        for(var hendelse of this.hendelser) {
+            for(var innslag of hendelse.getInnslags()) {
+                if(innslag.getId() == innslagId) {
+                    innslag.fetchVideos();
+                }
+            }
+        }
+    }
+
+    public onVideoDelete(response : any, video : Video, innslag : InnslagVideo) {
+        innslag.fetchVideos();
+    }
+
+    public onVideoPublish(response : any, video : Video, innslag : InnslagVideo) {
+        innslag.fetchVideos()
     }
 
 }

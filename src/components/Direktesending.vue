@@ -40,7 +40,7 @@
 
             <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-12">
                 <div class="col-xs-4">
-                    <video-vue :video="video" />
+                    <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
                 </div>
             </div>
         </div>
@@ -80,6 +80,7 @@ export default class Direktesending extends Vue {
     }
     
     public async init() {
+        this.videos = [];
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getSingleLivestream',
@@ -120,6 +121,8 @@ export default class Direktesending extends Vue {
         }
 
         this.hendelserShowHide();
+
+        return response;
     }
 
     private hendelserShowHide() {
@@ -168,6 +171,14 @@ export default class Direktesending extends Vue {
             }
             return response;
         });
+    }
+
+    public onVideoDelete(response : any, video : Video) {
+        this.init();
+    }
+
+    public onVideoPublish(response : any, video : Video) {
+        this.init();
     }
 }
     
