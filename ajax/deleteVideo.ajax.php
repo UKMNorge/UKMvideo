@@ -99,7 +99,16 @@ function checkPermissions(String $cfId, $arrangement) {
 
     if($result) {
         $resObj = json_decode($result);
-        if($resObj && $resObj->result->creator) {
+        // It is livestream
+        if($resObj->result->liveInput) {
+            // Check if arrangement has livestream and cloudflare_live_id == live_input_id
+            if($arrangement->getMeta('har_livestream')->getValue() == true && $arrangement->getMeta('cloudflare_live_id')->getValue()) {
+                return $resObj->result->liveInput == $arrangement->getMeta('cloudflare_live_id')->getValue() ? true : false;
+            }
+            return false;
+        }
+        // It is not livestream, check creator id
+        else if($resObj && $resObj->result->creator) {
             $creatorExploded = explode("-", $resObj->result->creator);
             return $creatorExploded[0] == $arrangement->getId() ? true : false;
         }
