@@ -48,7 +48,7 @@ export default class InnslagVideo {
     }
     
     public async fetchVideos() {
-        console.log('fetchVideos fra ' + this.id);
+
         var data = {
             action: 'UKMvideo_ajax',
             subaction: 'getVideos',
@@ -58,6 +58,8 @@ export default class InnslagVideo {
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
 
+        // Empty videos
+        this.videos = [];
         if(response.result && response.result.success == true) {
             for(var video of response.result.result) {
                 
