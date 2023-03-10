@@ -45,7 +45,7 @@
                                             <div class="upload-video-for-hendelse innslag">
                                                 <!--- Upload video -->
                                                 <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
-                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
+                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
                                             </div>
                                         </div>
                                     </div>
@@ -148,6 +148,16 @@ export default class VideoHendelser extends Vue {
 
     public toggleHendelse(hendelse : Hendelse) {
         hendelse.hendelseOpen = !hendelse.hendelseOpen;
+    }
+
+    public onUpload(response : any, innslagId : string) {
+        for(var hendelse of this.hendelser) {
+            for(var innslag of hendelse.getInnslags()) {
+                if(innslag.getId() == innslagId) {
+                    innslag.fetchVideos();
+                }
+            }
+        }
     }
 
 }
