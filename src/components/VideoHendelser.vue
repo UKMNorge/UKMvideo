@@ -17,7 +17,7 @@
                     <div class="videos collapse" :id="[ 'hendelse' + hendelse.getId() ]">
                         <!-- alle innslag -->
                         <div class="innslags row nop">
-                            <div v-for="(innslag, innslagIndex) in hendelse.getInnslags()" :key="innslagIndex" class="innslag col-sm-4 col-xs-6">
+                            <div v-for="(innslag, innslagIndex) in hendelse.getInnslags()" :key="innslagIndex" class="innslag col-xs-12">
                                 <div class="innslag-inner as-box-style">
     
                                     <!-- Labels -->
