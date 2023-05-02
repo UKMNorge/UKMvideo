@@ -1,8 +1,10 @@
 <template>
     <div>
         <div>
-            <div>
-                <upload-video ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="true" />
+            <div class="upload-reportasje-outside">
+                <div class="upload-reportasje">
+                    <upload-video ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="true" />
+                </div>
             </div>
             <div>
                 <list-videos ref="allVideos-reportasje" :erReportasje="true" />
@@ -50,6 +52,13 @@ export default class VideoReportasjer extends Vue {
 Vue.component('video-reportasjer', VideoReportasjer);
 </script>
 
-<style>    
-
+<style>  
+.upload-reportasje-outside {
+    margin: 100px 0;
+    display: flex;
+}  
+.upload-reportasje-outside .upload-reportasje {
+    margin: auto;
+    max-width: 600px;
+}
 </style>

@@ -36,16 +36,18 @@
                                     </div>
                                     <!-- Filmer i innslag -->
                                     <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
-                                        <div class="inner-videos">
-                                            <div v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
-                                                <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :innslag="innslag" :video="video" :mini="true" />
+                                        <div class="inner-videos flex-row">
+                                            <!-- Last opp film -->
+                                            <div class="col-xs-3 upload-video-for-hendelse innslag">
+                                                <!--- Upload video -->
+                                                <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #4f46e5;transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
+                                                </button>
+                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
                                             </div>
                                             
-                                            <!-- Last opp film -->
-                                            <div class="upload-video-for-hendelse innslag">
-                                                <!--- Upload video -->
-                                                <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">+</button>
-                                                <upload-video v-show="innslag.isUploadOpen" ref="uploadVideo-reportasje" :onUploadCallback="onUpload" :erReportasje="false" :innslagId="innslag.getId()" :miniVersion="true" />
+                                            <div  class="col-xs-3" v-for="(video, videoIndex) in innslag.getVideos()" :key="videoIndex">
+                                                <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :innslag="innslag" :video="video" :mini="false" />
                                             </div>
                                         </div>
                                     </div>
