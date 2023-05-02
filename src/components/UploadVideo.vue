@@ -1,7 +1,7 @@
 <template>
     <div class="main-upload-video-div" :class="{'mini-version' : miniVersion}">
-        <div v-if="!uploadStarted && !showSavingInfo">
-            <div class="dropzone-container" @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
+        <div class="before-dropzone" v-if="!uploadStarted && !showSavingInfo">
+            <div class="dropzone-container" :class="{'active-drag' : isDragging}"  @dragover="dragover" @dragleave="dragleave()" @drop="drop($event)">
                 <input type="file" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file" accept="video/mp4,video/x-m4v,video/*"/>
                 <label for="fileInput" class="file-label">
                     <div v-if="isDragging">Slipp her for å laste opp filmen</div>
@@ -10,16 +10,22 @@
             </div>
         </div>
 
-        <div>
-            <progress-bar v-show="!showLoadingText" ref="progressBar" :uploadProgress="uploadProgress" :visible="uploadStarted" />
-            <div class="vent-text" v-show="showLoadingText"><h3>Vi gjør filmen klar, vennligst vent!</h3></div>
-
-            <div class="info-upload" v-show="showSavingInfo && !lagringCompleted">
-                <input v-model="navn" class="as-input-style input" :class="ugyldigNavn && navn.length < 1 ? 'error' : ''" placeholder="navn"/>
-                <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
-                <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
+        <div class="save-video-div" v-show="showSavingInfo">
+            <div class="save-video-div-inner">
+                <div class="progres-bar-div" :class="{'hide' : showLoadingText}">
+                    <progress-bar ref="progressBar" :uploadProgress="uploadProgress" :visible="uploadStarted" />
+                </div>
+                <div class="vent-text" v-show="showLoadingText"><h4>Vi gjør filmen klar, vennligst vent!</h4></div>
+                <div class="vent-text" v-show="!showLoadingText && uploadProgress == 100"><h4>Filmen er lastet opp!</h4></div>
+    
+                <div class="info-upload" v-show="showSavingInfo && !lagringCompleted">
+                    <input v-model="navn" class="as-input-style input" :class="ugyldigNavn && navn.length < 1 ? 'error' : ''" placeholder="navn"/>
+                    <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
+                    <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
+                </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -256,24 +262,22 @@ Vue.component('upload-video', UploadVideo);
 
 <style>
 .main-upload-video-div {
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    min-height: 200px;
-    justify-content: center;
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
+
+}
+.before-dropzone {
+    height: 100%;
 }
 .main-upload-video-div.mini-version {
-    margin: 10px 0;
+    min-height: 10vw;
     height: auto;
+    width: 100%;
 }
 .main-upload-video-div.mini-version .dropzone-container {
     padding: 15px;
+    display: flex;
 }    
 .main-upload-video-div.mini-version .dropzone-container .file-label {
-    font-size: 17px;
+    font-size: 15px;
 }
 
 .dropzone-container {
@@ -282,9 +286,13 @@ Vue.component('upload-video', UploadVideo);
     border: 1px solid #e2e8f0;
     position: relative;
     border-radius: 15px;
-    border: solid 1px #4f46e5;
+    border: dotted 2px #4f46e575;
     box-shadow: 0px 0px 13px -4px #0000003d;
     transition: .2s;
+    height: 100%;
+}
+.dropzone-container.active-drag {
+    border: solid 2px #4f46e5;
 }
 .dropzone-container:hover {
     background: #4f46e514;
@@ -310,12 +318,13 @@ Vue.component('upload-video', UploadVideo);
     font-size: 20px;
     display: block;
     cursor: pointer;
+    margin: auto;
 }
 .info-upload {
     display: grid;
 }
 .info-upload > * {
-    margin: 10px;
+    margin: 10px 0;
     border: solid 1px #4f46e5;
     border-radius: 10px !important;
     font-size: 15px;
@@ -330,7 +339,25 @@ Vue.component('upload-video', UploadVideo);
     box-shadow: 0px 0px 8px 4px #ff00002e;
 }
 .info-upload button {
-    margin-bottom: 50px;
     background: transparent;
+}
+.save-video-div {
+    display: flex;
+    z-index: 10;
+}
+.save-video-div .save-video-div-inner {
+    margin: auto;
+    border: solid 1px #4f46e5;
+    padding: 50px;
+    background: #f7fafc;
+    border-radius: 20px !important;
+    box-shadow: 0px 0px 9px 5px #00000012;
+    width: 100%;
+}
+.progres-bar-div {
+    margin-bottom: 20px;
+}
+.save-video-div-inner .vent-text {
+    margin-bottom: 20px;
 }
 </style>
