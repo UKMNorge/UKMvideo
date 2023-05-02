@@ -113,8 +113,8 @@ export default class Video {
     public getDurationStr() : string {
         var hms = this.toHoursAndMinutes(Math.floor(this.duration));
         var h = hms.h;
-        var m = hms.m;
-        var s = hms.s;
+        var m = h > 0 && hms.m < 10 ? '0' + hms.m : hms.m;
+        var s = hms.s < 10 ? '0' + hms.s : hms.s;
 
 
         // Time er større en null
