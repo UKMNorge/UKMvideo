@@ -279,6 +279,7 @@ a.video-vue{
 }
 .publish-info .input {
     margin-top: 5px;
+    padding-left: 10px;
 }
 .vue-video-item.mini .publish-info {
     margin-top: 10px;
