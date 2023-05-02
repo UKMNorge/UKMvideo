@@ -22,14 +22,14 @@ $handleCall = new HandleAPICall(
 $arrangement_id = get_option( 'pl_id' );
 
 if(!$arrangement_id) {
-    $handleCall->sendErrorToClient('pl_id finnes ikke. Kalle ble kjørt utenfor et arrangement', 400);
+    $handleCall->sendErrorToClient('pl_id finnes ikke. Kallet ble kjørt utenfor et arrangement', 400);
     die;
 }
 
 $arrangement = new Arrangement($arrangement_id);
 
-$tittel = $handleCall->getArgument('tittel'); 
-$description = $handleCall->getOptionalArgument('description'); 
+$tittel = stripslashes($handleCall->getArgument('tittel'));
+$description = stripslashes($handleCall->getOptionalArgument('description'));
 $cloudFlareId = $handleCall->getArgument('cloudFlareId'); 
 $erReportasje = $handleCall->getArgument('erReportasje'); 
 
