@@ -11,7 +11,24 @@
     display: flex;
 }
 .upload-video-for-hendelse.innslag {
-    margin-top: 30px;
+    margin-top: 15px;
+    border: none;
+    min-height: 10vw;
+    padding: 0 !important;
+    margin: 10px 0;
+    height: auto;
+}
+.upload-video-for-hendelse .round-style-button.open-upload {
+    height: 10vw;
+    width: 100%;
+    border: dotted 2px #a9a8ef;
+    border-radius: 20px;
+    transition: .2s;
+    margin-top: 0;
+}
+.upload-video-for-hendelse .round-style-button.open-upload:hover {
+    background: #4f46e514;
+    transition: .2s;
 }
 .hendelser .hendelse .inner .innslags .innslag .innslag-inner .labels {
     position: absolute;
