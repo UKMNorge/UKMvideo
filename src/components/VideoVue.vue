@@ -366,4 +366,7 @@ button.publiser {
     height: 50vh;
     margin: auto;
 }
+.modal-video-play .modal-content .modal-header {
+    min-height: 50px;
+}
 </style>
