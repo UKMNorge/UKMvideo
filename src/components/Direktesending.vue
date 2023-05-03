@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="filmer col-xs-12 flex-row">
-                    <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-3">
+                    <div v-for="(video, index) in videos" :key="index" class="filmer col-sm-3 col-xs-4">
                         <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
                     </div>
                 </div>
