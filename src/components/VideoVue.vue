@@ -2,11 +2,14 @@
     <div>
         <div class="vue-video-item" :class="{'mini' : mini}">
             <div class="right-buttons">
+                <button v-show="video.isLagret()" @click="redigerVideo()" :class="{ 'open' : editMode }" class="edit-button btn">  
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10c5.515 0 10-4.486 10-10S17.515 2 12 2zm0 14-5-6h10l-5 6z"></path></svg>
+                </button>
                 <button @click="deleteVideo($event, video)" class="remove-button btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
                 </button>
             </div>
-            <a v-if="!video.isPendingUpload()" @click="openVideoModal($event)" class="video-vue">
+            <a v-if="!video.isPendingUpload()" @click="openVideoModal()" class="video-vue">
                 <div class="thumbnail-div">
                     <div v-if="!video.isLagret()" class="video-labels">
                         <span class="label-item">Filmen er ikke publisert</span>
@@ -16,7 +19,7 @@
                     <span class="duration">{{ video.getDurationStr() }}</span>
                     <div v-if="!video.isReady()" class="processing" :style="{ 'width': video.getProcessingProgress() + '%' }"><span>{{ video.getProcessingProgress() }}%</span></div>
                 </div>
-                <div class="text-info">
+                <div v-show="!editMode" class="text-info">
                     <h4 class="title">{{ video.getTitle() }}</h4>
                     <span class="description">{{ video.getDescription() }}</span>
                 </div>
@@ -26,12 +29,13 @@
                     <p>Filmen er ikke lastet opp</p>
                 </div>
             </a>
-            <div v-if="!video.isLagret() && !video.isPendingUpload()" class="publish-info">
-                <div v-if="showPublishInfo">
+
+            <div v-if="editMode || (!video.isLagret() && !video.isPendingUpload())" class="publish-info">
+                <div v-if="editMode || showPublishInfo">
                     <input v-model="tittel" class="as-input-style input" placeholder="navn" :class="ugyldigTittel && tittel.length < 1 ? 'error' : ''"/>
                     <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
                 </div>
-                <button @click="publishVideo()" class="as-botton-style-simple publiser">Publiser</button>
+                <button @click="publishVideo()" class="as-botton-style-simple publiser">{{ editMode ? 'Lagre' : 'Publiser' }}</button>
             </div>
         </div>
 
@@ -84,9 +88,10 @@ export default class VideoVue extends Vue {
     public ugyldigTittel = false;
     public previewOpen = false;
     public iframeLink = '';
+    public editMode = false;
 
     public async publishVideo() {
-        if(!this.showPublishInfo) {
+        if(!this.showPublishInfo && !this.editMode) {
             this.showPublishInfo = true;
             return;
         }
@@ -94,6 +99,8 @@ export default class VideoVue extends Vue {
             this.ugyldigTittel = true;
             return;
         }
+
+        this.editMode = false;
         
         var innslagId = this.video.getInnslagId();
 
@@ -112,8 +119,14 @@ export default class VideoVue extends Vue {
         if(response && this.onPublishCallback) {
             this.onPublishCallback(response, this.video, this.innslag);
         }
-
+        
         return response;
+    }
+
+    public redigerVideo() {
+        this.tittel = this.video.getTitle();
+        this.beskrivelse = this.video.getDescription();
+        this.editMode = !this.editMode;
     }
 
     public openVideoModal() {
@@ -309,9 +322,6 @@ a.video-vue{
 .vue-video-item .thumbnail-div .video-labels .label-item {
     font-size: 12px;
 }
-.publish-info {
-    margin-top: -10px;
-}
 .publish-info .input {
     margin-top: 5px;
     padding-left: 10px;
@@ -355,6 +365,10 @@ button.publiser {
     display: flex;
     padding: 0;
     background: #00000042;
+    margin-left: 5px;
+}
+.vue-video-item .right-buttons .edit-button.open {
+    transform: rotate(180deg);
 }
 .modal-video-play {
     position: fixed;
@@ -368,7 +382,7 @@ button.publiser {
 }
 .modal-video-play .modal-content {
     width: 50vw;
-    height: 50vh;
+    height: auto;
     margin: auto;
 }
 .modal-video-play .modal-content .modal-header {
