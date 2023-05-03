@@ -32,15 +32,15 @@
                 </div>
             </div>
             
-            <div v-if="videos.length > 0" class="col-xs-12">
-                <h2>
-                    Tidligere direktesendinger
-                </h2>
-            </div>
+            <div v-if="videos.length > 0" class="col-xs-12 tidligere-filmer">
+                <div class="col-xs-12">
+                    <h3>Tidligere direktesendinger</h3>
+                </div>
 
-            <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-12">
-                <div class="col-xs-4">
-                    <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
+                <div class="filmer col-xs-12 flex-row">
+                    <div v-for="(video, index) in videos" :key="index" class="filmer col-xs-3">
+                        <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -228,5 +228,9 @@ Vue.component('direktesending', Direktesending);
     margin: auto;
     margin-left: 10px;
     fill: #525252 !important;
+}
+.tidligere-filmer {
+    margin-bottom: 80px;
+    margin-top: 30px;
 }
 </style>
