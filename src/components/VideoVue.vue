@@ -252,7 +252,7 @@ a.video-vue{
     transition: box-shadow .2s;
 }
 .vue-video-item .thumbnail-div svg.play-svg {
-    fill: #0006 !important;
+    fill: #fff !important;
     position: absolute;
     height: 100px;
     width: 100px;
@@ -263,6 +263,11 @@ a.video-vue{
     margin: auto;
     opacity: 0;
     transition: opacity .2s;
+    border-radius: 50%;
+    background: #0000008f;
+    padding-left: 8px;
+    height: 60px;
+    width: 60px;
 }
 .vue-video-item .video-vue:hover .thumbnail-div svg.play-svg {
     opacity: 1;
