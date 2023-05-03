@@ -328,13 +328,13 @@ button.publiser {
 
 .vue-video-item .right-buttons {
     position: absolute;
-    width: 100%;
     padding: 10px;
     display: flex;
     visibility: hidden;
     opacity: 0;
     transition: visibility .2s, opacity .2s;
     z-index: 5;
+    right: 0;
 }
 .vue-video-item:hover .right-buttons {
     visibility: visible;  
