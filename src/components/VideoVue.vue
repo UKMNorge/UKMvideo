@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="vue-video-item" :class="{'mini' : mini}">
-            <a v-if="!video.isPendingUpload()" @click="openVideoModal()" class="video-vue">
+            <div class="right-buttons">
+                <button @click="deleteVideo($event, video)" class="remove-button btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
+                </button>
+            </div>
+            <a v-if="!video.isPendingUpload()" @click="openVideoModal($event)" class="video-vue">
                 <div class="thumbnail-div">
-                    <div class="right-buttons">
-                        <button @click="deleteVideo($event, video)" class="remove-button btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
-                        </button>
-                    </div>
                     <div v-if="!video.isLagret()" class="video-labels">
                         <span class="label-item">Filmen er ikke publisert</span>
                     </div>
@@ -23,11 +23,6 @@
             </a>
             <a v-else class="video-vue">
                 <div class="thumbnail-div not-available">
-                    <div class="right-buttons">
-                        <button @click="deleteVideo($event, video)" class="remove-button btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 2 24 20" style="fill: #fff;transform: ;msFilter:;"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg>
-                        </button>
-                    </div>
                     <p>Filmen er ikke lastet opp</p>
                 </div>
             </a>
@@ -125,16 +120,16 @@ export default class VideoVue extends Vue {
         this.previewOpen = true;
     }
     
-    public closeVideoModal($event : Event) {
-        if($((<any>$event).target).hasClass('closes-modal')) {
+    public closeVideoModal(event : Event) {
+        if($((<any>event).target).hasClass('closes-modal')) {
             this.iframeLink = '';
             this.previewOpen = false;
         }
     }
 
     public deleteVideo(e : Event, video : Video) {
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-        console.log(video);
+        // e.preventDefault(); // avoid to execute the actual submit of the form.
+        // console.log(video);
 
         // It is waiting list
         var buttons = [{
@@ -175,6 +170,7 @@ Vue.component('video-vue', VideoVue);
     border-radius: 20px;
     text-decoration: none;
     margin: 10px 0;
+    position: relative;
 }
 .vue-video-item .thumbnail-div.not-available {
     border-radius: 20px;
@@ -330,7 +326,7 @@ button.publiser {
     box-shadow: 0px 0px 8px 4px #ff00002e;
 }
 
-.vue-video-item .thumbnail-div .right-buttons {
+.vue-video-item .right-buttons {
     position: absolute;
     width: 100%;
     padding: 10px;
@@ -340,12 +336,12 @@ button.publiser {
     transition: visibility .2s, opacity .2s;
     z-index: 5;
 }
-.vue-video-item .thumbnail-div:hover .right-buttons {
+.vue-video-item:hover .right-buttons {
     visibility: visible;  
     opacity: 1;
     transition: visibility .2s, opacity .2s;
 }
-.vue-video-item .thumbnail-div .right-buttons .btn {
+.vue-video-item .right-buttons .btn {
     margin: auto;
     margin-right: 0;
     background: #0000;
