@@ -21,7 +21,7 @@
                 <div class="info-upload" v-show="showSavingInfo && !lagringCompleted">
                     <input v-model="navn" class="as-input-style input" :class="ugyldigNavn && navn.length < 1 ? 'error' : ''" placeholder="navn"/>
                     <textarea v-model="beskrivelse" class="as-input-style input" placeholder="beskrivelse"></textarea>
-                    <button @click="lagre()" class="as-botton-style-simple">Lagre filmen</button>
+                    <button @click="lagre()" class="as-botton-style-simple">Publiser filmen</button>
                 </div>
             </div>
         </div>
@@ -322,6 +322,7 @@ Vue.component('upload-video', UploadVideo);
 }
 .info-upload {
     display: grid;
+    margin-top: 10px;
 }
 .info-upload > * {
     margin: 10px 0;
@@ -353,11 +354,5 @@ Vue.component('upload-video', UploadVideo);
     border-radius: 20px !important;
     box-shadow: 0px 0px 9px 5px #00000012;
     width: 100%;
-}
-.progres-bar-div {
-    margin-bottom: 20px;
-}
-.save-video-div-inner .vent-text {
-    margin-bottom: 20px;
 }
 </style>
