@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="all-videos col-xs-12">
-            <div v-for="(video, index) in videos" :key="index" class="vue-video-item col-md-3">
+        <div class="all-videos col-xs-12 flex-row">
+            <div v-for="(video, index) in videos" :key="index" class="vue-video-item col-sm-3 col-xs-4">
                 <video-vue :onDeleteCallback="onVideoDelete" :onPublishCallback="onVideoPublish" :video="video" />
             </div>
         </div>
@@ -94,18 +94,5 @@ Vue.component('list-videos', ListVideos);
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
 
-/* Create three equal columns that floats next to each other */
-.all-videos .vue-video-item {
-    height: 300px;
-}
-/* Clear floats after the columns */
-.all-videos:after {
-    content: "";
-    display: table;
-    clear: both;
-}
 </style>

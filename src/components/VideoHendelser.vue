@@ -38,7 +38,7 @@
                                     <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
                                         <div class="inner-videos flex-row">
                                             <!-- Last opp film -->
-                                            <div class="col-xs-3 upload-video-for-hendelse innslag">
+                                            <div class="col-xs-4 col-sm-3 upload-video-for-hendelse innslag">
                                                 <!--- Upload video -->
                                                 <button v-show="!innslag.isUploadOpen" @click="showUpload(innslag)" class="round-style-button mini open-upload">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #4f46e5;transform: ;msFilter:;"><path d="M15 2.013H9V9H2v6h7v6.987h6V15h7V9h-7z"></path></svg>
