@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="vue-video-item" :class="{'mini' : mini}">
-            <a v-if="!video.isPendingUpload()" :href="video.getPreview()" class="video-vue">
+            <a v-if="!video.isPendingUpload()" @click="openVideoModal()" class="video-vue">
                 <div class="thumbnail-div">
                     <div class="right-buttons">
                         <button @click="deleteVideo($event, video)" class="remove-button btn">
@@ -39,6 +39,24 @@
                 <button @click="publishVideo()" class="as-botton-style-simple publiser">Publiser</button>
             </div>
         </div>
+
+        <div @click="closeVideoModal($event)" v-if="previewOpen == true" class="modal-video-play closes-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button @click="closeVideoModal($event)" type="button" class="close closes-modal" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{ video.getTitle() }}</h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ video.getDescription() }}</p>
+                    <p>Status: {{ video.getStatus() }}</p>
+                    <div style="position: relative; padding-top: 56.25%;">
+                        <iframe :src="iframeLink"  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
     </div>
 </template>
 
@@ -68,6 +86,8 @@ export default class VideoVue extends Vue {
     public beskrivelse : string = '';
     public showPublishInfo = false;
     public ugyldigTittel = false;
+    public previewOpen = false;
+    public iframeLink = '';
 
     public async publishVideo() {
         if(!this.showPublishInfo) {
@@ -98,6 +118,18 @@ export default class VideoVue extends Vue {
         }
 
         return response;
+    }
+
+    public openVideoModal() {
+        this.iframeLink = this.video.getPreview() + '/iframe';
+        this.previewOpen = true;
+    }
+    
+    public closeVideoModal($event : Event) {
+        if($((<any>$event).target).hasClass('closes-modal')) {
+            this.iframeLink = '';
+            this.previewOpen = false;
+        }
     }
 
     public deleteVideo(e : Event, video : Video) {
@@ -207,6 +239,7 @@ Vue.component('video-vue', VideoVue);
 }
 a.video-vue{
     text-decoration: none !important;
+    cursor: pointer;
 }
 
 .vue-video-item .thumbnail-div img {
@@ -320,5 +353,20 @@ button.publiser {
     display: flex;
     padding: 0;
     background: #00000042;
+}
+.modal-video-play {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: #000000d6;
+    z-index: 999999;
+    display: flex;
+}
+.modal-video-play .modal-content {
+    width: 50vw;
+    height: 50vh;
+    margin: auto;
 }
 </style>
