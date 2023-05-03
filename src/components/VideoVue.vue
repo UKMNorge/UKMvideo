@@ -44,6 +44,7 @@
                 <div class="modal-body">
                     <p>{{ video.getDescription() }}</p>
                     <p>Status: {{ video.getStatus() }}</p>
+                    <p v-if="!video.isLagret()">Info: filmen er ikke publisert</p>
                     <div style="position: relative; padding-top: 56.25%;">
                         <iframe :src="iframeLink"  style="border: none; position: absolute; top: 0; left: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
                         </iframe>
