@@ -21,10 +21,10 @@ $erReportasje = $handleCall->getArgument('erReportasje');
 $creatorId = $erReportasje == 'true' ? '-p-' : '-b-';
 $arrangementId = $arrangement->getId();
 
-$url = ('https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?after=2014-01-02T02:20:00Z&before=2025-01-02T02:20:00Z&include_counts=false&creator=' . $arrangementId . $creatorId . $id);
+$url = ('https://api.cloudflare.com/client/v4/accounts/'. UKM_CLOUDFLARE_ACCOUNT_ID .'/stream?after=2014-01-02T02:20:00Z&before=2099-01-02T02:20:00Z&include_counts=false&creator=' . $arrangementId . $creatorId . $id);
 
 
-// Sender Cloudflare account id and creator. Creator contains current wp user og innslag som er identifisert med '-p-XXXX' eller arrangement id '-b-XXXX'
+// Sender Cloudflare account id and creator. Creator contains arrangement id (pl_id) og innslag som er identifisert med '-p-XXXX' eller arrangement id '-b-XXXX'
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
