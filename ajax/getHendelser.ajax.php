@@ -3,11 +3,9 @@
 use UKMNorge\Arrangement\Arrangement;
 use UKMNorge\OAuth2\HandleAPICall;
 
-$handleCall = new HandleAPICall(['arrangementId'], [], ['GET', 'POST'], false);
+$handleCall = new HandleAPICall([], [], ['GET', 'POST'], false);
 
-$arrangementId = $handleCall->getArgument('arrangementId');
-
-$arrangement = new Arrangement($arrangementId);
+$arrangement = new Arrangement(get_option('pl_id'));
 
 $retArr = [];
 foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {

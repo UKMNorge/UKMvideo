@@ -114,8 +114,7 @@ export default class VideoHendelser extends Vue {
 
         var data = {
             action: 'UKMvideo_ajax',
-            subaction: 'getHendelser',
-            arrangementId: this.arrangementId 
+            subaction: 'getHendelser'
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
