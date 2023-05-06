@@ -60,8 +60,6 @@ import $ from "jquery";
 Vue.component('ToggleButton', ToggleButton)
 
 
-import UploadVideo from "./UploadVideo.vue";
-
 declare var ajaxurl: string; // Kommer fra global
 
 @Component
@@ -75,7 +73,6 @@ export default class Direktesending extends Vue {
     public rtmpsKey = null;
 
     components = {
-        UploadVideo,
         VideoVue
     }
     
