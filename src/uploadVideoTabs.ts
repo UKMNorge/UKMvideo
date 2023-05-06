@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VideoReportasjer from "./components/VideoReportasjer.vue";
 import VideoHendelser from "./components/VideoHendelser.vue";
-import Direktesending from "./components/Direktesending.vue";
+import Direktesending from "./tabs/Direktesending.vue";
 import $ from "jquery";
 
 
