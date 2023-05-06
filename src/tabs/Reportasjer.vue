@@ -17,13 +17,13 @@
 <script lang="ts">
 // Import av Vue
 import { Vue, Component, Prop } from "vue-property-decorator";
-import UploadVideo from "./UploadVideo.vue";
-import ListVideos from "./ListVideos.vue";
+import UploadVideo from "../components/UploadVideo.vue";
+import ListVideos from "../components/ListVideos.vue";
 
 declare var ajaxurl: string; // Kommer fra global
 
 @Component
-export default class VideoReportasjer extends Vue {
+export default class Reportasjer extends Vue {
     private listVideos : ListVideos = new ListVideos;
 
 
@@ -49,7 +49,7 @@ export default class VideoReportasjer extends Vue {
     
 
 // Registrering av komponenten
-Vue.component('video-reportasjer', VideoReportasjer);
+Vue.component('video-reportasjer', Reportasjer);
 </script>
 
 <style>  

@@ -74,16 +74,16 @@ import $ from "jquery";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
 import Hendelse from "../objects/Hendelse";
 import InnslagVideo from "../objects/InnslagVideo";
-import VideoVue from './VideoVue.vue';
+import VideoVue from '../components/VideoVue.vue';
 import Video from '../objects/Video';
 
 
-import UploadVideo from "./UploadVideo.vue";
+import UploadVideo from "../components/UploadVideo.vue";
 
 declare var ajaxurl: string; // Kommer fra global
 
 @Component
-export default class VideoHendelser extends Vue {
+export default class Hendelser extends Vue {
     private spaInteraction = new SPAInteraction(null, ajaxurl);
     public chartId = '#progressBar';
     public arrangementId : string = '';
@@ -180,7 +180,7 @@ export default class VideoHendelser extends Vue {
     
 
 // Registrering av komponenten
-Vue.component('video-hendelser', VideoHendelser);
+Vue.component('video-hendelser', Hendelser);
 </script>
 
 <style>

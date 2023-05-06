@@ -52,7 +52,7 @@
 // Import av Vue
 import { Vue, Component, Prop } from "vue-property-decorator";
 import { SPAInteraction } from 'ukm-spa/SPAInteraction';
-import VideoVue from './VideoVue.vue';
+import VideoVue from '../components/VideoVue.vue';
 import Video from '../objects/Video';
 import { ToggleButton } from 'vue-js-toggle-button';
 import $ from "jquery";
