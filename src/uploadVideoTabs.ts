@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Reportasjer from "./tabs/Reportasjer.vue";
-import VideoHendelser from "./components/VideoHendelser.vue";
+import Hendelser from "./tabs/Hendelser.vue";
 import Direktesending from "./tabs/Direktesending.vue";
 import $ from "jquery";
 
@@ -15,7 +15,7 @@ export function uploadVideoTabs(activeTab : string) {
         
         components: {
             Reportasjer,
-            VideoHendelser,
+            Hendelser,
             Direktesending
         },
     
