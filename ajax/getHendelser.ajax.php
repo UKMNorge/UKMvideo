@@ -11,7 +11,7 @@ $retArr = [];
 foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {
     $hendelse->getInnslag()->getAll();
     foreach($hendelse->getInnslag()->getAll() as $innslag) {
-        $innslag->antallFilmer = $innslag->getFilmer()->getAntall();
+        $innslag->antallFilmer = $innslag->getFilmer($arrangement->getId())->getAntall();
 
     }
     $retArr[] = $hendelse;
