@@ -23,6 +23,7 @@
     "@types/uuid": "^9.0.0",
     "jquery": "^3.6.3",
     "tus-js-client": "^3.0.1",
+    "ukm-components-vue": "^0.1.1",
     "ukm-spa": "^1.0.9",
     "uuid": "^9.0.0",
     "vue": "^2.5.2",
