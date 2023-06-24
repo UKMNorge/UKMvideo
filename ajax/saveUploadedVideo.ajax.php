@@ -42,7 +42,7 @@ if(!$erReportasje) {
         $arrangement->getType(),
         $arrangement->getSesong(),
         $arrangement->getFylke()->getId(),
-        $arrangement->getKommuner()->getIdArray()
+        $arrangement->getKommuner() ? $arrangement->getKommuner()->getIdArray() : null
     );
 
     $innslag = new Innslag($handleCall->getOptionalArgument('innslagId'));
@@ -93,8 +93,9 @@ $film->getTags()->opprett('sesong', $arrangement->getSesong());
 // sesong
 $film->getTags()->opprett('sesong', $arrangement->getSesong());
 
-// Kommuner
-foreach($arrangement->getKommuner()->getAll() as $kommune) {
+// Kommuner (hvis arrangement har kommuner, hvis ikke, blir det tom liste)
+$arrangementKommuner = $arrangement->getKommuner() ? $arrangement->getKommuner()->getAll() : [];
+foreach($arrangementKommuner as $kommune) {
     $film->getTags()->opprett('kommune', $kommune->getId());
 }
 
