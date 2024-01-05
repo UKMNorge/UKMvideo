@@ -6,6 +6,9 @@ use UKMNorge\Arrangement\Arrangement;
 require_once('UKMconfig.inc.php');
 
 // Hent videos fra CloudFlare Stream
+if(!defined('UKM_CLOUDFLARE_ACCOUNT_ID') || !defined('UKM_CLOUDFLARE_VIDEO_KEY')) {
+    throw new Exception('Cloudflare legitimasjonsinformasjon er ikke definert');
+}
 
 $handleCall = new HandleAPICall(['id', 'erReportasje'], [], ['GET', 'POST'], false);
 
