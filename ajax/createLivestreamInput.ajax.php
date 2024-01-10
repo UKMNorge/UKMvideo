@@ -17,13 +17,13 @@ $status = $handleCall->getArgument('status');
 
 // Deaktiver direktesending på arrangement og stopp prosessen
 if($status == 'false') {
-    $meta = static::getArrangement()->getMeta('har_livestream')->set(false);
+    $meta = $arrangement->getMeta('har_livestream')->set(false);
     WriteMeta::set($meta);
     $handleCall->sendToClient(['status' => false]);
     die;
 } 
 else {
-    $meta = static::getArrangement()->getMeta('har_livestream')->set(true);
+    $meta = $arrangement->getMeta('har_livestream')->set(true);
     WriteMeta::set($meta);
 }
 // Det finnes live link fra før, ikke opprett det på nytt
