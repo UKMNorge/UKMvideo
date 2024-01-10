@@ -10,7 +10,7 @@ $livestream = new Collection(
     new ParentObject('livestream', 0)
 );
 //Check if livestream input exists for this arrangement
-if( static::getArrangement()->getMetaValue('har_livestream') )
+if( $arrangement->getMetaValue('har_livestream') )
     $input = true;
 UKMvideo::addViewData(
     [
