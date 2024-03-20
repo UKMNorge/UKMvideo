@@ -1,5 +1,51 @@
 <template>
     <div>
+        <!-- Melding om direktesending -->
+        <div v-show="hendelser.length > 0">
+            <div class="container as-container as-margin-top-space-4 as-margin-bottom-space-4">
+                <permanent-notification :typeNotification="'info'" :tittel="'Viktig beskjed'" :description="'Trykk knappen under for veiledning for optimalisering av videoopplastinger'" />
+                <div class="as-display-flex">
+                    <button class="as-margin-auto as-btn-simple primary" @click="showHideNotifiction()">Åpne beskjed</button>
+                </div>
+            </div>
+            
+            <div v-show="showNotification" class="container container-as as-card-1 as-padding-space-4 as-padding-left-space-5 as-padding-right-space-5 as-margin-bottom-space-2">
+                <h3 class="as-margin-top-space-2">Anbefalinger for videoopplastinger?</h3>
+                <ul>
+                    <li>MP4-containers, AAC-audio codec, H264-video codec, 30 eller lavere bilder per sekund</li>
+                    <li>moov-atom bør være i starten av filen (Fast Start)</li>
+                    <li>H264 progressiv skanning (ingen interlacing)</li>
+                    <li>H264 high profile</li>
+                    <li>Closed GOP</li>
+                    <li>Innholdet bør kodes og lastes opp i samme bildefrekvens som det ble opptatt</li>
+                    <li>Mono eller Stereo lyd (Stream vil blande lydspor med mer enn 2 kanaler ned til stereo)</li>
+                </ul>
+                <h3>Nedenfor er bitrate-anbefalinger for koding av nye videoer for Stream:</h3>
+                <table>
+                    <tr>
+                        <th><b>Resolution</b></th>
+                        <th><b>Recommended bitrate</b></th>
+                    </tr>
+                    <tr>
+                        <td>1080p</td>
+                        <td>8 Mbps</td>
+                    </tr>
+                    <tr>
+                        <td>720p</td>
+                        <td>4.8 Mbps</td>
+                    </tr>
+                    <tr>
+                        <td>480p</td>
+                        <td>2.4 Mbps</td>
+                    </tr>
+                    <tr>
+                        <td>360p</td>
+                        <td>1 Mbps</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
         <div class="hendelser col-xs-12 nop">
             <div v-for="(hendelse, index) in hendelser" :key="index" class="hendelse col-xs-12">
                 <div class="inner as-box-style" >
@@ -88,12 +134,16 @@ export default class Hendelser extends Vue {
     public chartId = '#progressBar';
     public arrangementId : string = '';
     public hendelser : Hendelse[] = [];
+    public showNotification = false;
 
     components = {
         UploadVideo,
         VideoVue
     }
 
+    public showHideNotifiction() {
+        this.showNotification = !this.showNotification;
+    }
 
     public init() {
         var arrangementId = $('#vueArguments').attr('arrangementId');

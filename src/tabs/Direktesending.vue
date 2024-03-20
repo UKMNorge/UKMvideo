@@ -16,7 +16,33 @@
         <div v-else>
             <p>Vennligst vent...</p>
         </div>
-        <div v-if="aktivert">
+        <div v-show="aktivert">
+            <!-- Melding om direktesending -->
+            <div class="container as-container">
+                <permanent-notification :typeNotification="'info'" :tittel="'Viktig beskjed'" :description="'Trykk knappen under for veiledning for optimalisering av live streaming'" />
+                <div class="as-display-flex">
+                    <button class="as-margin-auto as-btn-simple primary" @click="showHideNotifiction()">Åpne beskjed</button>
+                </div>
+            </div>
+            
+            <div v-show="showNotification" class="container container-as as-card-1 as-padding-space-4 as-padding-left-space-5 as-padding-right-space-5 as-margin-top-space-2">
+                <h4>Anbefalinger, krav og begrensninger for Live Stream</h4>
+                <p><b>Anbefalinger</b></p>
+                <ul>
+                    <li>Bitrate bør være godt under 12Mbps (12000Kbps). Innhold med høy bevegelse og høy bildefrekvens bør typisk bruke en høyere bitrate, mens innhold med lav bevegelse som lysbildepresentasjoner bør bruke en lavere bitrate.</li>
+                    <li>Det bør brukes en GOP-varighet (keyframe interval) på mellom 2 til 8 sekunder. Standarden i de fleste streamingprogrammer og -hardware, inkludert Open Broadcaster Software (OBS), er innenfor dette området. Å sette en lavere GOP-varighet vil redusere latency for seere, samtidig som det reduserer encoding efficiency. Å sette en høyere GOP-varighet vil forbedre encoding efficiency, samtidig som det øker latency for seere.</li>
+                    <li>Når det er mulig, velg CBR (konstant bitrate) i stedet for VBR (variabel bitrate) da CBR bidrar til å sikre en stabil strømningsopplevelse samtidig som det forhindrer buffering og avbrudd.</li>
+                </ul>
+                <p><b>Krav</b></p>
+                <ul>
+                    <li>«Closed GOPs» er nødvendig. Dette betyr at hvis det er noen B-frames i videoen, bør de alltid referere til frames innenfor samme GOP. Denne innstillingen er standard i de fleste kodingsprogramvarer og -hardware, inkludert OBS Studio.</li>
+                </ul>
+                <p><b>Begrensninger</b></p>
+                <ul>
+                    <li>Hvis en direktevideo overstiger syv dager i lengde, vil opptaket bli forkortet til syv dager. Kun de første syv dagene med direktevideoinnhold vil bli registrert.</li>
+                </ul>
+            </div>
+
             <div v-if="currentLink" class="col-xs-12 live-iframe-div as-box-style">
                 <iframe :src="currentLink + '/iframe'" style="height: 600px; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
                 </iframe>
@@ -56,9 +82,9 @@ import VideoVue from '../components/VideoVue.vue';
 import Video from '../objects/Video';
 import { ToggleButton } from 'vue-js-toggle-button';
 import $ from "jquery";
+import PermanentNotificationLocal from '../components/PermanentNotificationLocal.vue';
 
-Vue.component('ToggleButton', ToggleButton)
-
+Vue.component('ToggleButton', ToggleButton);
 
 declare var ajaxurl: string; // Kommer fra global
 
@@ -71,9 +97,11 @@ export default class Direktesending extends Vue {
     public loaded = false;
     public rtmpsUrl = null;
     public rtmpsKey = null;
+    public showNotification = false;
 
     components = {
-        VideoVue
+        VideoVue,
+        PermanentNotificationLocal,
     }
     
     public async init() {
@@ -120,6 +148,10 @@ export default class Direktesending extends Vue {
         this.hendelserShowHide();
 
         return response;
+    }
+
+    public showHideNotifiction() {
+        this.showNotification = !this.showNotification;
     }
 
     private hendelserShowHide() {
