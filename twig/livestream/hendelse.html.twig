@@ -1,13 +1,3 @@
-    {% if not hendelse.erSynligRammeprogram() %}
-        <p class="small text-danger" style="margin-top:0em;">
-            Så lenge hendelsen er skjult vil ikke direktesendingen vises noe sted.
-        </p>
-    {% elseif not hendelse.erSynligDetaljprogram() %}
-        <p class="small text-danger" style="margin-top:0em;">
-            Så lenge hendelsen ikke har synlig detaljprogram vil ikke direktesendingen vises noe sted.
-        </p>
-    {% endif %}
-
 <div class="livestream_detaljer">
     <div class="row">
         <div class="col-12 col-xs-12 col-sm-6">
