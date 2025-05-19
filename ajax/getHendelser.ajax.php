@@ -11,9 +11,12 @@ $retArr = [];
 foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {
     $hendelse->getInnslag()->getAll();
     $titler = [];
+    $samtykker = [];
+
     foreach($hendelse->getInnslag()->getAll() as $innslag) {
         try{
             $titler[$innslag->getId()] = $innslag->getTitler()->getAll();
+            $samtykker[$innslag->getId()] = $innslag->getSamtykke()->getAll();
         }
         catch(Exception $e) {
             // No title
@@ -23,6 +26,7 @@ foreach($arrangement->getProgram()->getAbsoluteAll() as $hendelse) {
     }
     $retArr[$hendelse->getId()]['hendelse'] = $hendelse;
     $retArr[$hendelse->getId()]['titler'] = $titler;
+    $retArr[$hendelse->getId()]['samtykker'] = $samtykker;
 }
 
 $handleCall->sendToClient($retArr);

@@ -81,7 +81,12 @@
                                         </button>
                                     </div>
                                     <!-- Filmer i innslag -->
+                                    
                                     <div class="videos collapse" :id="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
+                                        <div>
+                                            <p class="samtykke" :class="innslag.getNeiSamtykker() > 0 ? 'ikke-godkjent' : ''">{{ innslag.getNeiSamtykker() > 0 ? innslag.getNeiSamtykker() + ' deltaker'+ (innslag.getNeiSamtykker() > 1 ? 'e' : '') +' og/eller foresatte har ikke godkjent eller besvart samtykke' : 'Alle har samtykket' }}</p>
+                                        </div>
+
                                         <div class="inner-videos flex-row">
                                             <!-- Last opp film -->
                                             <div class="col-xs-4 col-sm-3 upload-video-for-hendelse innslag">
@@ -188,12 +193,21 @@ export default class Hendelser extends Vue {
                 var innslags : InnslagVideo[] = [];
                 for(var innslag of hendelse.innslag.innslag) {
                     let titlesStr : string = '';
+                    let samtykker : any[] = [];
+
                     if(response[key].titler[innslag.id] != undefined) {
                         for(let title of response[key].titler[innslag.id]) {
                             titlesStr += (titlesStr.length > 0 ? ', ' : '') + title.tittel;
                         }
                     }
-                    // for(var title in hendelse[key].)
+
+                    if(response[key].samtykker[innslag.id] != undefined) {
+                        console.log('Samtykker: ', response[key].samtykker[innslag.id]);
+                        for(let samtykke of response[key].samtykker[innslag.id]) {
+                            samtykker.push(samtykke);
+                        }
+                    }
+                
 
                     var innslagVideoObj = new InnslagVideo(
                         innslag.id,
@@ -201,6 +215,7 @@ export default class Hendelser extends Vue {
                         innslag.type.name,
                         innslag.antallFilmer,
                         titlesStr,
+                        samtykker ?? [],
                     );
                     innslags.push(innslagVideoObj);
                 }
@@ -245,6 +260,11 @@ export default class Hendelser extends Vue {
 Vue.component('video-hendelser', Hendelser);
 </script>
 
-<style>
-
+<style scoped>
+.samtykke {
+    color: var(--as-color-primary-success-darker);
+}
+.samtykke.ikke-godkjent {
+    color: var(--as-color-primary-danger);
+}
 </style>

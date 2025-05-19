@@ -15,17 +15,19 @@ export default class InnslagVideo {
     private antallFilmer: number;
     public isUploadOpen = false;
     public titles: string = '';
+    private samtykker : any[] = [];
 
-    constructor(id: string, navn: string, type: string, antallFilmer?: number, titles?: string) {
+    constructor(id: string, navn: string, type: string, antallFilmer?: number, titles?: string, samtykker?: any[]) {
         this.id = id;
         this.navn = navn;
         this.type = type;
         this.antallFilmer = antallFilmer ? antallFilmer : 0;
-
+        
         // Lagrer filmer som kommer for første gang.
         // Variablen antallFilmer kan endres basert på upload, slett og fetch
         this.antallFilmerDB = this.antallFilmer;
         this.titles = titles ? titles : '';
+        this.samtykker = samtykker ? samtykker : [];
     }
     
     public getId() : string {
@@ -98,6 +100,29 @@ export default class InnslagVideo {
     public getTitlesString() : string {
         return this.titles;
     }
+
+    public getNeiSamtykker() : number {
+        let countNei = 0;
+        for(let samtykke of this.samtykker) {
+            let samtykkerNei = false;
+            if(samtykke.status.id != 'godkjent') {
+                samtykkerNei = true;
+            }
+            if(samtykke.foresatt && samtykke.foresatt.status.id != 'godkjent') {
+                samtykkerNei = true;
+            }
+            
+            if(samtykkerNei) countNei++;
+        }
+        return countNei;
+    }
+
+    // public getSamtykkerString() : string {
+    //     let countAlle = 0;
+    //     let countNei = this.getNeiSamtykker();
+
+    //     return countNei > 0 ? countNei + ' deltaker'+ (countNei > 1 ? 'e' : '') +' og/eller foresatte har ikke godkjent eller besvart samtykke' : 'Alle har samtykket';
+    // }
     
    
 }
