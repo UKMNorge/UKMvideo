@@ -108,8 +108,10 @@ export default class InnslagVideo {
             if(samtykke.status.id != 'godkjent') {
                 samtykkerNei = true;
             }
-            if(samtykke.foresatt && samtykke.foresatt.status.id != 'ikke_sendt' && samtykke.foresatt.status.id != 'godkjent') {
-                samtykkerNei = true;
+            if(samtykke.foresatt && samtykke.foresatt.status.id != 'ikke_sendt') {
+                if(samtykke.foresatt.status.id != 'godkjent') {
+                    samtykkerNei = true;
+                }
             }
             
             if(samtykkerNei) countNei++;
