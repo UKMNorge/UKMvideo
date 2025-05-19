@@ -72,7 +72,7 @@
                                             <span>{{ innslag.getType() }}</span>
                                         </div>
                                     </div>
-                                    <p>{{ innslag.getNavn()  }}</p>
+                                    <p><b>{{ innslag.getNavn()  }}</b>{{ innslag.getTitlesString() ? ' - ' + innslag.getTitlesString() : '' }}</p>
                                     
                                     <div class="buttons">
                                         <button @click="innslag.fetchVideos()" class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + hendelse.getId() + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
@@ -168,11 +168,14 @@ export default class Hendelser extends Vue {
         };
         
         var response = await this.spaInteraction.runAjaxCall('/', 'POST', data);
-
         if(response) {
             this.hendelser = [];
 
-            for(var hendelse of response) {
+            console.log(response);
+            for(var key in response) {
+                console.log('Hendelse: ', response[key]);
+                var hendelse = response[key].hendelse;
+
                 var hendelseObj = new Hendelse(
                     hendelse.id,
                     hendelse.navn,
@@ -184,11 +187,20 @@ export default class Hendelser extends Vue {
                 // Legg til innslag
                 var innslags : InnslagVideo[] = [];
                 for(var innslag of hendelse.innslag.innslag) {
+                    let titlesStr : string = '';
+                    if(response[key].titler[innslag.id] != undefined) {
+                        for(let title of response[key].titler[innslag.id]) {
+                            titlesStr += (titlesStr.length > 0 ? ', ' : '') + title.tittel;
+                        }
+                    }
+                    // for(var title in hendelse[key].)
+
                     var innslagVideoObj = new InnslagVideo(
                         innslag.id,
                         innslag.navn,
                         innslag.type.name,
-                        innslag.antallFilmer
+                        innslag.antallFilmer,
+                        titlesStr,
                     );
                     innslags.push(innslagVideoObj);
                 }

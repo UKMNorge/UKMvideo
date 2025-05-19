@@ -14,8 +14,9 @@ export default class InnslagVideo {
     private antallFilmerDB : number;
     private antallFilmer: number;
     public isUploadOpen = false;
+    public titles: string = '';
 
-    constructor(id: string, navn: string, type: string, antallFilmer?: number) {
+    constructor(id: string, navn: string, type: string, antallFilmer?: number, titles?: string) {
         this.id = id;
         this.navn = navn;
         this.type = type;
@@ -24,6 +25,7 @@ export default class InnslagVideo {
         // Lagrer filmer som kommer for første gang.
         // Variablen antallFilmer kan endres basert på upload, slett og fetch
         this.antallFilmerDB = this.antallFilmer;
+        this.titles = titles ? titles : '';
     }
     
     public getId() : string {
@@ -91,6 +93,10 @@ export default class InnslagVideo {
         this.antallFilmer = this.videos.length;
         
         return response;
+    }
+
+    public getTitlesString() : string {
+        return this.titles;
     }
     
    
