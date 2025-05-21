@@ -73,6 +73,9 @@
                                         </div>
                                     </div>
                                     <p><b>{{ innslag.getNavn()  }}</b>{{ innslag.getTitlesString() ? ' - ' + innslag.getTitlesString() : '' }}</p>
+                                    <div v-if="innslag.getNeiSamtykker() > 0">
+                                        <svg style="height: 20px; width: 20px; fill: var(--as-color-primary-danger)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>alert-circle</title><path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>
+                                    </div>
                                     
                                     <div class="buttons">
                                         <button @click="innslag.fetchVideos()" class="btn show-more collapsed" type="button" data-toggle="collapse" :data-target="[ '#allVideos' + hendelse.getId() + innslag.getId() ]" aria-expanded="false" :aria-controls="[ 'allVideos' + hendelse.getId() + innslag.getId() ]">
