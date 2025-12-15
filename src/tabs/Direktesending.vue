@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div>
+           <h4>Direktesending er ikke tilgjengelig. Kontakt oss på: </h4>
+           <a href="mailto:ukm@ukm.no">ukm@ukm.no</a>
+       </div>
         <div v-if="loaded" class="aktivator-div">
             <div v-if="!aktivert" class="melding-aktivator">
                 <div class="text">
@@ -183,6 +187,7 @@ export default class Direktesending extends Vue {
     }
     
     public onChangeEventHandler(event : any) {
+        return;
         this.setLivestreamStatus();
     }
     
