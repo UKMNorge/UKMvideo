@@ -29,7 +29,7 @@
                         </option>
                     {% endfor %}
                 </select>
-                <p class="mt-0 text-muted small">
+                <p class="mt-0 text-muted small">Husk å ta høyde for tiden før sendingen starter når du planlegger varigheten.
                     {% if hendelse.getType() == 'default' %}
                         Hendelsen er beregnet til å vare {{ hendelse.getInnslag().getTid() }} effektiv tid, altså uten konferansierer, rigg osv. 
                     {% endif %}
