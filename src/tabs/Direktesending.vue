@@ -20,8 +20,10 @@
             <!-- Melding om direktesending -->
             <div class="container as-container">
                 <permanent-notification :typeNotification="'info'" :tittel="'Viktig beskjed'" :description="'Trykk knappen under for veiledning for optimalisering av live streaming'" />
-                <div class="as-display-flex">
-                    <button class="as-margin-auto as-btn-simple primary" @click="showHideNotifiction()">Åpne beskjed</button>
+                <div class="melding-toggle-wrap">
+                    <button class="as-btn-simple primary melding-toggle-btn" @click="showHideNotifiction()">
+                        {{ showNotification ? 'Skjul veiledning' : 'Vis veiledning' }}
+                    </button>
                 </div>
             </div>
             
@@ -46,6 +48,15 @@
             <div v-if="currentLink" class="col-xs-12 live-iframe-div as-box-style">
                 <iframe :src="currentLink + '/iframe'" style="height: 600px; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true">
                 </iframe>
+
+                <div class="streaming-help as-box-style">
+                    <h4>Hvilken URL burde du bruke?</h4>
+                    <ul>
+                        <li><b>RTMPS</b> anbefales for de fleste (OBS, Blackmagic og de fleste encodere).</li>
+                        <li><b>SRT</b> kan passe bedre ved ustabilt nett eller pakketap, hvis encoderen har god SRT-støtte.</li>
+                        <li>Bruk bare en av metodene i samme sending.</li>
+                    </ul>
+                </div>
 
                 <!-- rtmps keys -->
                 <div class="rtmps-div">
@@ -240,6 +251,17 @@ Vue.component('direktesending', Direktesending);
     margin-top: 20px;
     display: flex;
 }
+.streaming-help {
+    margin-top: 20px;
+    padding: 15px;
+}
+.streaming-help h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+.streaming-help ul {
+    margin-bottom: 0;
+}
 .rtmps-div * {
     width: 100%;
     margin: 0;
@@ -271,5 +293,19 @@ Vue.component('direktesending', Direktesending);
 }
 .url-keys {
     word-break: break-all;
+}
+.melding-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+.melding-toggle-btn {
+    min-width: 220px;
+}
+.container-as {
+    line-height: 1.5;
+}
+.container-as p {
+    margin-top: 14px;
 }
 </style>
