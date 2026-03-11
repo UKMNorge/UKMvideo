@@ -50,11 +50,15 @@
                 <!-- rtmps keys -->
                 <div class="rtmps-div">
                     <h4 class="title">RTMPS URL: </h4>
-                    <h4 class="as-box-style">{{ rtmpsUrl }}</h4>
+                    <h4 class="as-box-style url-keys">{{ rtmpsUrl }}</h4>
                 </div>
                 <div class="rtmps-div">
                     <h4 class="title">RTMPS Key: </h4>
-                    <h4 class="as-box-style">{{ rtmpsKey }}</h4>
+                    <h4 class="as-box-style url-keys">{{ rtmpsKey }}</h4>
+                </div>
+                <div class="rtmps-div">
+                    <h4 class="title">SRT URL: </h4>
+                    <h4 class="as-box-style url-keys">{{ srtUrl }}</h4>
                 </div>
             </div>
             
@@ -97,6 +101,7 @@ export default class Direktesending extends Vue {
     public loaded = false;
     public rtmpsUrl = null;
     public rtmpsKey = null;
+    public srtUrl = null;
     public showNotification = false;
 
     components = {
@@ -122,6 +127,7 @@ export default class Direktesending extends Vue {
         this.aktivert = response.status == true;
         this.rtmpsUrl = response.rtmps_url;
         this.rtmpsKey = response.rtmps_key;
+        this.srtUrl = response.srt_url;
 
         // det er ikke en liste
         var videos = response.videos.result ? response.videos.result : [];
@@ -177,6 +183,7 @@ export default class Direktesending extends Vue {
         this.currentLink = response.current_link;
         this.rtmpsUrl = response.rtmps_url;
         this.rtmpsKey = response.rtmps_key;
+        this.srtUrl = response.srt_url;
         this.hendelserShowHide();
         
         return response;
@@ -261,5 +268,8 @@ Vue.component('direktesending', Direktesending);
 .tidligere-filmer {
     margin-bottom: 80px;
     margin-top: 30px;
+}
+.url-keys {
+    word-break: break-all;
 }
 </style>

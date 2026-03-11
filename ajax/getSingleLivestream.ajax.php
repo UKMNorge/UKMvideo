@@ -21,6 +21,7 @@ else {
       'current_iframe' => null,
       'rtmps_url' => null,
       'rtmps_key' => null,
+      'srt_url' => null,
       'videos' => []
   ];
     $handleCall->sendToClient($arrRes);
@@ -41,12 +42,14 @@ curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'GET');
 $result2 = curl_exec($ch2);
 curl_close($ch2);
 
+
 $arrRes = [
     'status' => true,
     'current_link' => $arrangement->getMeta('live_link')->getValue(), 
     'current_iframe' => $arrangement->getMeta('live_embed')->getValue(),
     'rtmps_url' => $arrangement->getMeta('rtmps_url')->getValue(),
     'rtmps_key' => $arrangement->getMeta('rtmps_key')->getValue(),
+    'srt_url' => $arrangement->getMeta('srt_url')->getValue(),
     'videos' => json_decode($result2)
 ];
 
